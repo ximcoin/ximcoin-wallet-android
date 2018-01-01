@@ -1,0 +1,105 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "1783c91637ebad169f55ea033bdccc4c",
+    "entities": [
+      {
+        "tableName": "Account",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `paging_token` TEXT, `account_id` TEXT, `sequence` INTEGER NOT NULL, `subentry_count` INTEGER NOT NULL, `balances` TEXT, `signers` TEXT, `data` TEXT, `low_threshold` INTEGER, `med_threshold` INTEGER, `high_threshold` INTEGER, `auth_required` INTEGER, `auth_revocable` INTEGER, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "paging_token",
+            "columnName": "paging_token",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "account_id",
+            "columnName": "account_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sequence",
+            "columnName": "sequence",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "subentry_count",
+            "columnName": "subentry_count",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "balances",
+            "columnName": "balances",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "signers",
+            "columnName": "signers",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "data",
+            "columnName": "data",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "thresholds.low_threshold",
+            "columnName": "low_threshold",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "thresholds.med_threshold",
+            "columnName": "med_threshold",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "thresholds.high_threshold",
+            "columnName": "high_threshold",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "flags.auth_required",
+            "columnName": "auth_required",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "flags.auth_revocable",
+            "columnName": "auth_revocable",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"1783c91637ebad169f55ea033bdccc4c\")"
+    ]
+  }
+}

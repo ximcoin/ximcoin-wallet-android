@@ -4,6 +4,10 @@ import android.app.Application;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.squareup.moshi.Moshi;
+
+import javax.inject.Inject;
+
 import tech.duchess.luminawallet.model.dagger.component.AppComponent;
 import tech.duchess.luminawallet.model.dagger.component.DaggerAppComponent;
 import tech.duchess.luminawallet.model.dagger.module.AppModule;
@@ -14,6 +18,9 @@ import tech.duchess.luminawallet.model.dagger.module.AppModule;
 public class LuminaWalletApp extends Application {
 
     private AppComponent appComponent;
+
+    @Inject
+    Moshi moshi;
 
     @Nullable
     private static LuminaWalletApp application;
@@ -26,6 +33,7 @@ public class LuminaWalletApp extends Application {
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .build();
+        appComponent.inject(this);
     }
 
     @NonNull
@@ -39,5 +47,9 @@ public class LuminaWalletApp extends Application {
 
     public AppComponent getAppComponent() {
         return appComponent;
+    }
+
+    public Moshi getMoshi() {
+        return moshi;
     }
 }

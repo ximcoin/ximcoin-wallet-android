@@ -20,6 +20,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         debug {
@@ -57,32 +63,36 @@ android {
 }
 
 dependencies {
-    compile "com.google.dagger:dagger:$daggerVersion"
-    compile "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
-    compile "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
-    compile "com.trello.rxlifecycle2:rxlifecycle:$rxLifecycleVersion"
-    compile "com.trello.rxlifecycle2:rxlifecycle-components:$rxLifecycleVersion"
-    compile "com.jakewharton.rxrelay2:rxrelay:$rxRelayVersion"
-    compile "com.jakewharton:butterknife:$butterKnifeVersion"
-    compile "com.squareup.okhttp3:okhttp:$okHttpVersion"
-    compile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
-    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    compile "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
-    compile "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
-    compile "com.squareup.moshi:moshi:$moshiVersion"
-    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
-    compile "com.android.support:design:$supportLibraryVersion"
-    compile "com.android.support:recyclerview-v7:$supportLibraryVersion"
-    compile "com.android.support:cardview-v7:$supportLibraryVersion"
-    compile "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    implementation "com.trello.rxlifecycle2:rxlifecycle:$rxLifecycleVersion"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-components:$rxLifecycleVersion"
+    implementation "com.jakewharton.rxrelay2:rxrelay:$rxRelayVersion"
+    implementation "com.jakewharton:butterknife:$butterKnifeVersion"
+    implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation "com.squareup.moshi:moshi:$moshiVersion"
+    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+    implementation "com.android.support:design:$supportLibraryVersion"
+    implementation "com.android.support:recyclerview-v7:$supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$supportLibraryVersion"
+    implementation "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
+    implementation "android.arch.persistence.room:runtime:$architectureComponentsVersion"
+    implementation "android.arch.persistence.room:rxjava2:$architectureComponentsVersion"
 
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation "android.arch.persistence.room:testing:$architectureComponentsVersion"
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
-    androidTestCompile 'com.google.code.findbugs:jsr305:3.0.1'
+    androidTestImplementation 'com.google.code.findbugs:jsr305:3.0.1'
 
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$architectureComponentsVersion"
 }
