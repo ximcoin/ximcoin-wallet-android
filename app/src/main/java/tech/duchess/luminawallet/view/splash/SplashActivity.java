@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import tech.duchess.luminawallet.view.wallet.WalletActivity;
+import tech.duchess.luminawallet.view.account.AccountsActivity;
 
 /**
  * Activity serving as a splash screen during cold boot. This should be taken out if no loading
@@ -20,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
         //Observe that this activity has no views explicitly set. This activity simply serves as a
         //screen to display during cold boot, where in which the view displayed is determined by
         //the theme configured for this activity within the android manifest.
-        startActivity(new Intent(this, WalletActivity.class));
+        startActivity(new Intent(this, AccountsActivity.class));
         //Important to call finish to ensure the user can't back into this activity.
         finish();
     }

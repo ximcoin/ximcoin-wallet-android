@@ -5,6 +5,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverter;
 import android.arch.persistence.room.TypeConverters;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import com.squareup.moshi.JsonAdapter;
@@ -21,7 +23,9 @@ import tech.duchess.luminawallet.LuminaWalletApp;
 
 @Entity
 @TypeConverters(Account.AccountTypeConverters.class)
-public class Account {
+public class Account implements Parcelable {
+    public static final String INVALID_ID = "INVALID_ID";
+
     @NonNull
     @PrimaryKey
     private String id;
@@ -36,6 +40,10 @@ public class Account {
     private List<Balance> balances;
     private List<Signer> signers;
     private Map<String, String> data;
+
+    public Account() {
+        id = INVALID_ID;
+    }
 
     @NonNull
     public String getId() {
@@ -117,6 +125,71 @@ public class Account {
     public void setData(Map<String, String> data) {
         this.data = data;
     }
+
+    protected Account(Parcel in) {
+        id = in.readString();
+        paging_token = in.readString();
+        account_id = in.readString();
+        sequence = in.readLong();
+        subentry_count = in.readLong();
+        thresholds = in.readParcelable(Thresholds.class.getClassLoader());
+        flags = in.readParcelable(Flags.class.getClassLoader());
+
+        this.balances = new ArrayList<>();
+        in.readTypedList(balances, Balance.CREATOR);
+
+        this.signers = new ArrayList<>();
+        in.readTypedList(signers, Signer.CREATOR);
+
+        int dataSize = in.readInt();
+        if (dataSize > 0) {
+            data = new HashMap<>(dataSize);
+            for (int i = 0; i < dataSize; i++) {
+                String key = in.readString();
+                String value = in.readString();
+                data.put(key, value);
+            }
+        }
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(paging_token);
+        dest.writeString(account_id);
+        dest.writeLong(sequence);
+        dest.writeLong(subentry_count);
+        dest.writeParcelable(thresholds, flags);
+        dest.writeParcelable(this.flags, flags);
+        dest.writeTypedList(balances);
+        dest.writeTypedList(signers);
+
+        int dataSize = data == null ? 0 : data.size();
+        dest.writeInt(dataSize);
+        if (dataSize > 0) {
+            for (Map.Entry<String, String> entry : data.entrySet()) {
+                dest.writeString(entry.getKey());
+                dest.writeString(entry.getValue());
+            }
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Account> CREATOR = new Creator<Account>() {
+        @Override
+        public Account createFromParcel(Parcel in) {
+            return new Account(in);
+        }
+
+        @Override
+        public Account[] newArray(int size) {
+            return new Account[size];
+        }
+    };
 
     public static class AccountTypeConverters {
         private static final JsonAdapter<List<Balance>> balanceAdapter;

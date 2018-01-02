@@ -1,10 +1,15 @@
 package tech.duchess.luminawallet.model.persistence.account;
 
-public class Signer {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Signer implements Parcelable {
     private String public_key;
     private int weight;
     private String key;
     private String type;
+
+    public Signer() {}
 
     public String getPublic_key() {
         return public_key;
@@ -37,4 +42,36 @@ public class Signer {
     public String getType() {
         return type;
     }
+
+    protected Signer(Parcel in) {
+        public_key = in.readString();
+        weight = in.readInt();
+        key = in.readString();
+        type = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(public_key);
+        dest.writeInt(weight);
+        dest.writeString(key);
+        dest.writeString(type);
+    }
+
+    public static final Creator<Signer> CREATOR = new Creator<Signer>() {
+        @Override
+        public Signer createFromParcel(Parcel in) {
+            return new Signer(in);
+        }
+
+        @Override
+        public Signer[] newArray(int size) {
+            return new Signer[size];
+        }
+    };
 }

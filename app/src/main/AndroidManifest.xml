@@ -24,7 +24,7 @@
         </activity>
 
         <activity
-            android:name=".view.wallet.WalletActivity"
+            android:name=".view.account.AccountsActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"/>

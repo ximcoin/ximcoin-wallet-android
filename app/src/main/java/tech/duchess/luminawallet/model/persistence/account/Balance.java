@@ -1,11 +1,16 @@
 package tech.duchess.luminawallet.model.persistence.account;
 
-public class Balance {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Balance implements Parcelable {
     private String asset_type;
     private String asset_code;
     private String asset_issuer;
     private double balance;
     private double limit;
+
+    public Balance() {}
 
     public String getAsset_type() {
         return asset_type;
@@ -46,4 +51,38 @@ public class Balance {
     public void setLimit(double limit) {
         this.limit = limit;
     }
+
+    protected Balance(Parcel in) {
+        asset_type = in.readString();
+        asset_code = in.readString();
+        asset_issuer = in.readString();
+        balance = in.readDouble();
+        limit = in.readDouble();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(asset_type);
+        dest.writeString(asset_code);
+        dest.writeString(asset_issuer);
+        dest.writeDouble(balance);
+        dest.writeDouble(limit);
+    }
+
+    public static final Creator<Balance> CREATOR = new Creator<Balance>() {
+        @Override
+        public Balance createFromParcel(Parcel in) {
+            return new Balance(in);
+        }
+
+        @Override
+        public Balance[] newArray(int size) {
+            return new Balance[size];
+        }
+    };
 }
