@@ -5,10 +5,13 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccentDark">@color/colorAccentDark</item>
+        <item name="colorAccentLight">@color/colorAccentLight</item>
         <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:textColorPrimary">@color/colorPrimaryText</item>
         <item name="android:textColorSecondary">@color/colorSecondaryText</item>
         <item name="android:actionBarSize">46dp</item>
+        <item name="colorButtonNormal">@color/colorAccent</item>
     </style>
 
     <!-- Theme for the splash screen (Duchess Technologies Logo) -->
@@ -33,6 +36,20 @@
 
     <style name="body_light_background" parent="body_dark_background">
         <item name="android:textColor">@color/colorPrimaryText</item>
+    </style>
+
+    <style name="button_primary" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">@color/btn_primary_text_color</item>
+        <item name="android:minHeight">@dimen/btn_min_height</item>
+    </style>
+
+    <style name="button_secondary_theme" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="colorAccent">@color/white</item>
+    </style>
+
+    <style name="button_secondary" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">@color/btn_secondary_text_color</item>
+        <item name="android:minHeight">@dimen/btn_min_height</item>
     </style>
 
 </resources>

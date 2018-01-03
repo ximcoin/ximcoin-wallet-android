@@ -7,4 +7,6 @@
     <dimen name="margin_normal">8dp</dimen>
     <dimen name="margin_large">16dp</dimen>
 
+    <dimen name="btn_min_height">48dp</dimen>
+
 </resources>
