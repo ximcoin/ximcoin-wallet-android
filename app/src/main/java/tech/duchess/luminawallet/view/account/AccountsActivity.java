@@ -3,6 +3,7 @@ package tech.duchess.luminawallet.view.account;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.ViewGroup;
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -20,11 +21,14 @@ import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.presenter.account.AccountsPresenter;
 
 /**
- * Displays a Stellar Lumen Wallet, with it's respective features (transactions, send, receive,
- * etc...).
+ * Displays a Stellar Account, with it's respective features (transactions, send, receive, etc...).
+ * Will also display the option to create a new account if no account is found.
  */
 public class AccountsActivity extends RxAppCompatActivity implements IAccountsView {
     private static final String LOADED_ACCOUNTS_KEY = "AccountsActivity.LOADED_ACCOUNTS_KEY";
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @BindView(R.id.fragment_container)
     ViewGroup fragmentContainer;
@@ -39,6 +43,8 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.accounts_activity);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+
         LuminaWalletApp.getInstance()
                 .getAppComponent()
                 .plus(new ActivityLifecycleModule(this))
@@ -99,10 +105,10 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     }
 
     private void displayCreateAccountFragment() {
-        getSupportFragmentManager().beginTransaction()
+        /*getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, new CreateAccountFragment())
-                .commit();
-        getSupportFragmentManager().executePendingTransactions();
+                .commit();*/
+        //getSupportFragmentManager().executePendingTransactions();
     }
 
     @Override

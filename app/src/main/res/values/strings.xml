@@ -2,8 +2,21 @@
     <string name="app_name">LuminaWallet</string>
 
     <!-- Create Account Fragment -->
-    <string name="welcome">Welcome to Lumina</string>
     <string name="create_new_account">Create a New Account</string>
     <string name="import_account">Import Existing Account</string>
+
+    <!-- Intro Slides -->
+    <string name="welcome">Welcome to Lumina</string>
+    <string name="secure_title">Secure</string>
+    <string name="secure_description">Locally encrypted secret keys. Authorize transactions before they happen.</string>
+    <string name="simple_title">Simple</string>
+    <string name="simple_description">Built for elegance and ease of use.</string>
+    <string name="open_source_title">Open Source</string>
+    <string name="open_source_description">Open sourced code for full transparency. Provided completely free of cost.</string>
+    <string name="developer_title">A word from our humble developer</string>
+    <string name="developer_description">Thanks for installing my app! If you enjoy using this as much as I did making it, please consider rating it in the Play Store and donating!</string>
+    <string name="intro_next">NEXT</string>
+    <string name="intro_previous">PREVIOUS</string>
+    <string name="intro_finish">FINISH</string>
 
 </resources>

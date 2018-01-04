@@ -1,18 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#FF607D8B</color>
-    <color name="colorPrimaryDark">#FF455A64</color>
-    <color name="colorPrimaryLight">#FFCFD8DC</color>
-    <color name="colorAccent">#FFFF5722</color>
-    <color name="colorAccentDark">#FFC41C00</color>
-    <color name="colorAccentLight">#FFFF8A50</color>
-    <color name="colorPrimaryText">#FF212121</color>
-    <color name="colorSecondaryText">#FF757575</color>
-    <color name="colorDivider">#FFBDBDBD</color>
+    <color name="colorPrimary">#FFFF9800</color>
+    <color name="colorPrimaryDark">#C66900</color>
+    <color name="colorPrimaryLight">#FFC947</color>
+    <color name="colorAccent">#607D8C</color>
+    <color name="colorAccentDark">#34515F</color>
+    <color name="colorAccentLight">#8EACBC</color>
+    <color name="colorPrimaryText">#000000</color>
+    <color name="colorSecondaryText">#000000</color>
 
-    <color name="white">#FFFFFF</color>
-    <color name="white_pressed">#FFDDDDDD</color>
-    <color name="white_disabled">#4DFFFFFF</color>
+    <!-- Intro Slides -->
+    <color name="intro_welcome_background">@color/colorPrimary</color>
+    <color name="intro_welcome_light_dot">@color/colorPrimaryLight</color>
+    <color name="intro_welcome_dark_dot">@color/colorPrimaryDark</color>
 
+    <color name="intro_secure_background">#FF20D2BB</color>
+    <color name="intro_secure_light_dot">#FF8CF9EB</color>
+    <color name="intro_secure_dark_dot">#FF14A895</color>
+
+    <color name="intro_simple_background">#FFC873F4</color>
+    <color name="intro_simple_light_dot">#FFE4B5FC</color>
+    <color name="intro_simple_dark_dot">#FFA854D4</color>
+
+    <color name="intro_open_source_background">#FF3395FF</color>
+    <color name="intro_open_source_light_dot">#93C6FD</color>
+    <color name="intro_open_source_dark_dot">#FF2278D4</color>
+
+    <color name="intro_developer_background">@color/colorAccent</color>
+    <color name="intro_developer_light_dot">@color/colorAccentLight</color>
+    <color name="intro_developer_dark_dot">@color/colorAccentDark</color>
+
+    <array name="array_dot_active">
+        <item>@color/intro_welcome_light_dot</item>
+        <item>@color/intro_secure_light_dot</item>
+        <item>@color/intro_simple_light_dot</item>
+        <item>@color/intro_open_source_light_dot</item>
+        <item>@color/intro_developer_light_dot</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/intro_welcome_dark_dot</item>
+        <item>@color/intro_secure_dark_dot</item>
+        <item>@color/intro_simple_dark_dot</item>
+        <item>@color/intro_open_source_dark_dot</item>
+        <item>@color/intro_developer_dark_dot</item>
+    </array>
 </resources>
