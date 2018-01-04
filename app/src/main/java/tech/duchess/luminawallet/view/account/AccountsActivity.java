@@ -105,10 +105,10 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     }
 
     private void displayCreateAccountFragment() {
-        /*getSupportFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, new CreateAccountFragment())
-                .commit();*/
-        //getSupportFragmentManager().executePendingTransactions();
+                .commit();
+        getSupportFragmentManager().executePendingTransactions();
     }
 
     @Override

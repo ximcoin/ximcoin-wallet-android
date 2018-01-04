@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,10 +31,10 @@ public class IntroActivity extends AppCompatActivity {
     LinearLayout dotsLayout;
 
     @BindView(R.id.btn_previous)
-    Button btnPrevious;
+    TextView btnPrevious;
 
     @BindView(R.id.btn_next)
-    Button btnNext;
+    TextView btnNext;
 
     private int[] layouts;
 
@@ -55,7 +54,7 @@ public class IntroActivity extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
 
-        setContentView(R.layout.activity_intro);
+        setContentView(R.layout.intro_activity);
         ButterKnife.bind(this);
 
         layouts = new int[]{
@@ -119,7 +118,7 @@ public class IntroActivity extends AppCompatActivity {
         public void onPageSelected(int position) {
             addBottomDots(position);
             if (position == layouts.length - 1) {
-                btnNext.setText(getString(R.string.intro_finish));
+                btnNext.setText(getString(R.string.intro_start));
             } else {
                 btnNext.setText(getString(R.string.intro_next));
                 btnPrevious.setVisibility(position == 0 ? View.INVISIBLE : View.VISIBLE);

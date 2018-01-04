@@ -14,9 +14,13 @@
     <string name="open_source_title">Open Source</string>
     <string name="open_source_description">Open sourced code for full transparency. Provided completely free of cost.</string>
     <string name="developer_title">A word from our humble developer</string>
-    <string name="developer_description">Thanks for installing my app! If you enjoy using this as much as I did making it, please consider rating it in the Play Store and donating!</string>
+    <string name="developer_description">Thanks for installing my app! If you enjoy it, please consider rating it in the Play Store or donating!</string>
     <string name="intro_next">NEXT</string>
     <string name="intro_previous">PREVIOUS</string>
-    <string name="intro_finish">FINISH</string>
+    <string name="intro_start">START</string>
+
+    <!-- Create Account Fragment -->
+    <string name="create_account_button">CREATE NEW ACCOUNT</string>
+    <string name="import_account_button">IMPORT ACCOUNT</string>
 
 </resources>
