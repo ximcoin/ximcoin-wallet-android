@@ -7,9 +7,9 @@ import java.util.List;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 
 public interface IAccountsView {
-    public void showAccounts(@NonNull List<Account> accountList);
+    void showAccounts(@NonNull List<Account> accountList);
 
-    public void showLoadError();
+    void showLoadError();
 
-    public void setLoading(boolean isLoading);
+    void showLoading(boolean isLoading);
 }

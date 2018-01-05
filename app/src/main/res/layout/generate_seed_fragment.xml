@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/btn_min_height"
+        app:layout_constraintBottom_toTopOf="@+id/btn_cancel"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/margin_normal">
+
+            <TextView
+                android:id="@+id/seed_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/seed_message" />
+
+            <TextView
+                android:id="@+id/warning_header"
+                style="@style/WarningHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large"
+                android:text="@string/seed_warning_header" />
+
+            <TextView
+                android:id="@+id/warning_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:paddingStart="@dimen/margin_normal"
+                android:textStyle="bold"
+                tools:text="Warning Item 1 \n Warning Item 2 \n Warning Item 3" />
+
+            <Button
+                android:id="@+id/btn_show_seed"
+                style="@style/RaisedButton"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_large"
+                android:text="@string/show_seed" />
+
+            <TextView
+                android:id="@+id/seed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_large"
+                android:visibility="gone"
+                app:fontFamily="@font/string_literal"
+                tools:text="NOTAREALSEED" />
+
+            <Button
+                android:id="@+id/btn_copy_seed"
+                style="@style/RaisedButtonSecondary"
+                android:text="@string/copy_seed"
+                android:theme="@style/RaisedButtonSecondaryTheme"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_generate_new_seed"
+                style="@style/RaisedButtonSecondary"
+                android:text="@string/generate_different_seed"
+                android:theme="@style/RaisedButtonSecondaryTheme"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_cancel"
+        style="@style/RaisedButton"
+        android:text="@string/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_next"
+        style="@style/RaisedButton"
+        android:text="@string/next"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

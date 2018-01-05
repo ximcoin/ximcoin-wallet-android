@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import tech.duchess.luminawallet.model.dagger.SchedulerProvider;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.model.repository.AccountRepository;
-import tech.duchess.luminawallet.view.ViewBindingUtils;
+import tech.duchess.luminawallet.view.util.ViewBindingUtils;
 import tech.duchess.luminawallet.view.account.IAccountsView;
 import timber.log.Timber;
 
@@ -47,9 +47,13 @@ public class AccountsPresenter {
         accountRepository.getAccounts()
                 .compose(schedulerProvider.singleScheduler())
                 .compose(lifecycleProvider.bindUntilEvent(ActivityEvent.DESTROY))
-                .doOnSubscribe(disposable ->
-                        ViewBindingUtils.whenNonNull(walletsView, view -> view.setLoading(true)))
+                .doAfterTerminate(() -> setLoading(false))
+                .doOnSubscribe(disposable -> setLoading(true))
                 .subscribe(this::updateWallets, this::showError);
+    }
+
+    private void setLoading(boolean isLoading) {
+        ViewBindingUtils.whenNonNull(walletsView, view -> view.showLoading(isLoading));
     }
 
     public void onViewDetached() {
@@ -58,7 +62,7 @@ public class AccountsPresenter {
 
     private void updateWallets(@NonNull List<Account> accountList) {
         ViewBindingUtils.whenNonNull(walletsView, view -> {
-            view.setLoading(false);
+            view.showLoading(false);
             view.showAccounts(accountList);
         });
     }
@@ -67,7 +71,7 @@ public class AccountsPresenter {
         Timber.e(throwable, "Failed to load accounts");
         ViewBindingUtils.whenNonNull(walletsView, view -> {
             view.showLoadError();
-            view.setLoading(false);
+            view.showLoading(false);
         });
     }
 }

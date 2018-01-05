@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.view.account.AccountsActivity;
 
@@ -69,22 +70,24 @@ public class IntroActivity extends AppCompatActivity {
 
         viewPager.setAdapter(new IntroPagerAdapter());
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+    }
 
-        btnPrevious.setOnClickListener(v -> {
-            int current = viewPager.getCurrentItem();
-            if (current > 0) {
-                viewPager.setCurrentItem(--current);
-            }
-        });
+    @OnClick(R.id.btn_previous)
+    public void onPrevious() {
+        int current = viewPager.getCurrentItem();
+        if (current > 0) {
+            viewPager.setCurrentItem(--current);
+        }
+    }
 
-        btnNext.setOnClickListener(v -> {
-            int next = viewPager.getCurrentItem() + 1;
-            if (next < layouts.length) {
-                viewPager.setCurrentItem(next);
-            } else {
-                launchHomeScreen();
-            }
-        });
+    @OnClick(R.id.btn_next)
+    public void onNext() {
+        int next = viewPager.getCurrentItem() + 1;
+        if (next < layouts.length) {
+            viewPager.setCurrentItem(next);
+        } else {
+            launchHomeScreen();
+        }
     }
 
     private void addBottomDots(int currentPage) {
@@ -118,9 +121,9 @@ public class IntroActivity extends AppCompatActivity {
         public void onPageSelected(int position) {
             addBottomDots(position);
             if (position == layouts.length - 1) {
-                btnNext.setText(getString(R.string.intro_start));
+                btnNext.setText(getString(R.string.start));
             } else {
-                btnNext.setText(getString(R.string.intro_next));
+                btnNext.setText(getString(R.string.next));
                 btnPrevious.setVisibility(position == 0 ? View.INVISIBLE : View.VISIBLE);
             }
         }

@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import tech.duchess.luminawallet.LuminaWalletApp;
+import tech.duchess.luminawallet.view.util.TextUtils;
 
 @Entity
 @TypeConverters(Account.AccountTypeConverters.class)
@@ -205,7 +206,7 @@ public class Account implements Parcelable {
 
         @TypeConverter
         public static List<Balance> stringToBalance(String json) {
-            if (isEmpty(json)) {
+            if (TextUtils.isEmpty(json)) {
                 return new ArrayList<>();
             }
 
@@ -223,7 +224,7 @@ public class Account implements Parcelable {
 
         @TypeConverter
         public static List<Signer> stringToSigner(String json) {
-            if (isEmpty(json)) {
+            if (TextUtils.isEmpty(json)) {
                 return new ArrayList<>();
             }
 
@@ -241,7 +242,7 @@ public class Account implements Parcelable {
 
         @TypeConverter
         public static Map<String, String> stringToData(String json) {
-            if (isEmpty(json)) {
+            if (TextUtils.isEmpty(json)) {
                 return new HashMap<>();
             }
 
@@ -255,10 +256,6 @@ public class Account implements Parcelable {
         @TypeConverter
         public static String dataToString(Map<String, String> data) {
             return dataAdapter.toJson(data);
-        }
-
-        private static boolean isEmpty(String json) {
-            return json == null || json.isEmpty();
         }
     }
 }

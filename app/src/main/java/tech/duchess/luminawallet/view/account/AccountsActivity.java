@@ -1,10 +1,13 @@
 package tech.duchess.luminawallet.view.account;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.view.ViewGroup;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
@@ -19,6 +22,7 @@ import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.dagger.module.ActivityLifecycleModule;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.presenter.account.AccountsPresenter;
+import tech.duchess.luminawallet.view.createaccount.CreateAccountActivity;
 
 /**
  * Displays a Stellar Account, with it's respective features (transactions, send, receive, etc...).
@@ -26,12 +30,13 @@ import tech.duchess.luminawallet.presenter.account.AccountsPresenter;
  */
 public class AccountsActivity extends RxAppCompatActivity implements IAccountsView {
     private static final String LOADED_ACCOUNTS_KEY = "AccountsActivity.LOADED_ACCOUNTS_KEY";
+    private static final int CREATE_ACCOUNT_REQUEST_CODE = 1;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.fragment_container)
-    ViewGroup fragmentContainer;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
 
     @Inject
     AccountsPresenter presenter;
@@ -41,7 +46,7 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.accounts_activity);
+        setContentView(R.layout.base_activity);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
@@ -105,10 +110,22 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     }
 
     private void displayCreateAccountFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new CreateAccountFragment())
+        startActivityForResult(new Intent(this, CreateAccountActivity.class),
+                CREATE_ACCOUNT_REQUEST_CODE);
+        /*getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new NoAccountFoundFragment())
                 .commit();
-        getSupportFragmentManager().executePendingTransactions();
+        getSupportFragmentManager().executePendingTransactions();*/
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CREATE_ACCOUNT_REQUEST_CODE
+                && resultCode == Activity.RESULT_OK) {
+            presenter.loadUI(true);
+        }
     }
 
     @Override
@@ -117,7 +134,7 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     }
 
     @Override
-    public void setLoading(boolean isLoading) {
-
+    public void showLoading(boolean isLoading) {
+        progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
     }
 }
