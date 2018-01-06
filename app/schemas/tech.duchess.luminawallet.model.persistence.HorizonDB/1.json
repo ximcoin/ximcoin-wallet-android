@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a8ef6848f56281221b685ce4d0f2a75a",
+    "identityHash": "14e01ed611b782fde769868af265aa54",
     "entities": [
       {
         "tableName": "Account",
@@ -98,7 +98,7 @@
       },
       {
         "tableName": "AccountPrivateKey",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`accountId` TEXT NOT NULL, `privateKey` TEXT NOT NULL, PRIMARY KEY(`accountId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`accountId` TEXT NOT NULL, `salt` BLOB, `initializationVector` BLOB, `encryptedSeed` BLOB, PRIMARY KEY(`accountId`))",
         "fields": [
           {
             "fieldPath": "accountId",
@@ -107,10 +107,22 @@
             "notNull": true
           },
           {
-            "fieldPath": "privateKey",
-            "columnName": "privateKey",
-            "affinity": "TEXT",
-            "notNull": true
+            "fieldPath": "encryptedSeedPackage.salt",
+            "columnName": "salt",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "encryptedSeedPackage.initializationVector",
+            "columnName": "initializationVector",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "encryptedSeedPackage.encryptedSeed",
+            "columnName": "encryptedSeed",
+            "affinity": "BLOB",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -125,7 +137,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"a8ef6848f56281221b685ce4d0f2a75a\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"14e01ed611b782fde769868af265aa54\")"
     ]
   }
 }

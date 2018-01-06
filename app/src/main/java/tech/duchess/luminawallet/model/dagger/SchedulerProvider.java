@@ -3,6 +3,7 @@ package tech.duchess.luminawallet.model.dagger;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.reactivex.CompletableTransformer;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.SingleTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -17,6 +18,11 @@ public class SchedulerProvider {
     public SchedulerProvider() {}
 
     public <T> ObservableTransformer<T, T> observableScheduler() {
+        return upstream -> upstream.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public CompletableTransformer completableScheduler() {
         return upstream -> upstream.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

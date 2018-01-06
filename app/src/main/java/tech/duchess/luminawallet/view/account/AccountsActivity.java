@@ -46,7 +46,7 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.base_activity);
+        setContentView(R.layout.basic_activity);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 

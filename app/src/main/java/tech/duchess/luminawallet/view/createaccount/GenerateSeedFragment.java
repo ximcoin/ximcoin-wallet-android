@@ -27,6 +27,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.view.util.TextUtils;
+import tech.duchess.luminawallet.view.util.ViewBindingUtils;
 
 public class GenerateSeedFragment extends RxFragment {
     private static final String SEED_CLIP_LABEL = "StellarAccountSeed";
@@ -45,12 +46,23 @@ public class GenerateSeedFragment extends RxFragment {
     @BindView(R.id.btn_show_seed)
     Button showSeedButton;
 
+    @BindView(R.id.btn_next)
+    Button nextButton;
+
     @BindViews({R.id.btn_next, R.id.btn_copy_seed, R.id.btn_generate_new_seed, R.id.seed})
     List<View> postViewSeedViews;
 
     Unbinder unbinder;
 
     private boolean didShowSeed = false;
+
+    public static GenerateSeedFragment newInstance(@NonNull String seed) {
+        Bundle args = new Bundle();
+        args.putString(SEED_KEY, seed);
+        GenerateSeedFragment generateSeedFragment = new GenerateSeedFragment();
+        generateSeedFragment.setArguments(args);
+        return generateSeedFragment;
+    }
 
     @Nullable
     @Override
@@ -70,6 +82,16 @@ public class GenerateSeedFragment extends RxFragment {
             if (didShowSeed) {
                 showSeed();
             }
+        } else {
+            // First time start. Check arguments to see if we were given a seed.
+            Bundle args = getArguments();
+            if (args != null) {
+                String seed = getArguments().getString(SEED_KEY);
+                if (!TextUtils.isEmpty(seed)) {
+                    keyPair = KeyPair.fromSecretSeed(seed);
+                    showSeed();
+                }
+            }
         }
 
         setSeedWarningMessage();
@@ -78,18 +100,24 @@ public class GenerateSeedFragment extends RxFragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ViewBindingUtils.whenNonNull(getActivity(), activity ->
+                ((ICreateAccountFlowManager) activity)
+                        .setTitle(getString(R.string.generate_seed_fragment_title)));
+    }
+
     private void setSeedWarningMessage() {
-        Context context = getContext();
-        if (context != null) {
-            warningMessage.setText(TextUtils.getBulletedList(
-                    5,
-                    null,
-                    getContext(),
-                    R.string.seed_warning_bullet1,
-                    R.string.seed_warning_bullet2,
-                    R.string.seed_warning_bullet3,
-                    R.string.seed_warning_bullet4));
-        }
+        ViewBindingUtils.whenNonNull(getContext(), c ->
+                warningMessage.setText(TextUtils.getBulletedList(
+                        5,
+                        null,
+                        c,
+                        R.string.seed_warning_bullet1,
+                        R.string.seed_warning_bullet2,
+                        R.string.seed_warning_bullet3,
+                        R.string.seed_warning_bullet4)));
     }
 
     private void setSeedText() {
@@ -136,14 +164,6 @@ public class GenerateSeedFragment extends RxFragment {
         if (parentActivity != null) {
             ((ICreateAccountFlowManager) parentActivity)
                     .onSeedCreated(String.valueOf(keyPair.getSecretSeed()));
-        }
-    }
-
-    @OnClick(R.id.btn_cancel)
-    public void onCancel() {
-        Activity parentActivity = getActivity();
-        if (parentActivity != null) {
-            getActivity().onBackPressed();
         }
     }
 
