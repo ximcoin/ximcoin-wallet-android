@@ -3,15 +3,11 @@ package tech.duchess.luminawallet.view.account;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ProgressBar;
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -29,7 +25,6 @@ import tech.duchess.luminawallet.view.createaccount.CreateAccountActivity;
  * Will also display the option to create a new account if no account is found.
  */
 public class AccountsActivity extends RxAppCompatActivity implements IAccountsView {
-    private static final String LOADED_ACCOUNTS_KEY = "AccountsActivity.LOADED_ACCOUNTS_KEY";
     private static final int CREATE_ACCOUNT_REQUEST_CODE = 1;
 
     @BindView(R.id.toolbar)
@@ -40,8 +35,6 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
 
     @Inject
     AccountsPresenter presenter;
-
-    private boolean hasLoadedAccounts = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,50 +48,8 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
                 .plus(new ActivityLifecycleModule(this))
                 .inject(this);
 
-        if (savedInstanceState != null) {
-            hasLoadedAccounts = savedInstanceState.getBoolean(LOADED_ACCOUNTS_KEY);
-        }
-
-        presenter.attachView(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        presenter.onViewDetached();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (!hasLoadedAccounts) {
-            presenter.loadUI(true);
-        }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean(LOADED_ACCOUNTS_KEY, hasLoadedAccounts);
-    }
-
-    @Override
-    public void showAccounts(@NonNull List<Account> accountList) {
-        hasLoadedAccounts = true;
-
-        if (accountList.isEmpty()) {
-            displayCreateAccountFragment();
-            return;
-        }
-
-        AccountFragment accountFragment = (AccountFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.fragment_container);
-
-        if (accountFragment == null) {
-            initAccountFragment(accountList.get(0));
-        } else {
-            accountFragment.updateAccount(accountList.get(0));
-        }
+        //presenter.test();
+        displayCreateAccountFragment();
     }
 
     private void initAccountFragment(Account account) {
@@ -124,17 +75,7 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
 
         if (requestCode == CREATE_ACCOUNT_REQUEST_CODE
                 && resultCode == Activity.RESULT_OK) {
-            presenter.loadUI(true);
+            // Reload accounts
         }
-    }
-
-    @Override
-    public void showLoadError() {
-
-    }
-
-    @Override
-    public void showLoading(boolean isLoading) {
-        progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
     }
 }

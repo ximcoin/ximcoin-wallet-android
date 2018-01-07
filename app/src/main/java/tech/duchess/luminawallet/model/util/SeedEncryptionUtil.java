@@ -62,8 +62,8 @@ public class SeedEncryptionUtil {
      * @param password             The plaintext password used to decrypt the seed.
      * @return The seed in plaintext.
      */
-    private String decryptSeed(@NonNull EncryptedSeedPackage encryptedSeedPackage,
-                               @NonNull String password)
+    public static String decryptSeed(@NonNull EncryptedSeedPackage encryptedSeedPackage,
+                              @NonNull String password)
             throws Exception {
         SecretKey secretKey = deriveKeyPbkdf2(encryptedSeedPackage.getSalt(), password);
 

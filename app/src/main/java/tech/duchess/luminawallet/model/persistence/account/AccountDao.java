@@ -4,6 +4,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
@@ -13,6 +14,9 @@ import io.reactivex.Single;
 public interface AccountDao {
     @Query("SELECT * FROM account")
     Single<List<Account>> getAll();
+
+    @Query("SELECT * FROM account WHERE account_id = :accountId")
+    Single<Account> getAccountById(@NonNull String accountId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Account... accounts);
