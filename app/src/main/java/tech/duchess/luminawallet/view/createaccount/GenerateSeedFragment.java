@@ -60,14 +60,6 @@ public class GenerateSeedFragment extends RxFragment {
 
     private boolean didShowSeed = false;
 
-    public static GenerateSeedFragment newInstance(@NonNull String seed) {
-        Bundle args = new Bundle();
-        args.putString(SEED_KEY, seed);
-        GenerateSeedFragment generateSeedFragment = new GenerateSeedFragment();
-        generateSeedFragment.setArguments(args);
-        return generateSeedFragment;
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -83,19 +75,13 @@ public class GenerateSeedFragment extends RxFragment {
             }
 
             didShowSeed = savedInstanceState.getBoolean(SEED_SHOWN_KEY, false);
-            if (didShowSeed) {
-                showSeed();
-            }
-        } else {
-            // First time start. Check arguments to see if we were given a seed.
-            Bundle args = getArguments();
-            if (args != null) {
-                String seed = getArguments().getString(SEED_KEY);
-                if (!TextUtils.isEmpty(seed)) {
-                    keyPair = KeyPair.fromSecretSeed(seed);
-                    showSeed();
-                }
-            }
+        }
+
+        if (didShowSeed) {
+            // We've already displayed the seed before. Keep it visible as to not make the user
+            // think a new seed may have generated.
+            showSeed();
+            scrollToBottom();
         }
 
         setSeedWarningMessage();
@@ -181,11 +167,7 @@ public class GenerateSeedFragment extends RxFragment {
     }
 
     private void scrollToBottom() {
-        scrollView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
-            }
-        }, 100);
+        scrollView.postDelayed(() ->
+                scrollView.fullScroll(ScrollView.FOCUS_DOWN), 100);
     }
 }
