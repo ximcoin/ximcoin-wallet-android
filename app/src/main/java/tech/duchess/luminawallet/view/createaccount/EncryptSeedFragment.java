@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
+import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import tech.duchess.luminawallet.LuminaWalletApp;
 import tech.duchess.luminawallet.R;
@@ -110,11 +112,9 @@ public class EncryptSeedFragment extends RxFragment implements IEncryptSeedView 
                 ((ICreateAccountFlowManager) activity).showLoading(isLoading));
     }
 
-    @OnFocusChange({R.id.initial_password_field_layout, R.id.verify_password_field_layout})
-    public void onFocusChanged(View v, boolean hasFocus) {
-        if (hasFocus) {
-            presenter.onPasswordFieldFocusChanged();
-        }
+    @OnTextChanged({R.id.initial_password_field, R.id.verify_password_field})
+    public void onTextChanged(Editable editable) {
+        presenter.onPasswordContentsChanged();
     }
 
     @Override

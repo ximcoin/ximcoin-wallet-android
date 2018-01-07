@@ -72,6 +72,13 @@ public class IntroActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        // Check button state in case of activity destroy/recreate.
+        updateNavButtons(viewPager.getCurrentItem());
+    }
+
     @OnClick(R.id.btn_previous)
     public void onPrevious() {
         int current = viewPager.getCurrentItem();
@@ -115,17 +122,23 @@ public class IntroActivity extends AppCompatActivity {
         finish();
     }
 
+    private void updateNavButtons(int currentPosition) {
+        addBottomDots(currentPosition);
+
+        btnPrevious.setVisibility(currentPosition == 0 ? View.INVISIBLE : View.VISIBLE);
+
+        if (currentPosition == layouts.length - 1) {
+            btnNext.setText(getString(R.string.start));
+        } else {
+            btnNext.setText(getString(R.string.next));
+        }
+    }
+
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
         @Override
         public void onPageSelected(int position) {
-            addBottomDots(position);
-            if (position == layouts.length - 1) {
-                btnNext.setText(getString(R.string.start));
-            } else {
-                btnNext.setText(getString(R.string.next));
-                btnPrevious.setVisibility(position == 0 ? View.INVISIBLE : View.VISIBLE);
-            }
+            updateNavButtons(position);
         }
 
         @Override

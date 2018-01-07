@@ -23,7 +23,7 @@ public class TextUtils {
         for (int i = 0; i < count; i++) {
             items[i] = context.getString(stringResources[i]);
         }
-        return getBulletedList(bulletRadius, leadingMargin == null ? 40 : leadingMargin, items);
+        return getBulletedList(bulletRadius, leadingMargin == null ? 35 : leadingMargin, items);
     }
 
     public static CharSequence getBulletedList(int bulletRadius,
@@ -31,7 +31,7 @@ public class TextUtils {
                                                @NonNull CharSequence... lines) {
         SpannableStringBuilder sb = new SpannableStringBuilder();
         for (int i = 0; i < lines.length; i++) {
-            CharSequence line = lines[i] + (i < lines.length - 1 ? "\n" : "");
+            CharSequence line = lines[i] + (i < lines.length - 1 ? "\n\n" : "");
             Spannable spannable = new SpannableString(line);
             spannable.setSpan(new CustomBulletSpan(leadingMargin, 0, bulletRadius), 0,
                     spannable.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);

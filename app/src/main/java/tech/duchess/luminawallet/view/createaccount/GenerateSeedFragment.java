@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,9 @@ public class GenerateSeedFragment extends RxFragment {
 
     @BindView(R.id.btn_next)
     Button nextButton;
+
+    @BindView(R.id.scroll_container)
+    ScrollView scrollView;
 
     @BindViews({R.id.btn_next, R.id.btn_copy_seed, R.id.btn_generate_new_seed, R.id.seed})
     List<View> postViewSeedViews;
@@ -173,5 +177,15 @@ public class GenerateSeedFragment extends RxFragment {
         showSeedButton.setVisibility(View.GONE);
         ButterKnife.apply(postViewSeedViews, (ButterKnife.Action<? super View>)
                 (view, index) -> view.setVisibility(View.VISIBLE));
+        scrollToBottom();
+    }
+
+    private void scrollToBottom() {
+        scrollView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        }, 100);
     }
 }

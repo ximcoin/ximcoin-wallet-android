@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LuminaWallet</string>
+    <string name="app_name">Lumina</string>
     <string name="next">NEXT</string>
     <string name="previous">PREVIOUS</string>
     <string name="start">START</string>
@@ -32,7 +32,7 @@
     <string name="seed_warning_bullet1">Do not share your seed with anyone.</string>
     <string name="seed_warning_bullet2">View and copy this seed somewhere very safe.</string>
     <string name="seed_warning_bullet3">Lumina makes no guarantee of keeping this for you under any circumstances. If you do not retain this, you risk losing access to your account and funds.</string>
-    <string name="seed_warning_bullet4">We will encrypt this seed within the local database using a passphrase you provide in the next step.</string>
+    <string name="seed_warning_bullet4">We will encrypt this seed using a passphrase you provide in the next step.</string>
     <string name="show_seed">SHOW SEED</string>
     <string name="copy_seed">COPY SEED</string>
     <string name="generate_different_seed">GENERATE DIFFERENT SEED</string>
@@ -40,12 +40,12 @@
 
     <!-- Encrypt Seed Fragment -->
     <string name="encrypt_seed_fragment_title">Set Passphrase</string>
-    <string name="encryption_message">You will now enter a passphrase to encrypt your seed with.</string>
-    <string name="encryption_message_bullet1">This allows us to safely store your secret key locally within the application\'s database.</string>
+    <string name="encryption_message">You will now enter a passphrase to encrypt your account seed with.</string>
+    <string name="encryption_message_bullet1">This allows us to safely store your seed.</string>
     <string name="encryption_message_bullet2">You will need to enter this passphrase before completing any transactions.</string>
-    <string name="encryption_message_bullet3">Forgetting this is not an issue! You can always recover your account with the account seed. You will however need to reimport the account into the app to do any further transactions.</string>
+    <string name="encryption_message_bullet3">Forgetting this is not an issue! You can always recover your account with the account seed.</string>
     <string name="encryption_message_bullet4">We will never store your passphrase on the device.</string>
-    <string name="encryption_message_bullet5">This particular passphrase you enter will be tied specifically to the account seed imported or generated in the previous step. It may be different from passphrases for other accounts.</string>
+    <string name="encryption_message_bullet5">This particular passphrase you enter will be tied specifically to the account seed imported or generated in the previous step.</string>
     <string name="encryption_message_bullet6">Your passphrase must be 8 to 20 characters long. It is case-sensitive.</string>
     <string name="initial_password_field_hint">Password</string>
     <string name="verify_password_field_hint">Verify Password</string>

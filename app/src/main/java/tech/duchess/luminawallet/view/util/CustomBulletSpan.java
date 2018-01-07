@@ -67,15 +67,15 @@ public class CustomBulletSpan implements LeadingMarginSpan {
                 if (BulletPath == null) {
                     BulletPath = new Path();
                     // Bullet is slightly better to avoid aliasing artifacts on mdpi devices.
-                    BulletPath.addCircle(0.0f, 0.0f, 1.2f * bulletRadius, Path.Direction.CW);
+                    BulletPath.addCircle(0.0f, 0.0f, 1.2f + bulletRadius, Path.Direction.CW);
                 }
 
                 c.save();
-                c.translate(x + dir * bulletRadius, (top + bottom) / 2.0f);
+                c.translate(x + dir + bulletRadius, (top + bottom) / 2.0f);
                 c.drawPath(BulletPath, p);
                 c.restore();
             } else {
-                c.drawCircle(x + dir * bulletRadius, (top + bottom) / 2.0f, bulletRadius, p);
+                c.drawCircle(x + dir + bulletRadius, (top + bottom) / 2.0f, bulletRadius, p);
             }
 
             if (wantColor) {

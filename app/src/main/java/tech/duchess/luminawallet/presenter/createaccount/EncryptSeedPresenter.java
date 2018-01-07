@@ -71,7 +71,7 @@ public class EncryptSeedPresenter {
         }
     }
 
-    public void onPasswordFieldFocusChanged() {
+    public void onPasswordContentsChanged() {
         checkFinishEnabled();
     }
 
