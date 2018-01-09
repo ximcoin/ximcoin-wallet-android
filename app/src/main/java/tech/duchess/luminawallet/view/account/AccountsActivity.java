@@ -39,7 +39,7 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.basic_activity);
+        setContentView(R.layout.accounts_activity);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
@@ -48,8 +48,8 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
                 .plus(new ActivityLifecycleModule(this))
                 .inject(this);
 
-        //presenter.test();
-        displayCreateAccountFragment();
+        // presenter.test();
+        // displayCreateAccountFragment();
     }
 
     private void initAccountFragment(Account account) {

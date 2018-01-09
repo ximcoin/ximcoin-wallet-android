@@ -7,6 +7,8 @@ import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import javax.inject.Inject;
 
+import io.reactivex.Single;
+import retrofit2.HttpException;
 import tech.duchess.luminawallet.model.dagger.SchedulerProvider;
 import tech.duchess.luminawallet.model.repository.AccountRepository;
 import tech.duchess.luminawallet.model.util.SeedEncryptionUtil;
@@ -42,7 +44,18 @@ public class AccountsPresenter {
                 })
                 .compose(schedulerProvider.singleScheduler())
                 .compose(lifecycleProvider.bindUntilEvent(ActivityEvent.DESTROY))
-                .doOnError(Timber::e)
+                .onErrorResumeNext(throwable -> {
+                    if (throwable instanceof HttpException
+                            && ((HttpException) throwable).code() == 404) {
+                        return Single.error(new AccountNotFoundException());
+                    } else {
+                        Timber.e(throwable);
+                        return Single.error(throwable);
+                    }
+                })
                 .subscribe(account -> Timber.d(account.toString()));
+    }
+
+    private class AccountNotFoundException extends Exception {
     }
 }

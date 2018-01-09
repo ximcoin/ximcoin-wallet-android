@@ -52,4 +52,10 @@
     <string name="password_length_error">Passphrase must be at least 8 characters long</string>
     <string name="passwords_match_error">Passwords don\'t match</string>
 
+    <!-- Wallet Bottom Nav -->
+    <string name="bottom_nav_balances">Balances</string>
+    <string name="bottom_nav_send">Send</string>
+    <string name="bottom_nav_receive">Receive</string>
+    <string name="bottom_nav_transactions">Transactions</string>
+
 </resources>

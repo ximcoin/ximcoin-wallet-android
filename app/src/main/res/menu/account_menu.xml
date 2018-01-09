@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/bottom_nav_balances"
+        android:icon="@drawable/ic_account_balance"
+        android:title="@string/bottom_nav_balances"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/send"
+        android:icon="@drawable/ic_send"
+        android:title="@string/bottom_nav_send"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/receive"
+        android:icon="@drawable/ic_receive"
+        android:title="@string/bottom_nav_receive"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/transactions"
+        android:icon="@drawable/ic_receipt"
+        android:title="@string/bottom_nav_transactions"
+        app:showAsAction="ifRoom" />
+
+</menu>

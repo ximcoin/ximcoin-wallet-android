@@ -12,6 +12,10 @@
     <color name="warningColor">#FFD24D57</color>
 
     <color name="white">#FFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="black_70">#B3000000</color>
+    <color name="black_26">#42000000</color>
+
 
     <!-- Intro Slides -->
     <color name="intro_welcome_background">@color/colorPrimary</color>
