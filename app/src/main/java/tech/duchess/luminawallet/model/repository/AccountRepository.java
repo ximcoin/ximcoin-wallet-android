@@ -1,21 +1,23 @@
 package tech.duchess.luminawallet.model.repository;
 
-import android.arch.persistence.room.EmptyResultSetException;
 import android.support.annotation.NonNull;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import io.reactivex.Single;
+import retrofit2.HttpException;
 import tech.duchess.luminawallet.model.api.HorizonApi;
 import tech.duchess.luminawallet.model.persistence.HorizonDB;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.model.persistence.account.AccountDao;
 import tech.duchess.luminawallet.model.persistence.account.AccountPrivateKey;
 import tech.duchess.luminawallet.model.persistence.account.AccountPrivateKeyDao;
-import tech.duchess.luminawallet.model.persistence.account.EncryptedSeedPackage;
+import tech.duchess.luminawallet.model.persistence.account.DisconnectedAccount;
 
 public class AccountRepository {
     @NonNull
@@ -27,6 +29,9 @@ public class AccountRepository {
     @NonNull
     private final AccountPrivateKeyDao accountPrivateKeyDao;
 
+    @NonNull
+    private final Map<String, Account> inMemoryAccountCache = new HashMap<>();
+
     @Inject
     public AccountRepository(@NonNull HorizonApi horizonApi,
                              @NonNull HorizonDB horizonDB) {
@@ -35,9 +40,27 @@ public class AccountRepository {
         this.accountPrivateKeyDao = horizonDB.accountPrivateKeyDao();
     }
 
-    public Single<List<String>> getAllAccountIds() {
-        // Note that we never have to do a network transaction to figure this out. All of our
-        // managed accounts are stored on disk.
+    public Single<List<Account>> getAllAccounts(boolean forceRefresh) {
+        if (forceRefresh) {
+            return getAllAccountsRemote();
+        } else {
+            return getAllAccountsCached();
+        }
+    }
+
+    private Single<List<Account>> getAllAccountsCached() {
+        return Single.just(new ArrayList<>(inMemoryAccountCache.values()));
+    }
+
+    private Single<List<Account>> getAllAccountsRemote() {
+        return getAllAccountIds()
+                .toObservable()
+                .flatMapIterable(accountIds -> accountIds)
+                .flatMap(accountId -> getAccountByIdRemote(accountId).toObservable())
+                .toList();
+    }
+
+    private Single<List<String>> getAllAccountIds() {
         return accountPrivateKeyDao.getAllAccountIds();
     }
 
@@ -49,28 +72,27 @@ public class AccountRepository {
         if (forceRefresh) {
             return getAccountByIdRemote(accountId);
         } else {
-            return Single.amb(Arrays.asList(getAccountByIdCache(accountId),
-                    getAccountByIdRemote(accountId)));
+            return getAccountByIdCache(accountId);
         }
     }
 
     private Single<Account> getAccountByIdCache(@NonNull String accountId) {
-        return accountDao.getAccountById(accountId)
-                .onErrorResumeNext(throwable -> {
-                    if (throwable instanceof EmptyResultSetException) {
-                        // Not an error. This may be our first pull.
-                        return Single.never();
-                    }
-
-                    return Single.error(throwable);
-                });
+        return Single.just(inMemoryAccountCache.get(accountId));
     }
 
     private Single<Account> getAccountByIdRemote(@NonNull String accountId) {
         return horizonApi.getAccount(accountId)
+                .onErrorResumeNext(throwable -> {
+                    if (throwable instanceof HttpException
+                            && ((HttpException) throwable).code() == 404) {
+                        return Single.just(new DisconnectedAccount(accountId));
+                    }
+
+                    return Single.error(throwable);
+                })
                 .map(account -> {
-                    // Cache on disk
-                    accountDao.insertAll(account);
+                    accountDao.insert(account);
+                    inMemoryAccountCache.put(accountId, account);
                     return account;
                 });
     }

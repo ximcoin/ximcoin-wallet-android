@@ -20,4 +20,7 @@ public interface AccountDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Account... accounts);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(Account account);
 }

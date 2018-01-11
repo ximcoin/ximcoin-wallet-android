@@ -3,6 +3,7 @@ package tech.duchess.luminawallet.view.account;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.widget.ProgressBar;
@@ -19,9 +20,10 @@ import tech.duchess.luminawallet.model.dagger.module.ActivityLifecycleModule;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.presenter.account.AccountsPresenter;
 import tech.duchess.luminawallet.view.createaccount.CreateAccountActivity;
+import timber.log.Timber;
 
 /**
- * Displays a Stellar Account, with it's respective features (transactions, send, receive, etc...).
+ * Displays a Stellar Account, with its respective features (transactions, send, receive, etc...).
  * Will also display the option to create a new account if no account is found.
  */
 public class AccountsActivity extends RxAppCompatActivity implements IAccountsView {
@@ -48,8 +50,13 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
                 .plus(new ActivityLifecycleModule(this))
                 .inject(this);
 
-        // presenter.test();
-        // displayCreateAccountFragment();
+        presenter.attachView(this, savedInstanceState == null);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.detachView();
     }
 
     private void initAccountFragment(Account account) {
@@ -67,6 +74,31 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
                 .replace(R.id.fragment_container, new NoAccountFoundFragment())
                 .commit();
         getSupportFragmentManager().executePendingTransactions();*/
+    }
+
+    @Override
+    public void showLoading(boolean isLoading) {
+
+    }
+
+    @Override
+    public void showNoAccountFound() {
+        displayCreateAccountFragment();
+    }
+
+    @Override
+    public void showAccountLoadFailure() {
+
+    }
+
+    @Override
+    public void showAccount(@NonNull Account account) {
+        Timber.d("Account on network: %s", account.getAccount_id());
+    }
+
+    @Override
+    public void showAccountNotOnNetwork(@NonNull String publicAddress) {
+        Timber.d("Account not on network: %s", publicAddress);
     }
 
     @Override

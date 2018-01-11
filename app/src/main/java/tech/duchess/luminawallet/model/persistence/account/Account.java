@@ -46,6 +46,10 @@ public class Account implements Parcelable {
         id = INVALID_ID;
     }
 
+    public boolean isOnNetwork() {
+        return true;
+    }
+
     @NonNull
     public String getId() {
         return id;
