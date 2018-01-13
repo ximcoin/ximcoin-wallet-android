@@ -21,7 +21,8 @@
     <string name="developer_title">A word from our humble developer</string>
     <string name="developer_description">Thanks for installing my app! If you enjoy it, please consider rating it in the Play Store or donating!</string>
 
-    <!-- Create Account Fragment -->
+    <!-- No Account Found Fragment -->
+    <string name="no_account_found_message">Add a new account</string>
     <string name="create_account_button">CREATE NEW ACCOUNT</string>
     <string name="import_account_button">IMPORT ACCOUNT</string>
 

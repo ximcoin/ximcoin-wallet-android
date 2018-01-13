@@ -56,7 +56,7 @@ public class GenerateSeedFragment extends RxFragment {
     @BindViews({R.id.btn_next, R.id.btn_copy_seed, R.id.btn_generate_new_seed, R.id.seed})
     List<View> postViewSeedViews;
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
 
     private boolean didShowSeed = false;
 

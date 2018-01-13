@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ProgressBar;
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -34,6 +36,9 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
 
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
+
+    @BindView(R.id.bottom_nav)
+    BottomNavigationView bottomNavigationView;
 
     @Inject
     AccountsPresenter presenter;
@@ -68,12 +73,10 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     }
 
     private void displayCreateAccountFragment() {
-        startActivityForResult(new Intent(this, CreateAccountActivity.class),
-                CREATE_ACCOUNT_REQUEST_CODE);
-        /*getSupportFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, new NoAccountFoundFragment())
                 .commit();
-        getSupportFragmentManager().executePendingTransactions();*/
+        getSupportFragmentManager().executePendingTransactions();
     }
 
     @Override
@@ -83,22 +86,35 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
 
     @Override
     public void showNoAccountFound() {
+        setBottomNavVisibility(false);
         displayCreateAccountFragment();
     }
 
     @Override
     public void showAccountLoadFailure() {
-
+        setBottomNavVisibility(false);
     }
 
     @Override
     public void showAccount(@NonNull Account account) {
+        setBottomNavVisibility(true);
         Timber.d("Account on network: %s", account.getAccount_id());
     }
 
     @Override
     public void showAccountNotOnNetwork(@NonNull String publicAddress) {
+        setBottomNavVisibility(false);
         Timber.d("Account not on network: %s", publicAddress);
+    }
+
+    @Override
+    public void startCreateAccountActivity(boolean isImportingSeed) {
+        if (!isImportingSeed) {
+            startActivityForResult(new Intent(this, CreateAccountActivity.class),
+                    CREATE_ACCOUNT_REQUEST_CODE);
+        } else {
+            //TODO
+        }
     }
 
     @Override
@@ -107,7 +123,11 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
 
         if (requestCode == CREATE_ACCOUNT_REQUEST_CODE
                 && resultCode == Activity.RESULT_OK) {
-            // Reload accounts
+            presenter.refreshAccounts();
         }
+    }
+
+    private void setBottomNavVisibility(boolean isVisible) {
+        bottomNavigationView.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 }

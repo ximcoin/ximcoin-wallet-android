@@ -42,12 +42,16 @@ public class AccountsPresenter {
         loadAccounts(isFirstStart);
     }
 
+    public void refreshAccounts() {
+        loadAccounts(true);
+    }
+
     public void detachView() {
         view = null;
     }
 
-    private void loadAccounts(boolean isFirstStart) {
-        accountRepository.getAllAccounts(isFirstStart)
+    private void loadAccounts(boolean deepPoll) {
+        accountRepository.getAllAccounts(deepPoll)
                 .compose(schedulerProvider.singleScheduler())
                 .compose(lifecycleProvider.bindUntilEvent(ActivityEvent.DESTROY))
                 .doOnSubscribe(disposable ->

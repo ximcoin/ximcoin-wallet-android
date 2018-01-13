@@ -7,23 +7,36 @@
 
     <ImageView
         android:id="@+id/no_account_image"
-        android:layout_width="192dp"
-        android:layout_height="192dp"
-        android:background="@color/colorAccent"
+        android:layout_width="@dimen/intro_image_width_height"
+        android:layout_height="@dimen/intro_image_width_height"
+        android:src="@drawable/ic_account_balance"
+        android:tint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintVertical_bias="0.25" />
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_account_found_message"
+        android:layout_marginTop="@dimen/margin_normal"
+        style="@style/Title"
+        app:layout_constraintTop_toBottomOf="@+id/no_account_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_large"
+        android:layout_margin="@dimen/margin_normal"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/no_account_image">
+        app:layout_constraintTop_toBottomOf="@+id/message">
 
         <Button
             android:id="@+id/create_account_button"
