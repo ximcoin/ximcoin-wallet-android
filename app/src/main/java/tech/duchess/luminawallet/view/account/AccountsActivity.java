@@ -5,9 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ProgressBar;
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -37,8 +36,8 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
 
-    @BindView(R.id.bottom_nav)
-    BottomNavigationView bottomNavigationView;
+    @BindView(R.id.tab_layout)
+    TabLayout tabLayout;
 
     @Inject
     AccountsPresenter presenter;
@@ -46,7 +45,7 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.accounts_activity);
+        setContentView(R.layout.accounts_activity_v2);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
@@ -56,6 +55,13 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
                 .inject(this);
 
         presenter.attachView(this, savedInstanceState == null);
+
+        tabLayout.addTab(tabLayout.newTab().setText("Balances"));
+        tabLayout.addTab(tabLayout.newTab().setText("Send"));
+        tabLayout.addTab(tabLayout.newTab().setText("Receive"));
+        tabLayout.addTab(tabLayout.newTab().setText("Transactions"));
+
+        startCreateAccountActivity(false);
     }
 
     @Override
@@ -64,19 +70,14 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
         presenter.detachView();
     }
 
-    private void initAccountFragment(Account account) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, AccountFragment.newInstance(account,
-                        AccountFragment.AccountPerspective.BALANCES))
-                .commit();
-        getSupportFragmentManager().executePendingTransactions();
+    private void displayAccountFragments(Account account) {
     }
 
     private void displayCreateAccountFragment() {
-        getSupportFragmentManager().beginTransaction()
+        /*getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, new NoAccountFoundFragment())
                 .commit();
-        getSupportFragmentManager().executePendingTransactions();
+        getSupportFragmentManager().executePendingTransactions();*/
     }
 
     @Override
@@ -128,6 +129,6 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     }
 
     private void setBottomNavVisibility(boolean isVisible) {
-        bottomNavigationView.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        // bottomNavigationView.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 }

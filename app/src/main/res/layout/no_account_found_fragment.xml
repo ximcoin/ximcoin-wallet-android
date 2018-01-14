@@ -10,7 +10,7 @@
         android:layout_width="@dimen/intro_image_width_height"
         android:layout_height="@dimen/intro_image_width_height"
         android:src="@drawable/ic_account_balance"
-        android:tint="@color/colorPrimary"
+        android:tint="?attr/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

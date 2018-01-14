@@ -7,42 +7,36 @@
     android:clickable="true"
     android:fitsSystemWindows="true"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:background="?attr/mainBackground">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         android:fitsSystemWindows="true">
-
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
             android:fitsSystemWindows="true"
-            android:stateListAnimator="@animator/appbar_elevation"
-            android:theme="@style/ThemeOverlay.AppCompat.Light">
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="192dp"
                 android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimary"
-                app:expandedTitleMarginEnd="64dp"
-                app:expandedTitleMarginStart="48dp"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                app:titleEnabled="false">
 
                 <tech.duchess.luminawallet.view.account.AccountHeaderView
+                    android:id="@+id/account_header_view"
                     android:layout_width="match_parent"
-                    android:layout_height="96dp"
-                    android:background="?attr/colorAccentDark"
+                    android:layout_height="match_parent"
+                    android:background="?attr/colorPrimary"
                     android:fitsSystemWindows="true"
                     app:layout_collapseMode="parallax" />
 
@@ -50,28 +44,34 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    android:layout_gravity="top"
                     android:background="?attr/colorPrimary"
+                    android:layout_marginBottom="48dp"
                     app:layout_collapseMode="pin"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tab_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    app:tabIndicatorColor="@color/white"
+                    app:tabSelectedTextColor="@color/white"
+                    app:tabTextColor="@color/white_70">
+
+                </android.support.design.widget.TabLayout>
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/progress_bar" />
-
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/bottom_nav"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:fitsSystemWindows="true"
-            android:visibility="gone"
-            app:itemBackground="?attr/colorPrimary"
-            app:itemIconTint="@drawable/selector_bottom_nav_item"
-            app:itemTextColor="@drawable/selector_bottom_nav_item"
-            app:menu="@menu/account_menu" />
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+        <include layout="@layout/progress_bar" />
 
     </android.support.design.widget.CoordinatorLayout>
 
