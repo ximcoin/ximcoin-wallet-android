@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- disabled state -->
+    <item android:drawable="@drawable/send_icon_disabled"
+        android:state_enabled="false" />
+    <!-- selected state -->
+    <item android:drawable="@drawable/send_icon_selected"
+        android:state_enabled="true"
+        android:state_selected="true" />
+    <!-- unselected state (default) -->
+    <item android:drawable="@drawable/send_icon_normal"
+        android:state_enabled="true" />
+</selector>

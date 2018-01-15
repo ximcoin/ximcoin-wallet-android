@@ -22,7 +22,7 @@
     <string name="developer_description">Thanks for installing my app! If you enjoy it, please consider rating it in the Play Store or donating!</string>
 
     <!-- No Account Found Fragment -->
-    <string name="no_account_found_message">Add a new account</string>
+    <string name="no_account_found_message">New to Lumina?</string>
     <string name="create_account_button">CREATE NEW ACCOUNT</string>
     <string name="import_account_button">IMPORT ACCOUNT</string>
 
@@ -53,10 +53,14 @@
     <string name="password_length_error">Passphrase must be at least 8 characters long</string>
     <string name="passwords_match_error">Passwords don\'t match</string>
 
-    <!-- Wallet Bottom Nav -->
-    <string name="bottom_nav_balances">Balances</string>
-    <string name="bottom_nav_send">Send</string>
-    <string name="bottom_nav_receive">Receive</string>
-    <string name="bottom_nav_transactions">Transactions</string>
+    <!-- Account Header View -->
+    <string name="account_label">Public Address:</string>
+    <string name="balance_label">Lumen Balance:</string>
+    <string name="account_not_on_network_message">Account not on network. Send at least %1$s to your public address to finish creating this account.</string>
+
+    <plurals name="lumens">
+        <item quantity="one">%d Lumen</item>
+        <item quantity="other">%d Lumens</item>
+    </plurals>
 
 </resources>

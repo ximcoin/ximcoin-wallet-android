@@ -18,7 +18,7 @@
     </style>
 
     <style name="Title" parent="@style/TextAppearance.AppCompat.Title" >
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
     <style name="WarningHeader">
         <item name="android:textSize">32sp</item>

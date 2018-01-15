@@ -11,7 +11,7 @@ public interface IAccountsView {
     void showNoAccountFound();
     void showAccountLoadFailure();
     void showAccount(@NonNull Account account);
-    void showAccountNotOnNetwork(@NonNull String publicAddress);
+    void showAccountNotOnNetwork(@NonNull Account account);
 
     // For child fragments
     void startCreateAccountActivity(boolean isImportingSeed);

@@ -67,7 +67,7 @@ public class AccountsPresenter {
                     } else {
                         Account account = accounts.get(0);
                         if (!account.isOnNetwork()) {
-                            view.showAccountNotOnNetwork(account.getAccount_id());
+                            view.showAccountNotOnNetwork(account);
                         } else {
                             view.showAccount(account);
                         }

@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observable;
 import tech.duchess.luminawallet.LuminaWalletApp;
 import tech.duchess.luminawallet.view.util.TextUtils;
 
@@ -129,6 +130,14 @@ public class Account implements Parcelable {
 
     public void setData(Map<String, String> data) {
         this.data = data;
+    }
+
+    public Balance getLumens() {
+        return Observable.fromIterable(balances)
+                .filter(balance -> balance.getAsset_type().equals("native"))
+                .firstElement()
+                .defaultIfEmpty(new Balance())
+                .blockingGet();
     }
 
     protected Account(Parcel in) {
