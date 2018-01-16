@@ -51,7 +51,7 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     FrameLayout fragmentContainer;
 
     @BindView(R.id.view_pager)
-    ViewPager viewPager;
+    LockableViewPager viewPager;
 
     @BindView(R.id.account_header_view)
     AccountHeaderView accountHeaderView;
@@ -62,6 +62,7 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     private int selectedTabColor;
     private int normalTabColor;
     private int disabledTabColor;
+    private AccountFragmentPagerAdapter adapter;
 
     /**
      * Enumeration to represent the tabbed views. Note that the ordering here defines the
@@ -101,8 +102,9 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     }
 
     private void initTabs() {
-        viewPager.setOffscreenPageLimit((AccountPerspective.values().length + 1)/2);
-        viewPager.setAdapter(new AccountFragmentPagerAdapter(getSupportFragmentManager()));
+        viewPager.setOffscreenPageLimit((AccountPerspective.values().length + 1) / 2);
+        adapter = new AccountFragmentPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
         for (AccountPerspective accountPerspective : AccountPerspective.values()) {
@@ -147,9 +149,10 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
 
     @Override
     public void showAccountNotOnNetwork(@NonNull Account account) {
-        updateUI(false, true, account);
-        ViewBindingUtils.setTabEnabled(tabLayout, true, AccountPerspective.RECEIVE.ordinal());
-        ViewBindingUtils.whenNonNull(tabLayout.getTabAt(AccountPerspective.RECEIVE.ordinal()),
+        updateUI(false, false, account);
+        int receiveFragmentPosition = AccountPerspective.RECEIVE.ordinal();
+        ViewBindingUtils.setTabEnabled(tabLayout, true, receiveFragmentPosition);
+        ViewBindingUtils.whenNonNull(tabLayout.getTabAt(receiveFragmentPosition),
                 TabLayout.Tab::select);
         tabLayout.setSelectedTabIndicatorColor(selectedTabColor);
         Timber.d("Account not on network: %s", account.getAccount_id());
@@ -181,10 +184,12 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
         setTabsEnabled(tabsEnabled);
         setSoloFragmentVisibility(isSoloFragmentVisible);
         accountHeaderView.setAccount(account);
+        adapter.setAccount(account);
     }
 
     private void setTabsEnabled(boolean tabsEnabled) {
         ViewBindingUtils.setTabsEnabled(tabLayout, tabsEnabled);
+        viewPager.setPagingEnabled(tabsEnabled);
 
         if (tabsEnabled) {
             tabLayout.setTabTextColors(normalTabColor, selectedTabColor);

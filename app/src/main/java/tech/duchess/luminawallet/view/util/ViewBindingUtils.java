@@ -2,6 +2,8 @@ package tech.duchess.luminawallet.view.util;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,8 +11,17 @@ import android.support.design.widget.TabLayout;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+
 import io.reactivex.functions.Consumer;
 import timber.log.Timber;
+
+import static android.graphics.Color.BLACK;
+import static android.graphics.Color.WHITE;
 
 /**
  * Helper methods for view bindings.
@@ -56,7 +67,7 @@ public final class ViewBindingUtils {
                 whenNonNull(viewGroup.getChildAt(tabIndex), tabView -> {
                     ((ViewGroup) tabView).getChildAt(0).setEnabled(tabEnabled);
                     tabView.setEnabled(tabEnabled);
-        }));
+                }));
     }
 
     private static ViewGroup getTabViewGroup(@NonNull TabLayout tabLayout) {
@@ -76,5 +87,30 @@ public final class ViewBindingUtils {
         } catch (Throwable t) {
             Timber.e(t, "Failed to open url: %s", url);
         }
+    }
+
+    public static Bitmap encodeAsBitmap(String str) {
+        BitMatrix result;
+        Bitmap bitmap = null;
+        try {
+            result = new MultiFormatWriter().encode(str,
+                    BarcodeFormat.QR_CODE, 500, 500, null);
+
+            int w = result.getWidth();
+            int h = result.getHeight();
+            int[] pixels = new int[w * h];
+            for (int y = 0; y < h; y++) {
+                int offset = y * w;
+                for (int x = 0; x < w; x++) {
+                    pixels[offset + x] = result.get(x, y) ? Color.BLACK : Color.WHITE;
+                }
+            }
+            bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+            bitmap.setPixels(pixels, 0, 500, 0, 0, w, h);
+        } catch (Exception iae) {
+            iae.printStackTrace();
+            return null;
+        }
+        return bitmap;
     }
 }
