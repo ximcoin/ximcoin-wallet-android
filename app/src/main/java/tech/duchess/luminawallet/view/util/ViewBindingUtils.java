@@ -40,15 +40,34 @@ public final class ViewBindingUtils {
 
     public static void setTabsEnabled(@NonNull TabLayout tabLayout, boolean tabsEnabled) {
         whenNonNull(getTabViewGroup(tabLayout), viewGroup -> {
-            viewGroup.setEnabled(false);
             for (int childIndex = 0; childIndex < viewGroup.getChildCount(); childIndex++) {
                 whenNonNull(viewGroup.getChildAt(childIndex), tabView -> {
-                    ViewGroup tabViewGroup = (ViewGroup) tabView;
-                    tabViewGroup.getChildAt(0).setEnabled(tabsEnabled);
+                    ((ViewGroup) tabView).getChildAt(0).setEnabled(tabsEnabled);
                     tabView.setEnabled(tabsEnabled);
                 });
             }
         });
+    }
+
+    public static void setTabEnabled(@NonNull TabLayout tabLayout,
+                                     boolean tabEnabled,
+                                     int tabIndex) {
+        whenNonNull(getTabViewGroup(tabLayout), viewGroup ->
+                whenNonNull(viewGroup.getChildAt(tabIndex), tabView -> {
+                    ((ViewGroup) tabView).getChildAt(0).setEnabled(tabEnabled);
+                    tabView.setEnabled(tabEnabled);
+        }));
+    }
+
+    private static ViewGroup getTabViewGroup(@NonNull TabLayout tabLayout) {
+        ViewGroup viewGroup = null;
+
+        if (tabLayout.getChildCount() > 0) {
+            View view = tabLayout.getChildAt(0);
+            if (view != null && view instanceof ViewGroup)
+                viewGroup = (ViewGroup) view;
+        }
+        return viewGroup;
     }
 
     public static void openUrl(@NonNull String url, @NonNull Context context) {
@@ -58,16 +77,4 @@ public final class ViewBindingUtils {
             Timber.e(t, "Failed to open url: %s", url);
         }
     }
-
-    private static ViewGroup getTabViewGroup(@NonNull TabLayout tabLayout) {
-        ViewGroup viewGroup = null;
-
-        if (tabLayout != null && tabLayout.getChildCount() > 0) {
-            View view = tabLayout.getChildAt(0);
-            if (view != null && view instanceof ViewGroup)
-                viewGroup = (ViewGroup) view;
-        }
-        return viewGroup;
-    }
-
 }

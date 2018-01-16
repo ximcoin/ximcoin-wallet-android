@@ -1,8 +1,11 @@
 package tech.duchess.luminawallet.view.account;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -60,6 +63,27 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     private int normalTabColor;
     private int disabledTabColor;
 
+    /**
+     * Enumeration to represent the tabbed views. Note that the ordering here defines the
+     * left-to-right ordering of the tabs in the views (meaning, ordinal here is important).
+     */
+    public enum AccountPerspective {
+        BALANCES(R.drawable.balance_tab_icon),
+        SEND(R.drawable.send_tab_icon),
+        RECEIVE(R.drawable.receive_tab_icon),
+        TRANSACTIONS(R.drawable.transactions_tab_icon);
+
+        private final int tabIconRes;
+
+        AccountPerspective(@DrawableRes int tabIconRes) {
+            this.tabIconRes = tabIconRes;
+        }
+
+        public Drawable getTabIcon(@NonNull Context context) {
+            return ContextCompat.getDrawable(context, tabIconRes);
+        }
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,18 +101,17 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     }
 
     private void initTabs() {
+        viewPager.setOffscreenPageLimit((AccountPerspective.values().length + 1)/2);
+        viewPager.setAdapter(new AccountFragmentPagerAdapter(getSupportFragmentManager()));
+        tabLayout.setupWithViewPager(viewPager);
+
+        for (AccountPerspective accountPerspective : AccountPerspective.values()) {
+            tabLayout.getTabAt(accountPerspective.ordinal()).setIcon(accountPerspective.getTabIcon(this));
+        }
+
         selectedTabColor = ContextCompat.getColor(this, R.color.white);
         normalTabColor = ContextCompat.getColor(this, R.color.white_70);
         disabledTabColor = ContextCompat.getColor(this, R.color.white_20);
-
-        tabLayout.addTab(tabLayout.newTab().setIcon(ContextCompat.getDrawable(this,
-                R.drawable.balance_tab_icon)));
-        tabLayout.addTab(tabLayout.newTab().setIcon(ContextCompat.getDrawable(this,
-                R.drawable.send_tab_icon)));
-        tabLayout.addTab(tabLayout.newTab().setIcon(ContextCompat.getDrawable(this,
-                R.drawable.receive_tab_icon)));
-        tabLayout.addTab(tabLayout.newTab().setIcon(ContextCompat.getDrawable(this,
-                R.drawable.transactions_tab_icon)));
     }
 
     @Override
@@ -125,6 +148,10 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     @Override
     public void showAccountNotOnNetwork(@NonNull Account account) {
         updateUI(false, true, account);
+        ViewBindingUtils.setTabEnabled(tabLayout, true, AccountPerspective.RECEIVE.ordinal());
+        ViewBindingUtils.whenNonNull(tabLayout.getTabAt(AccountPerspective.RECEIVE.ordinal()),
+                TabLayout.Tab::select);
+        tabLayout.setSelectedTabIndicatorColor(selectedTabColor);
         Timber.d("Account not on network: %s", account.getAccount_id());
     }
 
@@ -153,7 +180,7 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
                           @Nullable Account account) {
         setTabsEnabled(tabsEnabled);
         setSoloFragmentVisibility(isSoloFragmentVisible);
-        updateAccountHeader(account);
+        accountHeaderView.setAccount(account);
     }
 
     private void setTabsEnabled(boolean tabsEnabled) {
@@ -176,9 +203,5 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
             viewPager.setVisibility(View.VISIBLE);
             fragmentContainer.setVisibility(View.GONE);
         }
-    }
-
-    private void updateAccountHeader(@Nullable Account account) {
-        accountHeaderView.setAccount(account);
     }
 }
