@@ -6,6 +6,10 @@
     <string name="cancel">CANCEL</string>
     <string name="finish">FINISH</string>
 
+    <!-- Receive Fragment -->
+    <string name="copy_address">Copy Address</string>
+    <string name="view_full_address">View Full Address</string>
+
     <!-- Create Account Fragment -->
     <string name="create_new_account">Create a New Account</string>
     <string name="import_account">Import Existing Account</string>
