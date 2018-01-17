@@ -19,17 +19,14 @@ import tech.duchess.luminawallet.view.util.ViewBindingUtils;
 
 public class AccountHeaderView extends FrameLayout {
 
-    @BindView(R.id.balance_container)
-    View balanceContainer;
-
-    @BindView(R.id.account_not_on_network_container)
-    View notOnNetworkContainer;
-
-    @BindView(R.id.account_id)
-    TextView accountId;
+    @BindView(R.id.balance_label)
+    View balanceLabel;
 
     @BindView(R.id.lumen_balance)
     TextView lumenBalance;
+
+    @BindView(R.id.account_not_on_network_container)
+    View notOnNetworkContainer;
 
     @BindView(R.id.account_not_on_network_message)
     TextView notOnNetworkMessage;
@@ -79,27 +76,24 @@ public class AccountHeaderView extends FrameLayout {
 
     private void showNoAccountsFound() {
         // TODO:
-        invalidate();
     }
 
     private void showAccountNotOnNetwork(@NonNull String accountId) {
-        balanceContainer.setVisibility(GONE);
+        balanceLabel.setVisibility(GONE);
+        lumenBalance.setVisibility(GONE);
         notOnNetworkContainer.setVisibility(VISIBLE);
 
         // TODO: Get this from backend
         String minBalance = getResources().getQuantityString(R.plurals.lumens, 1, 1);
         notOnNetworkMessage.setText(getResources()
                 .getString(R.string.account_not_on_network_message, minBalance));
-        this.accountId.setText(accountId);
-        invalidate();
     }
 
     private void showAccount(@NonNull Account account) {
-        balanceContainer.setVisibility(VISIBLE);
+        balanceLabel.setVisibility(VISIBLE);
+        lumenBalance.setVisibility(VISIBLE);
         notOnNetworkContainer.setVisibility(GONE);
 
-        accountId.setText(account.getAccount_id());
         lumenBalance.setText(String.valueOf(account.getLumens().getBalance()));
-        invalidate();
     }
 }

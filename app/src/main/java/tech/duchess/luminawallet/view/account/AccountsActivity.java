@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -181,6 +180,7 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     private void updateUI(boolean tabsEnabled,
                           boolean isSoloFragmentVisible,
                           @Nullable Account account) {
+        updateTitle(account);
         setTabsEnabled(tabsEnabled);
         setSoloFragmentVisibility(isSoloFragmentVisible);
         accountHeaderView.setAccount(account);
@@ -207,6 +207,14 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
         } else {
             viewPager.setVisibility(View.VISIBLE);
             fragmentContainer.setVisibility(View.GONE);
+        }
+    }
+
+    private void updateTitle(@Nullable Account account) {
+        if (account == null) {
+            toolbar.setTitle(R.string.app_name);
+        } else {
+            toolbar.setTitle(getString(R.string.account_id_label) + account.getAccount_id());
         }
     }
 }

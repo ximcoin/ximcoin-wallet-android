@@ -7,7 +7,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorAccentDark">@color/colorAccentDark</item>
         <item name="colorAccentLight">@color/colorAccentLight</item>
-        <item name="mainBackground">@color/mainBackground</item>
+        <item name="android:windowBackground">@color/mainBackground</item>
         <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:textColorPrimary">@color/colorPrimaryText</item>
         <item name="android:textColorSecondary">@color/colorSecondaryText</item>
@@ -17,9 +17,10 @@
         <item name="actionMenuTextColor">@color/colorPrimaryText</item>
     </style>
 
-    <style name="Title" parent="@style/TextAppearance.AppCompat.Title" >
+    <style name="Title" parent="@style/TextAppearance.AppCompat.Title">
         <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
+
     <style name="WarningHeader">
         <item name="android:textSize">32sp</item>
         <item name="android:textColor">@color/warningColor</item>
@@ -59,6 +60,13 @@
     <style name="HintTextAppearance" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="DefaultAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
+        <item name="android:textColor">@color/colorAccentLight</item>
+        <item name="colorAccent">@color/colorAccentLight</item>
+        <item name="android:background">@color/mainBackground</item>
     </style>
 
 </resources>

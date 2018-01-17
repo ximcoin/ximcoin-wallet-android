@@ -3,6 +3,5 @@
     <declare-styleable name="AppTheme">
         <attr name="colorAccentDark" format="color"/>
         <attr name="colorAccentLight" format="color"/>
-        <attr name="mainBackground" format="color"/>
     </declare-styleable>
 </resources>

@@ -1,5 +1,7 @@
 package tech.duchess.luminawallet.view.util;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -87,6 +89,27 @@ public final class ViewBindingUtils {
         } catch (Throwable t) {
             Timber.e(t, "Failed to open url: %s", url);
         }
+    }
+
+    /**
+     * Copies the provided string to the clipboard.
+     * @param context Android context.
+     * @return {@code True} if we successfully copied to clipboard; otherwise {@code false}.
+     */
+    public static boolean copyToClipboard(@NonNull Context context,
+                                          @NonNull String label,
+                                          @NonNull String value) {
+        ClipboardManager clipboardManager =
+                (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+
+        if (clipboardManager == null) {
+            // Don't actually know under what circumstances this may occur. But best to let the user
+            // know that the value they expected on the clipboard is not there.
+            return false;
+        }
+
+        clipboardManager.setPrimaryClip(ClipData.newPlainText(label, value));
+        return true;
     }
 
     public static Bitmap encodeAsBitmap(String str) {

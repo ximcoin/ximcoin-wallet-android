@@ -1,8 +1,6 @@
 package tech.duchess.luminawallet.view.createaccount;
 
 import android.app.Activity;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -31,7 +29,6 @@ import tech.duchess.luminawallet.view.util.TextUtils;
 import tech.duchess.luminawallet.view.util.ViewBindingUtils;
 
 public class GenerateSeedFragment extends RxFragment {
-    private static final String SEED_CLIP_LABEL = "StellarAccountSeed";
     private static final String SEED_KEY = "GenerateSeedFragment.SEED_KEY";
     private static final String SEED_SHOWN_KEY = "GeneratedSeedFragment.SEED_SHOWN_KEY";
 
@@ -129,17 +126,19 @@ public class GenerateSeedFragment extends RxFragment {
 
     @OnClick(R.id.btn_copy_seed)
     public void copySeed() {
-        Activity parentActivity = getActivity();
-        if (parentActivity != null) {
-            ClipboardManager clipboardManager =
-                    (ClipboardManager) parentActivity.getSystemService(Context.CLIPBOARD_SERVICE);
-            if (clipboardManager != null) {
-                clipboardManager.setPrimaryClip(ClipData.newPlainText(SEED_CLIP_LABEL,
-                        String.valueOf(keyPair.getSecretSeed())));
-            }
-            Toast.makeText(parentActivity, getString(R.string.seed_copied_toast),
-                    Toast.LENGTH_SHORT).show();
+        Context context = getContext();
+
+        String toastMessage;
+        if (context != null
+                && ViewBindingUtils.copyToClipboard(getContext(),
+                getString(R.string.seed_clipboard_label),
+                String.valueOf(keyPair.getSecretSeed()))) {
+            toastMessage = getString(R.string.seed_copied_success_toast);
+        } else {
+            toastMessage = getString(R.string.seed_copy_failed_toast);
         }
+
+        Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.btn_generate_new_seed)

@@ -7,52 +7,22 @@
     android:background="?attr/colorPrimary"
     android:orientation="vertical"
     android:paddingEnd="@dimen/activity_margin"
-    android:paddingStart="@dimen/activity_margin" >
+    android:paddingStart="@dimen/activity_margin">
 
-    <LinearLayout
-        android:id="@+id/public_address_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/account_label"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/account_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_normal"
-            android:ellipsize="end"
-            android:maxLines="1"
-            tools:text="FAKEPUBLICADDRESSTHATISREALLYREALLYLONG" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/balance_container"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/balance_label"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_normal"
-        android:orientation="horizontal">
+        android:text="@string/balance_label" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/balance_label"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/lumen_balance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_normal"
-            tools:text="12345.12345" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/lumen_balance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textSize="@dimen/lumen_balance"
+        tools:text="12345.12345" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/account_not_on_network_container"
@@ -67,12 +37,12 @@
             android:id="@+id/account_not_on_network_info"
             android:layout_width="@dimen/help_icon_width_height"
             android:layout_height="@dimen/help_icon_width_height"
+            android:layout_marginEnd="@dimen/margin_normal"
             android:background="?selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_info"
             android:tint="@color/white"
-            android:layout_marginEnd="@dimen/margin_normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
