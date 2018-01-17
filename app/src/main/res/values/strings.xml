@@ -70,7 +70,7 @@
 
     <!-- Account Header View -->
     <string name="account_label">Public Address:</string>
-    <string name="balance_label">Lumen Balance:</string>
+    <string name="balance_label">Lumen (XLM) Balance:</string>
     <string name="account_not_on_network_message">Account not on network. Send at least %1$s to your public address to finish creating this account.</string>
 
     <plurals name="lumens">

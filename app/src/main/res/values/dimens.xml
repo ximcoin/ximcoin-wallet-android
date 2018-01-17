@@ -19,7 +19,4 @@
     <dimen name="slide_desc">16dp</dimen>
     <dimen name="desc_padding">40dp</dimen>
 
-    <!-- Account Header View -->
-    <dimen name="lumen_balance">28sp</dimen>
-
 </resources>

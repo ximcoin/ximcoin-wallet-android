@@ -134,7 +134,7 @@ public class Account implements Parcelable {
 
     public Balance getLumens() {
         return Observable.fromIterable(balances)
-                .filter(balance -> balance.getAsset_type().equals("native"))
+                .filter(Balance::isLumenBalance)
                 .firstElement()
                 .defaultIfEmpty(new Balance())
                 .blockingGet();

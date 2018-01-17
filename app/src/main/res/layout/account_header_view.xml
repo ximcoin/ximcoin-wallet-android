@@ -17,11 +17,11 @@
         android:text="@string/balance_label" />
 
     <TextView
+        style="@style/BalanceVolume"
         android:id="@+id/lumen_balance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="1"
-        android:textSize="@dimen/lumen_balance"
         tools:text="12345.12345" />
 
     <android.support.constraint.ConstraintLayout

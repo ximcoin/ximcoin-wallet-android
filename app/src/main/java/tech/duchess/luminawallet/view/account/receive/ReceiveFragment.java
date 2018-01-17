@@ -21,10 +21,12 @@ import butterknife.Unbinder;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.view.account.IAccountPerspectiveView;
+import tech.duchess.luminawallet.view.util.TextUtils;
 import tech.duchess.luminawallet.view.util.ViewBindingUtils;
 
 public class ReceiveFragment extends RxFragment implements IAccountPerspectiveView {
     private static final String ACCOUNT_KEY = "ReceiveFragment.ACCOUNT_KEY";
+    private static final String ADDRESS_KEY = "ReceiveFragment.ADDRESS_KEY";
 
     @BindView(R.id.qr_code)
     ImageView qrCode;
@@ -50,6 +52,14 @@ public class ReceiveFragment extends RxFragment implements IAccountPerspectiveVi
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.receive_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        if (savedInstanceState == null) {
+            Bundle args = getArguments();
+            setAccount(args == null ? null : args.getParcelable(ACCOUNT_KEY));
+        } else {
+            setAddress(savedInstanceState.getParcelable(ADDRESS_KEY));
+        }
+
         return view;
     }
 
@@ -60,13 +70,25 @@ public class ReceiveFragment extends RxFragment implements IAccountPerspectiveVi
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(ADDRESS_KEY, address);
+    }
+
+    @Override
     public void setAccount(@Nullable Account account) {
-        if (account == null) {
-            qrCode.setImageBitmap(null);
+        setAddress(account == null ? null : account.getAccount_id());
+    }
+
+    private void setAddress(@Nullable String address) {
+        this.address = address;
+        if (TextUtils.isEmpty(address)) {
+            qrCode.setImageDrawable(null);
+            qrCode.setVisibility(View.GONE);
             viewFullAddressButton.setEnabled(false);
         } else {
-            address = account.getAccount_id();
-            qrCode.setImageBitmap(ViewBindingUtils.encodeAsBitmap(account.getAccount_id()));
+            qrCode.setVisibility(View.VISIBLE);
+            qrCode.setImageBitmap(ViewBindingUtils.encodeAsBitmap(address));
             viewFullAddressButton.setEnabled(true);
         }
     }

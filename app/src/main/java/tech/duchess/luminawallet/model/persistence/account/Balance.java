@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Balance implements Parcelable {
+    private static final String LUMEN_ASSET_TYPE = "native";
+    private static final String LUMEN_ASSET_CODE = "XLM";
     private String asset_type;
     private String asset_code;
     private String asset_issuer;
@@ -21,7 +23,7 @@ public class Balance implements Parcelable {
     }
 
     public String getAsset_code() {
-        return asset_code;
+        return isLumenBalance() ? LUMEN_ASSET_CODE : asset_code;
     }
 
     public void setAsset_code(String asset_code) {
@@ -50,6 +52,10 @@ public class Balance implements Parcelable {
 
     public void setLimit(double limit) {
         this.limit = limit;
+    }
+
+    public boolean isLumenBalance() {
+        return LUMEN_ASSET_TYPE.equals(getAsset_type());
     }
 
     protected Balance(Parcel in) {

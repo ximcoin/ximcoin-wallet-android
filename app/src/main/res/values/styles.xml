@@ -21,6 +21,17 @@
         <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
 
+    <style name="BalanceCode" >
+        <item name="android:textColor">@color/colorAccentLight</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:maxWidth">120dp</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="BalanceVolume">
+        <item name="android:textSize">28sp</item>
+    </style>
+
     <style name="WarningHeader">
         <item name="android:textSize">32sp</item>
         <item name="android:textColor">@color/warningColor</item>

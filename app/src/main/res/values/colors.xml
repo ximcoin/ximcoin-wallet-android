@@ -11,10 +11,12 @@
     <color name="colorSecondaryText">#FFFFFF</color>
     <color name="warningColor">#FFD24D57</color>
     <color name="mainBackground">#FF36454F</color>
+    <color name="dividerColor">@color/white_12</color>
 
     <color name="white">#FFFFFF</color>
     <color name="white_70">#B3FFFFFF</color>
     <color name="white_20">#33FFFFFF</color>
+    <color name="white_12">#1FFFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="black_70">#B3000000</color>
     <color name="black_26">#42000000</color>
