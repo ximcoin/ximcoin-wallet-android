@@ -47,7 +47,7 @@ public class BalancesFragment extends RxFragment implements IAccountPerspectiveV
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.balances_fragment, container, false);
+        View view = inflater.inflate(R.layout.recycler_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
 
         adapter = new BalanceRecyclerAdapter();
@@ -91,9 +91,8 @@ public class BalancesFragment extends RxFragment implements IAccountPerspectiveV
 
         @Override
         public BalanceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            final View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.balance_recycler_item, parent, false);
-            return new BalanceViewHolder(view);
+            return new BalanceViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.balance_recycler_item, parent, false));
         }
 
         @Override
