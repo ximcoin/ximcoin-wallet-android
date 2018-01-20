@@ -1,5 +1,7 @@
 package tech.duchess.luminawallet.view.account.transactions;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.paging.PagedList;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,15 +22,14 @@ import tech.duchess.luminawallet.LuminaWalletApp;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.dagger.module.FragmentLifecycleModule;
 import tech.duchess.luminawallet.model.persistence.account.Account;
+import tech.duchess.luminawallet.model.persistence.transaction.Operation;
 import tech.duchess.luminawallet.presenter.account.transactions.TransactionsPresenter;
 import tech.duchess.luminawallet.view.account.IAccountPerspectiveView;
 import tech.duchess.luminawallet.view.util.ViewBindingUtils;
 
-// https://medium.com/@etiennelawlor/pagination-with-recyclerview-1cb7e66a502b
-// https://medium.com/fueled-android/scroll-pull-bind-paginate-recyclerview-30d5aed8b43a
+// https://github.com/googlesamples/android-architecture-components/tree/master/PagingWithNetworkSample
 public class TransactionsFragment extends RxFragment implements IAccountPerspectiveView {
     private static final String ACCOUNT_KEY = "TransactionsFragment.ACCOUNT_KEY";
-    private static final int PAGE_SIZE = 20;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -39,12 +40,10 @@ public class TransactionsFragment extends RxFragment implements IAccountPerspect
     @Nullable
     private String accountId;
 
-    private TransactionRecyclerAdapter adapter;
     private LinearLayoutManager layoutManager;
     private Unbinder unbinder;
-    private boolean isLoading = false;
-    private boolean isLastPage = false;
-    private int currentPage = 1;
+    private TransactionsAdapter adapter;
+    private LiveData<PagedList<Operation>> liveData;
 
     public static TransactionsFragment newInstance(@Nullable Account account) {
         Bundle args = new Bundle();
@@ -76,21 +75,34 @@ public class TransactionsFragment extends RxFragment implements IAccountPerspect
             ViewBindingUtils.whenNonNull(getArguments(), args ->
                     ViewBindingUtils.whenNonNull(args.getParcelable(ACCOUNT_KEY), account ->
                             accountId = ((Account) account).getAccount_id()));
-            loadFirstItems();
         } else {
             accountId = savedInstanceState.getString(accountId);
         }
+
+        initRecyclerView();
 
         return view;
     }
 
     private void initRecyclerView() {
         layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         //recyclerView.setItemAnimator(new SlideUpAnimator());
-        adapter = new TransactionRecyclerAdapter();
+        adapter = new TransactionsAdapter();
         recyclerView.setAdapter(adapter);
-        recyclerView.addOnScrollListener(new ScrollListener());
+        recyclerView.setHasFixedSize(true);
+
+        if (accountId != null) {
+            liveData = transactionsPresenter.setAccountId(accountId);
+            setDataListener();
+        }
+    }
+
+    private void setDataListener() {
+        if (liveData != null) {
+            liveData.observe(this, operations -> adapter.setList(operations));
+        }
     }
 
     @Override
@@ -99,16 +111,6 @@ public class TransactionsFragment extends RxFragment implements IAccountPerspect
         outState.putString(ACCOUNT_KEY, accountId);
     }
 
-    private void loadFirstItems() {
-        transactionsPresenter.test(accountId);
-    }
-
-    private void loadMoreItems() {
-        isLoading = true;
-        currentPage++;
-
-        // findMoreTransactionsCall
-    }
 
     @Override
     public void setAccount(@Nullable Account account) {
@@ -117,55 +119,8 @@ public class TransactionsFragment extends RxFragment implements IAccountPerspect
         } else {
             accountId = account.getAccount_id();
         }
-    }
 
-    private class TransactionRecyclerAdapter extends RecyclerView.Adapter<TransactionViewHolder> {
-
-        @Override
-        public TransactionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new TransactionViewHolder(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.balance_recycler_item, parent, false));
-        }
-
-        @Override
-        public void onBindViewHolder(TransactionViewHolder holder, int position) {
-            holder.bindData();
-        }
-
-        @Override
-        public int getItemCount() {
-            return 0;
-        }
-    }
-
-    class TransactionViewHolder extends RecyclerView.ViewHolder {
-
-        TransactionViewHolder(View itemView) {
-            super(itemView);
-        }
-
-        void bindData() {
-
-        }
-    }
-
-    private class ScrollListener extends RecyclerView.OnScrollListener {
-
-
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-            int visibleItemCount = layoutManager.getChildCount();
-            int totalItemCount = layoutManager.getItemCount();
-            int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-
-            if (!isLoading && !isLastPage) {
-                if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
-                        && firstVisibleItemPosition >= 0
-                        && totalItemCount >= PAGE_SIZE) {
-                    loadMoreItems();
-                }
-            }
-        }
+        liveData = transactionsPresenter.setAccountId(accountId);
+        setDataListener();
     }
 }

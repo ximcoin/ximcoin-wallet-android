@@ -1,48 +1,58 @@
 package tech.duchess.luminawallet.presenter.account.transactions;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.paging.DataSource;
+import android.arch.paging.LivePagedListBuilder;
+import android.arch.paging.PagedList;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.trello.rxlifecycle2.LifecycleProvider;
-import com.trello.rxlifecycle2.android.FragmentEvent;
+import com.squareup.moshi.Moshi;
 
 import javax.inject.Inject;
 
+import okhttp3.OkHttpClient;
 import tech.duchess.luminawallet.model.api.HorizonApi;
-import tech.duchess.luminawallet.model.dagger.SchedulerProvider;
-import timber.log.Timber;
+import tech.duchess.luminawallet.model.persistence.transaction.Operation;
+import tech.duchess.luminawallet.model.repository.OperationPageDataSource;
 
 public class TransactionsPresenter {
-    private final static int PAGE_SIZE = 10;
+    private final static int PAGE_SIZE = 7;
 
     @NonNull
     private final HorizonApi horizonApi;
 
     @NonNull
-    private final SchedulerProvider schedulerProvider;
+    private final OkHttpClient okHttpClient;
 
     @NonNull
-    private final LifecycleProvider<FragmentEvent> lifecycleProvider;
+    private final Moshi moshi;
 
     @Inject
     public TransactionsPresenter(@NonNull HorizonApi horizonApi,
-                                 @NonNull SchedulerProvider schedulerProvider,
-                                 @NonNull LifecycleProvider<FragmentEvent> lifecycleProvider) {
+                                 @NonNull OkHttpClient okHttpClient,
+                                 @NonNull Moshi moshi) {
         this.horizonApi = horizonApi;
-        this.schedulerProvider = schedulerProvider;
-        this.lifecycleProvider = lifecycleProvider;
+        this.okHttpClient = okHttpClient;
+        this.moshi = moshi;
     }
 
-    public void test(@Nullable String accountId) {
-        if (accountId != null) {
-            horizonApi.getFirstOperationsPage(accountId, PAGE_SIZE)
-                    .compose(schedulerProvider.singleScheduler())
-                    .compose(lifecycleProvider.bindUntilEvent(FragmentEvent.DESTROY))
-                    .subscribe(operationPage -> {
-                        Timber.d("Operation load success");
-                    }, throwable -> {
-                        Timber.e(throwable, "Failed to load operations");
-                    });
+    public LiveData<PagedList<Operation>> setAccountId(@Nullable String accountId) {
+        return new LivePagedListBuilder<>(new OperationsDataSourceFactory(accountId), PAGE_SIZE)
+                .build();
+    }
+
+    private class OperationsDataSourceFactory implements DataSource.Factory<String, Operation> {
+        @Nullable
+        private final String accountId;
+
+        public OperationsDataSourceFactory(@Nullable String accountId) {
+            this.accountId = accountId;
+        }
+
+        @Override
+        public DataSource<String, Operation> create() {
+            return new OperationPageDataSource(horizonApi, okHttpClient, moshi, accountId);
         }
     }
 }

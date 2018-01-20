@@ -3,6 +3,7 @@ package tech.duchess.luminawallet.model.persistence.transaction;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.functions.Function;
@@ -60,9 +61,31 @@ public class OperationPage {
         }
     }
 
+    @NonNull
+    public List<Operation> getOperations() {
+        return _embedded == null ? new ArrayList<>() : _embedded.getRecordsList();
+    }
+
     @Nullable
-    private List<Operation> getOperations() {
-        return _embedded == null ? null : _embedded.getRecordsList();
+    public String getPreviousPageLink() {
+        if (_links == null) {
+            return null;
+        }
+
+        Link prevLink = _links.getPrev();
+
+        return prevLink == null ? null : prevLink.getHref();
+    }
+
+    @Nullable
+    public String getNextPageLink() {
+        if (_links == null) {
+            return null;
+        }
+
+        Link nextLink = _links.getNext();
+
+        return nextLink == null ? null : nextLink.getHref();
     }
 
     public static class OperationPageLinks {
