@@ -65,10 +65,9 @@ android {
 
 dependencies {
     implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
     implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
-    implementation "com.trello.rxlifecycle2:rxlifecycle:$rxLifecycleVersion"
-    implementation "com.trello.rxlifecycle2:rxlifecycle-components:$rxLifecycleVersion"
     implementation "com.jakewharton.rxrelay2:rxrelay:$rxRelayVersion"
     implementation "com.jakewharton:butterknife:$butterKnifeVersion"
     implementation "com.jakewharton.timber:timber:$timberVersion"
@@ -97,6 +96,7 @@ dependencies {
     androidTestImplementation 'com.google.code.findbugs:jsr305:3.0.1'
 
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$architectureComponentsVersion"
 }

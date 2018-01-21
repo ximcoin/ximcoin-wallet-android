@@ -1,4 +1,4 @@
-package tech.duchess.luminawallet.model.dagger;
+package tech.duchess.luminawallet.dagger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

@@ -15,22 +15,17 @@ import android.view.ViewGroup;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 
 import io.reactivex.functions.Consumer;
 import timber.log.Timber;
 
-import static android.graphics.Color.BLACK;
-import static android.graphics.Color.WHITE;
-
 /**
  * Helper methods for view bindings.
  */
-public final class ViewBindingUtils {
+public final class ViewUtils {
 
-    private ViewBindingUtils() {
+    private ViewUtils() {
     }
 
     /**

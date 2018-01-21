@@ -3,14 +3,13 @@ package tech.duchess.luminawallet.view.account.balance;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +21,9 @@ import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.model.persistence.account.Balance;
 import tech.duchess.luminawallet.view.account.IAccountPerspectiveView;
-import tech.duchess.luminawallet.view.util.ViewBindingUtils;
+import tech.duchess.luminawallet.view.util.ViewUtils;
 
-public class BalancesFragment extends RxFragment implements IAccountPerspectiveView {
+public class BalancesFragment extends Fragment implements IAccountPerspectiveView {
     private static final String ACCOUNT_KEY = "BalancesFragment.ACCOUNT_KEY";
     private static final String BALANCES_KEY = "BalancesFragment.BALANCES_KEY";
 
@@ -53,8 +52,8 @@ public class BalancesFragment extends RxFragment implements IAccountPerspectiveV
         adapter = new BalanceRecyclerAdapter();
 
         if (savedInstanceState == null) {
-            ViewBindingUtils.whenNonNull(getArguments(), args -> {
-                ViewBindingUtils.whenNonNull(args.getParcelable(ACCOUNT_KEY), account -> {
+            ViewUtils.whenNonNull(getArguments(), args -> {
+                ViewUtils.whenNonNull(args.getParcelable(ACCOUNT_KEY), account -> {
                     adapter.setBalances(((Account)account).getBalances());
                 });
             });
@@ -107,7 +106,7 @@ public class BalancesFragment extends RxFragment implements IAccountPerspectiveV
 
         void setBalances(@Nullable List<Balance> balances) {
             this.balances.clear();
-            ViewBindingUtils.whenNonNull(balances, this.balances::addAll);
+            ViewUtils.whenNonNull(balances, this.balances::addAll);
             notifyDataSetChanged();
         }
 

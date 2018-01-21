@@ -15,26 +15,23 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import tech.duchess.luminawallet.LuminaWalletApp;
 import tech.duchess.luminawallet.R;
-import tech.duchess.luminawallet.model.dagger.module.ActivityLifecycleModule;
 import tech.duchess.luminawallet.model.persistence.account.Account;
-import tech.duchess.luminawallet.presenter.account.AccountsPresenter;
+import tech.duchess.luminawallet.presenter.account.AccountsContract;
+import tech.duchess.luminawallet.view.common.BaseActivity;
 import tech.duchess.luminawallet.view.createaccount.CreateAccountActivity;
-import tech.duchess.luminawallet.view.util.ViewBindingUtils;
+import tech.duchess.luminawallet.view.util.ViewUtils;
 import timber.log.Timber;
 
 /**
  * Displays a Stellar Account, with its respective features (transactions, send, receive, etc...).
  * Will also display the option to create a new account if no account is found.
  */
-public class AccountsActivity extends RxAppCompatActivity implements IAccountsView {
+public class AccountsActivity extends BaseActivity implements AccountsContract.AccountsView {
     private static final int CREATE_ACCOUNT_REQUEST_CODE = 1;
 
     @BindView(R.id.toolbar)
@@ -56,7 +53,7 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     AccountHeaderView accountHeaderView;
 
     @Inject
-    AccountsPresenter presenter;
+    AccountsContract.AccountsPresenter presenter;
 
     private int selectedTabColor;
     private int normalTabColor;
@@ -91,18 +88,24 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         initTabs();
+        presenter.start(savedInstanceState);
+    }
 
-        LuminaWalletApp.getInstance()
-                .getAppComponent()
-                .plus(new ActivityLifecycleModule(this))
-                .inject(this);
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        presenter.resume();
+    }
 
-        presenter.attachView(this, savedInstanceState == null);
+    @Override
+    protected void onPause() {
+        super.onPause();
+        presenter.pause();
     }
 
     private void initTabs() {
         viewPager.setOffscreenPageLimit((AccountPerspective.values().length + 1) / 2);
-        adapter = new AccountFragmentPagerAdapter(getSupportFragmentManager());
+        adapter = new AccountFragmentPagerAdapter(fragmentManager);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -118,7 +121,13 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        presenter.detachView();
+        presenter.stop();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        presenter.saveState(outState);
     }
 
     @Override
@@ -129,10 +138,7 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     @Override
     public void showNoAccountFound() {
         updateUI(false, true, null);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.solo_fragment_container, new NoAccountFoundFragment())
-                .commit();
-        getSupportFragmentManager().executePendingTransactions();
+        replaceFragment(R.id.solo_fragment_container, new NoAccountFoundFragment(), true);
     }
 
     @Override
@@ -150,15 +156,15 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     public void showAccountNotOnNetwork(@NonNull Account account) {
         updateUI(false, false, account);
         int receiveFragmentPosition = AccountPerspective.RECEIVE.ordinal();
-        ViewBindingUtils.setTabEnabled(tabLayout, true, receiveFragmentPosition);
-        ViewBindingUtils.whenNonNull(tabLayout.getTabAt(receiveFragmentPosition),
+        ViewUtils.setTabEnabled(tabLayout, true, receiveFragmentPosition);
+        ViewUtils.whenNonNull(tabLayout.getTabAt(receiveFragmentPosition),
                 TabLayout.Tab::select);
         tabLayout.setSelectedTabIndicatorColor(selectedTabColor);
         Timber.d("Account not on network: %s", account.getAccount_id());
     }
 
     @Override
-    public void startCreateAccountActivity(boolean isImportingSeed) {
+    public void startCreateAccountFlow(boolean isImportingSeed) {
         if (!isImportingSeed) {
             startActivityForResult(new Intent(this, CreateAccountActivity.class),
                     CREATE_ACCOUNT_REQUEST_CODE);
@@ -171,9 +177,8 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CREATE_ACCOUNT_REQUEST_CODE
-                && resultCode == Activity.RESULT_OK) {
-            presenter.refreshAccounts();
+        if (requestCode == CREATE_ACCOUNT_REQUEST_CODE) {
+            presenter.onAccountCreationReturned(resultCode == Activity.RESULT_OK);
         }
     }
 
@@ -188,7 +193,7 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
     }
 
     private void setTabsEnabled(boolean tabsEnabled) {
-        ViewBindingUtils.setTabsEnabled(tabLayout, tabsEnabled);
+        ViewUtils.setTabsEnabled(tabLayout, tabsEnabled);
         viewPager.setPagingEnabled(tabsEnabled);
 
         if (tabsEnabled) {
@@ -216,5 +221,9 @@ public class AccountsActivity extends RxAppCompatActivity implements IAccountsVi
         } else {
             toolbar.setTitle(getString(R.string.account_id_label) + account.getAccount_id());
         }
+    }
+
+    void onUserRequestedAccountCreation(boolean isImportingSeed) {
+        presenter.onUserRequestAccountCreation(isImportingSeed);
     }
 }

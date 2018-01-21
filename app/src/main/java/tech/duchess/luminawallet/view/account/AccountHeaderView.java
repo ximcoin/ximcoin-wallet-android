@@ -15,7 +15,7 @@ import butterknife.Unbinder;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.api.HelpLinks;
 import tech.duchess.luminawallet.model.persistence.account.Account;
-import tech.duchess.luminawallet.view.util.ViewBindingUtils;
+import tech.duchess.luminawallet.view.util.ViewUtils;
 
 public class AccountHeaderView extends FrameLayout {
 
@@ -61,7 +61,7 @@ public class AccountHeaderView extends FrameLayout {
 
     @OnClick(R.id.account_not_on_network_info)
     public void onNotOnNetworkInfoClicked() {
-        ViewBindingUtils.openUrl(HelpLinks.MINIMUM_ACCOUNT_BALANCE, getContext());
+        ViewUtils.openUrl(HelpLinks.MINIMUM_ACCOUNT_BALANCE, getContext());
     }
 
     public void setAccount(@Nullable Account account) {

@@ -12,23 +12,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.trello.rxlifecycle2.components.support.RxFragment;
-
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
-import tech.duchess.luminawallet.LuminaWalletApp;
 import tech.duchess.luminawallet.R;
-import tech.duchess.luminawallet.model.dagger.module.FragmentLifecycleModule;
-import tech.duchess.luminawallet.presenter.createaccount.EncryptSeedPresenter;
+import tech.duchess.luminawallet.presenter.createaccount.EncryptSeedContract;
+import tech.duchess.luminawallet.view.common.BaseViewFragment;
 import tech.duchess.luminawallet.view.util.TextUtils;
-import tech.duchess.luminawallet.view.util.ViewBindingUtils;
+import tech.duchess.luminawallet.view.util.ViewUtils;
 
-public class EncryptSeedFragment extends RxFragment implements IEncryptSeedView {
+public class EncryptSeedFragment extends BaseViewFragment<EncryptSeedContract.EncryptSeedPresenter>
+        implements EncryptSeedContract.EncryptSeedView {
     private static final String SEED_KEY = "EncryptSeedFragment.SEED_KEY";
 
     @BindView(R.id.encryption_message)
@@ -42,9 +38,6 @@ public class EncryptSeedFragment extends RxFragment implements IEncryptSeedView 
 
     @BindView(R.id.btn_finish)
     Button finishButton;
-
-    @Inject
-    EncryptSeedPresenter presenter;
 
     private Unbinder unbinder;
 
@@ -63,21 +56,12 @@ public class EncryptSeedFragment extends RxFragment implements IEncryptSeedView 
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.encrypt_seed_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
-
         initMessage();
-
-        LuminaWalletApp.getInstance()
-                .getAppComponent()
-                .plus(new FragmentLifecycleModule(this))
-                .inject(this);
-
-        presenter.attachView(this);
-
         return view;
     }
 
     private void initMessage() {
-        ViewBindingUtils.whenNonNull(getContext(), c ->
+        ViewUtils.whenNonNull(getContext(), c ->
                 encryptionMessage.setText(TextUtils.getBulletedList(
                         5,
                         null,
@@ -93,7 +77,7 @@ public class EncryptSeedFragment extends RxFragment implements IEncryptSeedView 
     @Override
     public void onResume() {
         super.onResume();
-        ViewBindingUtils.whenNonNull(getActivity(), activity ->
+        ViewUtils.whenNonNull(getActivity(), activity ->
                 ((ICreateAccountFlowManager) activity)
                         .setTitle(getString(R.string.encrypt_seed_fragment_title)));
     }
@@ -102,12 +86,11 @@ public class EncryptSeedFragment extends RxFragment implements IEncryptSeedView 
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        presenter.detachView();
     }
 
     @Override
     public void showLoading(boolean isLoading) {
-        ViewBindingUtils.whenNonNull(getActivity(), activity ->
+        ViewUtils.whenNonNull(getActivity(), activity ->
                 ((ICreateAccountFlowManager) activity).showLoading(isLoading));
     }
 
@@ -148,34 +131,27 @@ public class EncryptSeedFragment extends RxFragment implements IEncryptSeedView 
 
     @OnClick(R.id.btn_finish)
     public void onUserClickFinish() {
-        presenter.onUserFinished();
+        presenter.onUserFinished(
+                getFieldContents(primaryPasswordLayout),
+                getFieldContents(confirmationPasswordLayout),
+                getSeed());
     }
 
     @Override
     public void finish() {
-        ViewBindingUtils.whenNonNull(getActivity(),
+        ViewUtils.whenNonNull(getActivity(),
                 activity -> ((ICreateAccountFlowManager) activity).onAccountCreationCompleted());
     }
 
     @Nullable
-    @Override
-    public String getPrimaryFieldContents() {
-        EditText editText = primaryPasswordLayout.getEditText();
+    private String getFieldContents(@NonNull TextInputLayout layout) {
+        EditText editText = layout.getEditText();
         return editText == null ? null : editText.getText().toString();
     }
 
     @Nullable
-    @Override
-    public String getSecondaryFieldContents() {
-        EditText editText = confirmationPasswordLayout.getEditText();
-        return editText == null ? null : editText.getText().toString();
-    }
-
-    @Nullable
-    @Override
-    public String getSeed() {
+    private String getSeed() {
         Bundle args = getArguments();
-
         return args == null ? null : args.getString(SEED_KEY);
     }
 }

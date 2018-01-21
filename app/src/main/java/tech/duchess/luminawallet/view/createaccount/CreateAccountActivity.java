@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -12,14 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tech.duchess.luminawallet.R;
-import tech.duchess.luminawallet.view.util.ViewBindingUtils;
+import tech.duchess.luminawallet.view.common.BaseActivity;
+import tech.duchess.luminawallet.view.util.ViewUtils;
 
-public class CreateAccountActivity extends RxAppCompatActivity implements ICreateAccountFlowManager {
+public class CreateAccountActivity extends BaseActivity implements ICreateAccountFlowManager {
     private static final String SEED_KEY = "CreateAccountActivity.SEED_KEY";
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -36,7 +35,7 @@ public class CreateAccountActivity extends RxAppCompatActivity implements ICreat
         setContentView(R.layout.basic_activity);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        ViewBindingUtils.whenNonNull(getSupportActionBar(), actionBar -> {
+        ViewUtils.whenNonNull(getSupportActionBar(), actionBar -> {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
         });
@@ -77,25 +76,17 @@ public class CreateAccountActivity extends RxAppCompatActivity implements ICreat
     }
 
     private void startSeedFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new GenerateSeedFragment())
-                .commit();
-        getSupportFragmentManager().executePendingTransactions();
+        replaceFragment(R.id.fragment_container, new GenerateSeedFragment(), true);
     }
 
     private void startSeedEncryptionFragment(boolean isFirstFragment, String seed) {
-        FragmentTransaction transaction =
-                getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, EncryptSeedFragment.newInstance(seed));
-
-        if (!isFirstFragment) {
-            // Save this transaction to the backstack so the user can back into the generate/import
-            // seed fragment.
-            transaction.addToBackStack(EncryptSeedFragment.class.getSimpleName());
+        Fragment fragment = EncryptSeedFragment.newInstance(seed);
+        if (isFirstFragment) {
+            replaceFragment(R.id.fragment_container, fragment, true,
+                    EncryptSeedFragment.class.getSimpleName());
+        } else {
+            replaceFragment(R.id.fragment_container, fragment, true);
         }
-
-        transaction.commit();
-        getSupportFragmentManager().executePendingTransactions();
     }
 
     @Override

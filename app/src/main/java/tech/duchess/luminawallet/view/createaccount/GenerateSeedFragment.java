@@ -1,10 +1,10 @@
 package tech.duchess.luminawallet.view.createaccount;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +12,6 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import org.stellar.sdk.KeyPair;
 
@@ -26,9 +24,9 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.view.util.TextUtils;
-import tech.duchess.luminawallet.view.util.ViewBindingUtils;
+import tech.duchess.luminawallet.view.util.ViewUtils;
 
-public class GenerateSeedFragment extends RxFragment {
+public class GenerateSeedFragment extends Fragment {
     private static final String SEED_KEY = "GenerateSeedFragment.SEED_KEY";
     private static final String SEED_SHOWN_KEY = "GeneratedSeedFragment.SEED_SHOWN_KEY";
 
@@ -90,13 +88,13 @@ public class GenerateSeedFragment extends RxFragment {
     @Override
     public void onResume() {
         super.onResume();
-        ViewBindingUtils.whenNonNull(getActivity(), activity ->
+        ViewUtils.whenNonNull(getActivity(), activity ->
                 ((ICreateAccountFlowManager) activity)
                         .setTitle(getString(R.string.generate_seed_fragment_title)));
     }
 
     private void setSeedWarningMessage() {
-        ViewBindingUtils.whenNonNull(getContext(), c ->
+        ViewUtils.whenNonNull(getContext(), c ->
                 warningMessage.setText(TextUtils.getBulletedList(
                         5,
                         null,
@@ -130,7 +128,7 @@ public class GenerateSeedFragment extends RxFragment {
 
         String toastMessage;
         if (context != null
-                && ViewBindingUtils.copyToClipboard(getContext(),
+                && ViewUtils.copyToClipboard(getContext(),
                 getString(R.string.seed_clipboard_label),
                 String.valueOf(keyPair.getSecretSeed()))) {
             toastMessage = getString(R.string.seed_copied_success_toast);
@@ -149,11 +147,9 @@ public class GenerateSeedFragment extends RxFragment {
 
     @OnClick(R.id.btn_next)
     public void goNext() {
-        Activity parentActivity = getActivity();
-        if (parentActivity != null) {
-            ((ICreateAccountFlowManager) parentActivity)
-                    .onSeedCreated(String.valueOf(keyPair.getSecretSeed()));
-        }
+        ViewUtils.whenNonNull(getActivity(),
+                activity -> ((ICreateAccountFlowManager) activity)
+                        .onSeedCreated(String.valueOf(keyPair.getSecretSeed())));
     }
 
     @OnClick(R.id.btn_show_seed)

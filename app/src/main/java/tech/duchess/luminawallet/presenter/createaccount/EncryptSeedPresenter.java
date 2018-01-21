@@ -1,28 +1,25 @@
 package tech.duchess.luminawallet.presenter.createaccount;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.trello.rxlifecycle2.LifecycleProvider;
-import com.trello.rxlifecycle2.android.FragmentEvent;
-
 import org.stellar.sdk.KeyPair;
 
-import javax.inject.Inject;
-
 import io.reactivex.Completable;
-import tech.duchess.luminawallet.model.dagger.SchedulerProvider;
+import tech.duchess.luminawallet.dagger.SchedulerProvider;
 import tech.duchess.luminawallet.model.persistence.HorizonDB;
 import tech.duchess.luminawallet.model.persistence.account.AccountPrivateKey;
 import tech.duchess.luminawallet.model.persistence.account.AccountPrivateKeyDao;
 import tech.duchess.luminawallet.model.persistence.account.EncryptedSeedPackage;
 import tech.duchess.luminawallet.model.util.SeedEncryptionUtil;
-import tech.duchess.luminawallet.view.createaccount.IEncryptSeedView;
+import tech.duchess.luminawallet.presenter.common.BasePresenter;
 import tech.duchess.luminawallet.view.util.TextUtils;
-import tech.duchess.luminawallet.view.util.ViewBindingUtils;
+import tech.duchess.luminawallet.view.util.ViewUtils;
 import timber.log.Timber;
 
-public class EncryptSeedPresenter {
+public class EncryptSeedPresenter extends BasePresenter<EncryptSeedContract.EncryptSeedView>
+        implements EncryptSeedContract.EncryptSeedPresenter {
     // Make sure to update the respective xml layout and copy when changing the length requirements.
     private static final int MAX_PASSWORD_LENGTH = 20;
     private static final int MIN_PASSWORD_LENGTH = 8;
@@ -33,41 +30,40 @@ public class EncryptSeedPresenter {
     @NonNull
     private final SchedulerProvider schedulerProvider;
 
-    @NonNull
-    private final LifecycleProvider<FragmentEvent> lifecycleProvider;
-
-    @Nullable
-    private IEncryptSeedView view;
-
     private boolean isInEncryptionProcess = false;
 
-    @Inject
-    public EncryptSeedPresenter(@NonNull HorizonDB horizonDB,
-                                @NonNull SchedulerProvider schedulerProvider,
-                                @NonNull LifecycleProvider<FragmentEvent> lifecycleProvider) {
+    EncryptSeedPresenter(@NonNull EncryptSeedContract.EncryptSeedView view,
+                         @NonNull HorizonDB horizonDB,
+                         @NonNull SchedulerProvider schedulerProvider) {
+        super(view);
         this.accountPrivateKeyDao = horizonDB.accountPrivateKeyDao();
         this.schedulerProvider = schedulerProvider;
-        this.lifecycleProvider = lifecycleProvider;
     }
 
-    public void attachView(@NonNull IEncryptSeedView view) {
-        this.view = view;
+    @Override
+    public void start(@Nullable Bundle bundle) {
+        super.start(bundle);
         checkFinishEnabled();
     }
 
-    public void detachView() {
-        view = null;
-    }
+    @Override
+    public void onUserFinished(@Nullable String password,
+                               @Nullable String passwordValidation,
+                               @Nullable String seed) {
+        if (TextUtils.isEmpty(seed)) {
+            // Something went very wrong.
+            Timber.e("Seed was empty");
+            view.showSomethingWrongError();
+        }
 
-    public void onUserFinished() {
         if (isInEncryptionProcess) {
             return;
         }
 
-        if (!checkFieldErrors()) {
-            encryptSeed();
+        if (!checkFieldErrors(password, passwordValidation)) {
+            encryptSeed(seed, password);
         } else {
-            ViewBindingUtils.whenNonNull(view, v -> v.setFinishEnabled(false));
+            view.setFinishEnabled(true);
         }
     }
 
@@ -83,16 +79,12 @@ public class EncryptSeedPresenter {
      * will be responsible for displaying the most egregious error during submission.
      */
     private void checkFinishEnabled() {
-        if (view == null) {
-            return;
-        }
-
         hideAllFieldErrors();
         view.setFinishEnabled(true);
     }
 
     private void hideAllFieldErrors() {
-        ViewBindingUtils.whenNonNull(view, v -> {
+        ViewUtils.whenNonNull(view, v -> {
             v.hidePasswordLengthError();
             v.hidePasswordMismatchError();
         });
@@ -103,19 +95,14 @@ public class EncryptSeedPresenter {
      *
      * @return {@code True} if one was found; otherwise the form is valid for submission.
      */
-    private boolean checkFieldErrors() {
-        if (view == null) {
-            return true;
-        }
-
+    private boolean checkFieldErrors(@Nullable String password,
+                                     @Nullable String passwordValidation) {
         hideAllFieldErrors();
 
-        String primaryPassword = view.getPrimaryFieldContents();
-
-        if (!checkPasswordLength(primaryPassword)) {
+        if (!checkPasswordLength(password)) {
             view.showPasswordLengthError();
             return true;
-        } else if (!checkPasswordsMatch(primaryPassword, view.getSecondaryFieldContents())) {
+        } else if (!checkPasswordsMatch(password, passwordValidation)) {
             view.showPasswordMismatchError();
             return true;
         }
@@ -153,14 +140,8 @@ public class EncryptSeedPresenter {
         return primaryPassword.equals(confirmationPassword);
     }
 
-    private void encryptSeed() {
-        if (view == null) {
-            return;
-        }
-
-        final String seed = view.getSeed();
-        final String password = view.getPrimaryFieldContents();
-
+    private void encryptSeed(@NonNull String seed,
+                             @NonNull String password) {
         if (TextUtils.isEmpty(seed) || TextUtils.isEmpty(password)) {
             view.showSomethingWrongError();
             return;
@@ -178,10 +159,12 @@ public class EncryptSeedPresenter {
             accountPrivateKeyDao.insert(accountPrivateKey);
         })
                 .compose(schedulerProvider.completableScheduler())
-                .compose(lifecycleProvider.bindUntilEvent(FragmentEvent.PAUSE))
-                .doOnSubscribe(disposable -> view.showLoading(true))
+                .doOnSubscribe(disposable -> {
+                    addDisposable(disposable);
+                    view.showLoading(true);
+                })
                 .doOnTerminate(() -> view.showLoading(false))
-                .subscribe(() -> view.finish(),
+                .subscribe(view::finish,
                         throwable -> {
                             isInEncryptionProcess = false;
                             Timber.e(throwable, "Failed to encrypt/insert seed");

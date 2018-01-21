@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,9 +21,9 @@ import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.view.account.IAccountPerspectiveView;
 import tech.duchess.luminawallet.view.util.TextUtils;
-import tech.duchess.luminawallet.view.util.ViewBindingUtils;
+import tech.duchess.luminawallet.view.util.ViewUtils;
 
-public class ReceiveFragment extends RxFragment implements IAccountPerspectiveView {
+public class ReceiveFragment extends Fragment implements IAccountPerspectiveView {
     private static final String ACCOUNT_KEY = "ReceiveFragment.ACCOUNT_KEY";
     private static final String ADDRESS_KEY = "ReceiveFragment.ADDRESS_KEY";
 
@@ -88,14 +87,14 @@ public class ReceiveFragment extends RxFragment implements IAccountPerspectiveVi
             viewFullAddressButton.setEnabled(false);
         } else {
             qrCode.setVisibility(View.VISIBLE);
-            qrCode.setImageBitmap(ViewBindingUtils.encodeAsBitmap(address));
+            qrCode.setImageBitmap(ViewUtils.encodeAsBitmap(address));
             viewFullAddressButton.setEnabled(true);
         }
     }
 
     @OnClick(R.id.view_full_address_button)
     public void onViewFullAddressClicked() {
-        ViewBindingUtils.whenNonNull(getContext(), context ->
+        ViewUtils.whenNonNull(getContext(), context ->
                 new AlertDialog.Builder(context, R.style.DefaultAlertDialog)
                         .setTitle(R.string.view_full_address_dialog_title)
                         .setMessage(address)
@@ -112,7 +111,7 @@ public class ReceiveFragment extends RxFragment implements IAccountPerspectiveVi
 
         String toastMessage;
         if (context != null
-                && ViewBindingUtils.copyToClipboard(getContext(),
+                && ViewUtils.copyToClipboard(getContext(),
                 getString(R.string.address_clipboard_label),
                 String.valueOf(address))) {
             toastMessage = getString(R.string.address_copied_success_toast);

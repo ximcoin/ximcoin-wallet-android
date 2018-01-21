@@ -1,5 +1,6 @@
 package tech.duchess.luminawallet;
 
+import android.app.Activity;
 import android.app.Application;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,17 +10,19 @@ import com.squareup.moshi.Moshi;
 
 import javax.inject.Inject;
 
-import tech.duchess.luminawallet.model.dagger.component.AppComponent;
-import tech.duchess.luminawallet.model.dagger.component.DaggerAppComponent;
-import tech.duchess.luminawallet.model.dagger.module.AppModule;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
+import tech.duchess.luminawallet.dagger.component.DaggerAppComponent;
 import timber.log.Timber;
 
 /**
  * Base class for maintaining global application state.
  */
-public class LuminaWalletApp extends Application {
+public class LuminaWalletApp extends Application implements HasActivityInjector {
 
-    private AppComponent appComponent;
+    @Inject
+    DispatchingAndroidInjector<Activity> activityInjector;
 
     @Inject
     Moshi moshi;
@@ -31,11 +34,10 @@ public class LuminaWalletApp extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
-
-        appComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(this))
-                .build();
-        appComponent.inject(this);
+        DaggerAppComponent
+                .builder()
+                .create(this)
+                .inject(this);
 
         if (EnvironmentConstants.IS_PRODUCTION) {
             Timber.plant(new CrashReportingTree());
@@ -53,12 +55,13 @@ public class LuminaWalletApp extends Application {
         return application;
     }
 
-    public AppComponent getAppComponent() {
-        return appComponent;
-    }
-
     public Moshi getMoshi() {
         return moshi;
+    }
+
+    @Override
+    public AndroidInjector<Activity> activityInjector() {
+        return activityInjector;
     }
 
     private class CrashReportingTree extends Timber.Tree {

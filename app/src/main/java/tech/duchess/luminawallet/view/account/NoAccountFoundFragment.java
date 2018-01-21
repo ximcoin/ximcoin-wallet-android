@@ -3,20 +3,18 @@ package tech.duchess.luminawallet.view.account;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.trello.rxlifecycle2.components.support.RxFragment;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import tech.duchess.luminawallet.R;
-import tech.duchess.luminawallet.view.util.ViewBindingUtils;
+import tech.duchess.luminawallet.view.util.ViewUtils;
 
-public class NoAccountFoundFragment extends RxFragment {
+public class NoAccountFoundFragment extends Fragment {
     private Unbinder unbinder;
 
     @Nullable
@@ -46,7 +44,7 @@ public class NoAccountFoundFragment extends RxFragment {
     }
 
     private void startCreateAccountFlow(boolean isImportingSeed) {
-        ViewBindingUtils.whenNonNull(getActivity(),
-                activity -> ((IAccountsView) activity).startCreateAccountActivity(isImportingSeed));
+        ViewUtils.whenNonNull(getActivity(), activity ->
+                ((AccountsActivity) activity).onUserRequestedAccountCreation(isImportingSeed));
     }
 }

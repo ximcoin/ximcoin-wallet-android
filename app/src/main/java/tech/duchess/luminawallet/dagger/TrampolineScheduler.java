@@ -1,4 +1,4 @@
-package tech.duchess.luminawallet.model.dagger;
+package tech.duchess.luminawallet.dagger;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;

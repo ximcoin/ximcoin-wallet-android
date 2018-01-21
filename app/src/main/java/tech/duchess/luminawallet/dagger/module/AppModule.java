@@ -1,13 +1,17 @@
-package tech.duchess.luminawallet.model.dagger.module;
+package tech.duchess.luminawallet.dagger.module;
 
 import android.app.Application;
+import android.arch.persistence.room.Room;
 
 import com.squareup.moshi.Moshi;
 
 import javax.inject.Singleton;
 
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
+import dagger.android.AndroidInjectionModule;
+import dagger.android.ContributesAndroidInjector;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -15,20 +19,46 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 import tech.duchess.luminawallet.EnvironmentConstants;
+import tech.duchess.luminawallet.LuminaWalletApp;
+import tech.duchess.luminawallet.dagger.scope.PerActivity;
 import tech.duchess.luminawallet.model.api.CurlLoggingInterceptor;
 import tech.duchess.luminawallet.model.api.HorizonApi;
+import tech.duchess.luminawallet.model.persistence.HorizonDB;
+import tech.duchess.luminawallet.view.account.AccountsActivity;
+import tech.duchess.luminawallet.view.account.AccountsActivityModule;
+import tech.duchess.luminawallet.view.createaccount.CreateAccountActivity;
+import tech.duchess.luminawallet.view.createaccount.CreateAccountActivityModule;
 
-@Module
-public class HorizonApiModule {
+/**
+ * Provides application-wide dependencies.
+ */
+@Module(includes = AndroidInjectionModule.class)
+public abstract class AppModule {
+    @Binds
+    @Singleton
+    abstract Application application(LuminaWalletApp app);
+
     @Provides
     @Singleton
-    Cache provideHttpCache(Application application) {
+    static HorizonDB provideHorizonDB(Application application) {
+        return Room.databaseBuilder(application, HorizonDB.class, HorizonDB.DATABASE_NAME).build();
+    }
+
+    @Provides
+    @Singleton
+    static Moshi provideMoshi() {
+        return new Moshi.Builder().build();
+    }
+
+    @Provides
+    @Singleton
+    static Cache provideHttpCache(Application application) {
         return new Cache(application.getCacheDir(), 10 * 1024 * 1024);
     }
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(Cache cache) {
+    static OkHttpClient provideOkHttpClient(Cache cache) {
         OkHttpClient.Builder client = new OkHttpClient.Builder();
         if (!EnvironmentConstants.IS_PRODUCTION) {
             CurlLoggingInterceptor curlLoggingInterceptor = new CurlLoggingInterceptor();
@@ -46,7 +76,7 @@ public class HorizonApiModule {
 
     @Provides
     @Singleton
-    Retrofit provideRetrofit(Moshi moshi, OkHttpClient okHttpClient) {
+    static Retrofit provideRetrofit(Moshi moshi, OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -57,7 +87,15 @@ public class HorizonApiModule {
 
     @Provides
     @Singleton
-    public HorizonApi providesHorizonApi(Retrofit retrofit) {
+    static HorizonApi providesHorizonApi(Retrofit retrofit) {
         return retrofit.create(HorizonApi.class);
     }
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = AccountsActivityModule.class)
+    abstract AccountsActivity bindAccountsActivity();
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = CreateAccountActivityModule.class)
+    abstract CreateAccountActivity bindCreateAccountActivity();
 }

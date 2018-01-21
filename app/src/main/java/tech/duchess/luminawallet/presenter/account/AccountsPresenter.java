@@ -1,66 +1,61 @@
 package tech.duchess.luminawallet.presenter.account;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.trello.rxlifecycle2.LifecycleProvider;
-import com.trello.rxlifecycle2.android.ActivityEvent;
-
-import javax.inject.Inject;
-
-import tech.duchess.luminawallet.model.dagger.SchedulerProvider;
+import tech.duchess.luminawallet.dagger.SchedulerProvider;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.model.repository.AccountRepository;
-import tech.duchess.luminawallet.view.account.IAccountsView;
-import tech.duchess.luminawallet.view.util.ViewBindingUtils;
+import tech.duchess.luminawallet.presenter.common.BasePresenter;
+import tech.duchess.luminawallet.view.util.ViewUtils;
 import timber.log.Timber;
 
-public class AccountsPresenter {
+public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsView>
+        implements AccountsContract.AccountsPresenter {
+    private static final String HAS_LOADED_ACCOUNTS_KEY =
+            "AccountsPresenter.HAS_LOADED_ACCOUNTS_KEY";
+
     @NonNull
     private final AccountRepository accountRepository;
 
     @NonNull
     private final SchedulerProvider schedulerProvider;
 
-    @NonNull
-    private final LifecycleProvider<ActivityEvent> lifecycleProvider;
+    private boolean hasLoadedAccounts = false;
 
-    @Nullable
-    private IAccountsView view;
-
-    @Inject
-    public AccountsPresenter(@NonNull AccountRepository accountRepository,
-                             @NonNull SchedulerProvider schedulerProvider,
-                             @NonNull LifecycleProvider<ActivityEvent> lifecycleProvider) {
+    AccountsPresenter(@NonNull AccountsContract.AccountsView view,
+                      @NonNull AccountRepository accountRepository,
+                      @NonNull SchedulerProvider schedulerProvider) {
+        super(view);
         this.accountRepository = accountRepository;
         this.schedulerProvider = schedulerProvider;
-        this.lifecycleProvider = lifecycleProvider;
     }
 
-    public void attachView(@NonNull IAccountsView view, boolean isFirstStart) {
-        this.view = view;
-        loadAccounts(isFirstStart);
+    @Override
+    public void start(@Nullable Bundle bundle) {
+        ViewUtils.whenNonNull(bundle,
+                b -> b.putBoolean(HAS_LOADED_ACCOUNTS_KEY, hasLoadedAccounts));
+    }
+
+    @Override
+    public void resume() {
+        super.resume();
+        loadAccounts(!hasLoadedAccounts);
     }
 
     public void refreshAccounts() {
         loadAccounts(true);
     }
 
-    public void detachView() {
-        view = null;
-    }
-
     private void loadAccounts(boolean deepPoll) {
         accountRepository.getAllAccounts(deepPoll)
                 .compose(schedulerProvider.singleScheduler())
-                .compose(lifecycleProvider.bindUntilEvent(ActivityEvent.DESTROY))
-                .doOnSubscribe(disposable ->
-                        ViewBindingUtils.whenNonNull(view, v -> v.showLoading(true)))
+                .doOnSubscribe(disposable -> {
+                    addDisposable(disposable);
+                    view.showLoading(true);
+                })
                 .subscribe(accounts -> {
-                    if (view == null) {
-                        return;
-                    }
-
                     view.showLoading(false);
                     if (accounts.isEmpty()) {
                         view.showNoAccountFound();
@@ -74,13 +69,18 @@ public class AccountsPresenter {
                     }
                 }, throwable -> {
                     Timber.e(throwable, "Failed to load accounts");
-                    ViewBindingUtils.whenNonNull(view, v -> {
-                        v.showLoading(false);
-                        v.showAccountLoadFailure();
-                    });
+                    view.showLoading(false);
+                    view.showAccountLoadFailure();
                 });
     }
 
-    private class AccountNotFoundException extends Exception {
+    @Override
+    public void onAccountCreationReturned(boolean didCreateNewAccount) {
+        refreshAccounts();
+    }
+
+    @Override
+    public void onUserRequestAccountCreation(boolean isImportingSeed) {
+        view.startCreateAccountFlow(isImportingSeed);
     }
 }
