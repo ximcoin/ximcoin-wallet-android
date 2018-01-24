@@ -64,14 +64,13 @@ public class TransactionsFragment extends Fragment implements IAccountPerspectiv
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recycler_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
-        initRecyclerView();
 
         if (savedInstanceState == null) {
             ViewUtils.whenNonNull(getArguments(), args ->
                     ViewUtils.whenNonNull(args.getParcelable(ACCOUNT_KEY), account ->
                             accountId = ((Account) account).getAccount_id()));
         } else {
-            accountId = savedInstanceState.getString(accountId);
+            accountId = savedInstanceState.getString(ACCOUNT_KEY);
         }
 
         initRecyclerView();
