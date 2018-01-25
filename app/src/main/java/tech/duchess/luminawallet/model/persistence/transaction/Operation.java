@@ -1,96 +1,131 @@
 package tech.duchess.luminawallet.model.persistence.transaction;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
+import android.util.SparseArray;
 
+import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.persistence.Link;
+import tech.duchess.luminawallet.model.util.AssetUtil;
 
 public class Operation {
-    private enum OperationType {
+    public enum OperationType {
         /**
          * Creates new account in Stellar Network. Fields to look for:
-         *
+         * <p>
          * "account" - Account that is being created.
          * "funder" - Account that is funding the newly created account.
          * "starting_balance" - The balance that the account is initially being funded with. Will
          * always be in XLM.
          */
-        CREATE_ACCOUNT(0),
+        CREATE_ACCOUNT(0, R.string.operation_account_created),
         /**
          * Sends a simple payment between two accounts in the Stellar Network. Fields to look for:
-         *
+         * <p>
          * "to" - Account receiving funds.
          * "from" - Account sending funds.
          * "amount" - Amount being sent.
          * "asset_type"/"asset_code" - The type of asset being sent. Will not have an asset code if
          * asset type is native (XLM). Otherwise, check for asset code.
          */
-        PAYMENT(1),
+        PAYMENT(1, R.string.operation_payment),
         /**
          * Sends a path payment between two accounts in the Stellar Network. Fields to look for:
-         *
+         * <p>
          * TODO
          */
-        PATH_PAYMENT(2),
+        PATH_PAYMENT(2, R.string.operation_path_payment),
         /**
          * Creates, updates, or deletes an offer in the Stellar Network. Fields to look for:
-         *
+         * <p>
          * TODO
          */
-        MANAGE_OFFER(3),
+        MANAGE_OFFER(3, R.string.operation_manage_offer),
         /**
          * Creates an offer, that won't consume a counter offer that exactly matches this offer.
          * Fields to look for:
-         *
+         * <p>
          * TODO
          */
-        CREATE_PASSIVE_OFFER(4),
+        CREATE_PASSIVE_OFFER(4, R.string.operation_create_passive_offer),
         /**
          * Sets account options (inflation destination, adding signers, etc.). Fields to look for:
-         *
+         * <p>
          * TODO
          */
-        SET_OPTIONS(5),
+        SET_OPTIONS(5, R.string.operation_set_options),
         /**
          * Creates, updates, or deletes a trust line. Fields to look for:
-         *
+         * <p>
          * TODO
          */
-        CHANGE_TRUST(6),
+        CHANGE_TRUST(6, R.string.operation_change_trust),
         /**
          * Updates the authorized flag of an existing trust line; this is called by the issuer of
          * the related asset. Fields to look for:
-         *
+         * <p>
          * TODO
          */
-        ALLOW_TRUST(7),
+        ALLOW_TRUST(7, R.string.operation_allow_trust),
         /**
          * Deletes account and transfers remaining balance to destination account. Fields to look
          * for:
-         *
+         * <p>
          * TODO
          */
-        ACCOUNT_MERGE(8),
+        ACCOUNT_MERGE(8, R.string.operation_account_merge),
         /**
          * Runs inflation. Fields to look for:
-         *
+         * <p>
          * TODO
          */
-        INFLATION(9),
+        INFLATION(9, R.string.operation_inflation),
         /**
          * Set, modify or delete a Data Entry (name/value pair) for an account. Fields to look for:
-         *
+         * <p>
          * TODO
          */
-        MANAGE_DATA(10);
+        MANAGE_DATA(10, R.string.operation_manage_data),
+        /**
+         * A placeholder for unrecognized operation types.
+         */
+        UNKNOWN(-1, R.string.operation_unknown);
+
+        private static final SparseArray<OperationType> VALUES;
+
+        static {
+            OperationType[] operationTypes = values();
+            VALUES = new SparseArray<>(operationTypes.length);
+
+            for (OperationType operationType : operationTypes) {
+                VALUES.append(operationType.getType(), operationType);
+            }
+        }
 
         private final int type;
 
-        OperationType(int type) {
+        @StringRes
+        private final int friendlyName;
+
+        OperationType(int type, @StringRes int friendlyName) {
             this.type = type;
+            this.friendlyName = friendlyName;
         }
 
-        private int getType() {
+        public int getType() {
             return type;
+        }
+
+        @StringRes
+        public int getFriendlyName() {
+            return friendlyName;
+        }
+
+        @NonNull
+        static OperationType findOperationType(int type) {
+            OperationType operationType = VALUES.get(type);
+            return operationType == null ? OperationType.UNKNOWN : operationType;
         }
     }
 
@@ -99,7 +134,7 @@ public class Operation {
     private String paging_token;
     private String source_account;
     private String type;
-    private String type_i;
+    private int type_i;
     private String created_at;
     private String transaction_hash;
     private String asset_type;
@@ -114,6 +149,7 @@ public class Operation {
     private double starting_balance;
     private String funder;
     private String account;
+    private Transaction transaction;
 
     public OperationLinks get_links() {
         return _links;
@@ -155,11 +191,11 @@ public class Operation {
         this.type = type;
     }
 
-    public String getType_i() {
+    public int getType_i() {
         return type_i;
     }
 
-    public void setType_i(String type_i) {
+    public void setType_i(int type_i) {
         this.type_i = type_i;
     }
 
@@ -188,7 +224,7 @@ public class Operation {
     }
 
     public String getAsset_code() {
-        return asset_code;
+        return AssetUtil.getAssetCode(asset_type, asset_code);
     }
 
     public void setAsset_code(String asset_code) {
@@ -275,9 +311,22 @@ public class Operation {
         this.account = account;
     }
 
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+    }
+
+    @NonNull
+    public OperationType getOperationType() {
+        return OperationType.findOperationType(getType_i());
+    }
+
     public static class OperationLinks {
         @Nullable
-        private Link self,transaction,effects,succeeds,precedes;
+        private Link self, transaction, effects, succeeds, precedes;
 
         @Nullable
         public Link getSelf() {

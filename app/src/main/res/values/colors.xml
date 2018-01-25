@@ -21,7 +21,6 @@
     <color name="black_70">#B3000000</color>
     <color name="black_26">#42000000</color>
 
-
     <!-- Intro Slides -->
     <color name="intro_welcome_background">@color/colorPrimary</color>
     <color name="intro_welcome_light_dot">@color/colorPrimaryLight</color>
@@ -42,6 +41,9 @@
     <color name="intro_developer_background">@color/colorAccent</color>
     <color name="intro_developer_light_dot">@color/colorAccentLight</color>
     <color name="intro_developer_dark_dot">@color/colorAccentDark</color>
+
+    <color name="transfer_in">#FF87D37C</color>
+    <color name="transfer_out">#FFE26A6A</color>
 
     <array name="array_dot_active">
         <item>@color/intro_welcome_light_dot</item>

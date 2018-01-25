@@ -10,6 +10,9 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,6 +21,7 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 
 import io.reactivex.functions.Consumer;
+import tech.duchess.luminawallet.R;
 import timber.log.Timber;
 
 /**
@@ -105,6 +109,16 @@ public final class ViewUtils {
 
         clipboardManager.setPrimaryClip(ClipData.newPlainText(label, value));
         return true;
+    }
+
+    public static void addDividerDecoration(@NonNull RecyclerView recyclerView,
+                                            @NonNull Context context,
+                                            int layoutManagerOrientation) {
+        DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(context, layoutManagerOrientation);
+        ViewUtils.whenNonNull(ContextCompat.getDrawable(context, R.drawable.divider),
+                dividerItemDecoration::setDrawable);
+        recyclerView.addItemDecoration(dividerItemDecoration);
     }
 
     public static Bitmap encodeAsBitmap(String str) {

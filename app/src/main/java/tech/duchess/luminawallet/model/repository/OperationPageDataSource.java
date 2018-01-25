@@ -7,13 +7,17 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
+import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import tech.duchess.luminawallet.model.api.HorizonApi;
 import tech.duchess.luminawallet.model.persistence.transaction.Operation;
 import tech.duchess.luminawallet.model.persistence.transaction.OperationPage;
+import tech.duchess.luminawallet.view.util.TextUtils;
 import timber.log.Timber;
 
 public class OperationPageDataSource extends PageKeyedDataSource<String, Operation> {
@@ -42,11 +46,22 @@ public class OperationPageDataSource extends PageKeyedDataSource<String, Operati
     @Override
     public void loadInitial(@NonNull LoadInitialParams<String> params,
                             @NonNull LoadInitialCallback<String, Operation> callback) {
-        OperationPage operationPage =
-                horizonApi.getFirstOperationsPage(accountId, params.requestedLoadSize).blockingGet();
-        callback.onResult(operationPage.getOperations(),
-                operationPage.getPreviousPageLink(),
-                operationPage.getNextPageLink());
+        AtomicReference<String> nextPage = new AtomicReference<>();
+        AtomicReference<String> prevPage = new AtomicReference<>();
+        List<Operation> operationList =
+                horizonApi.getFirstOperationsPage(accountId, params.requestedLoadSize)
+                        .toObservable()
+                        .doOnNext(operationPage -> {
+                            nextPage.set(operationPage.getNextPageLink());
+                            prevPage.set(operationPage.getPreviousPageLink());
+                        })
+                        .map(OperationPage::getOperations)
+                        .flatMapIterable(operations -> operations)
+                        .flatMap(this::populateOperationTransaction)
+                        .toList()
+                        .blockingGet();
+
+        callback.onResult(operationList, prevPage.get(), nextPage.get());
     }
 
     @Override
@@ -62,9 +77,35 @@ public class OperationPageDataSource extends PageKeyedDataSource<String, Operati
         try {
             Response response = okHttpClient.newCall(request).execute();
             OperationPage operationPage = operationPageAdapter.fromJson(response.body().source());
-            callback.onResult(operationPage.getOperations(), operationPage.getNextPageLink());
+
+            List<Operation> operations = operationPage.getOperations();
+            if (operations.isEmpty()) {
+                callback.onResult(operations, operationPage.getNextPageLink());
+                return;
+            }
+
+            List<Operation> filledOperations = Observable.fromIterable(operations)
+                    .flatMap(this::populateOperationTransaction)
+                    .toList()
+                    .blockingGet();
+
+            callback.onResult(filledOperations, operationPage.getNextPageLink());
         } catch (IOException e) {
             Timber.e(e, "Failed to load more operations");
+        }
+    }
+
+    private Observable<Operation> populateOperationTransaction(@NonNull Operation operation) {
+        String transactionHash = operation.getTransaction_hash();
+        if (!TextUtils.isEmpty(transactionHash)) {
+            return horizonApi.getTransaction(operation.getTransaction_hash())
+                    .map(transaction -> {
+                        operation.setTransaction(transaction);
+                        return operation;
+                    })
+                    .toObservable();
+        } else {
+            return Observable.just(operation);
         }
     }
 }

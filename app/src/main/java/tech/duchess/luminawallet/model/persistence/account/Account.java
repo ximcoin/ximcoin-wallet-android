@@ -21,6 +21,7 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import tech.duchess.luminawallet.LuminaWalletApp;
+import tech.duchess.luminawallet.model.util.AssetUtil;
 import tech.duchess.luminawallet.view.util.TextUtils;
 
 @Entity
@@ -134,7 +135,7 @@ public class Account implements Parcelable {
 
     public Balance getLumens() {
         return Observable.fromIterable(balances)
-                .filter(Balance::isLumenBalance)
+                .filter(AssetUtil::isLumenBalance)
                 .firstElement()
                 .defaultIfEmpty(new Balance())
                 .blockingGet();

@@ -1,9 +1,12 @@
 package tech.duchess.luminawallet.view.account.balance;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -48,24 +51,32 @@ public class BalancesFragment extends Fragment implements IAccountPerspectiveVie
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recycler_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
-
         adapter = new BalanceRecyclerAdapter();
 
         if (savedInstanceState == null) {
-            ViewUtils.whenNonNull(getArguments(), args -> {
-                ViewUtils.whenNonNull(args.getParcelable(ACCOUNT_KEY), account -> {
-                    adapter.setBalances(((Account)account).getBalances());
-                });
-            });
+            ViewUtils.whenNonNull(getArguments(), args ->
+                    ViewUtils.whenNonNull(args.getParcelable(ACCOUNT_KEY), account ->
+                            adapter.setBalances(((Account) account).getBalances())));
         } else {
             adapter.restoreState(savedInstanceState);
         }
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
+        initRecycler();
 
         return view;
+    }
+
+    private void initRecycler() {
+        Context context = getContext();
+        if (context == null) {
+            return;
+        }
+
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+        ViewUtils.addDividerDecoration(recyclerView, context, layoutManager.getOrientation());
     }
 
     @Override

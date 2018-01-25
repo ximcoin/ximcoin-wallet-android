@@ -2,6 +2,7 @@ package tech.duchess.luminawallet.view.account.transactions;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.paging.PagedList;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -78,14 +79,26 @@ public class TransactionsFragment extends Fragment implements IAccountPerspectiv
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
     private void initRecyclerView() {
-        layoutManager = new LinearLayoutManager(getContext());
+        Context context = getContext();
+        if (context == null) {
+            return;
+        }
+
+        layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         //recyclerView.setItemAnimator(new SlideUpAnimator());
-        adapter = new TransactionsAdapter();
+        adapter = new TransactionsAdapter(accountId);
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
+        ViewUtils.addDividerDecoration(recyclerView, context, layoutManager.getOrientation());
 
         if (accountId != null) {
             liveData = transactionsPresenter.setAccountId(accountId);
@@ -114,6 +127,7 @@ public class TransactionsFragment extends Fragment implements IAccountPerspectiv
             accountId = account.getAccount_id();
         }
 
+        adapter.setAccountId(accountId);
         liveData = transactionsPresenter.setAccountId(accountId);
         setDataListener();
     }
