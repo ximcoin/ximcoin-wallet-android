@@ -71,10 +71,17 @@
     <!-- Operations Fragment -->
     <string name="operation_type_label">Action Performed:</string>
     <string name="memo_label">Memo:</string>
-    <string name="receiver_label">Receiver:</string>
+    <string name="recipient_label">Recipient:</string>
     <string name="sender_label">Sender:</string>
     <string name="receive_amount_prefix">+%1$s %2$s</string>
     <string name="send_amount_prefix">-%1$s %2$s</string>
+
+    <!-- Send Fragment -->
+    <string name="recipient_hint">Recipient Address</string>
+    <string name="amount_hint">Amount</string>
+    <string name="memo_hint">Memo (Optional)</string>
+    <string name="send_payment">SEND PAYMENT</string>
+    <string name="invalid_ascii">Invalid ASCII Character</string>
 
     <!-- Account Header View -->
     <string name="account_label">Public Address:</string>
@@ -100,4 +107,5 @@
         <item quantity="other">%d Lumens</item>
     </plurals>
 
+    <string name="address_validation">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
 </resources>

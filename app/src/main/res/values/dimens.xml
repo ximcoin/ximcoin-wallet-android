@@ -19,4 +19,7 @@
     <dimen name="slide_desc">16dp</dimen>
     <dimen name="desc_padding">40dp</dimen>
 
+    <!-- Send Fragment -->
+    <dimen name="address_icon_width_height">28dp</dimen>
+
 </resources>

@@ -34,8 +34,8 @@ class TransactionsViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.sender_label)
     TextView sender;
 
-    @BindView(R.id.receiver_label)
-    TextView receiver;
+    @BindView(R.id.recipient_label)
+    TextView recipient;
 
     @BindView(R.id.address)
     TextView address;
@@ -68,12 +68,12 @@ class TransactionsViewHolder extends RecyclerView.ViewHolder {
         int amountColorRes;
         int amountPrefixRes;
         if (operationAdapter.isTransferIn) {
-            receiver.setVisibility(View.GONE);
+            recipient.setVisibility(View.GONE);
             sender.setVisibility(View.VISIBLE);
             amountColorRes = R.color.transfer_in;
             amountPrefixRes = R.string.receive_amount_prefix;
         } else {
-            receiver.setVisibility(View.VISIBLE);
+            recipient.setVisibility(View.VISIBLE);
             sender.setVisibility(View.GONE);
             amountColorRes = R.color.transfer_out;
             amountPrefixRes = R.string.send_amount_prefix;

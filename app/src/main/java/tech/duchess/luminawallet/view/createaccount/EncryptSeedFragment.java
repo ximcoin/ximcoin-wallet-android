@@ -13,10 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
-import butterknife.Unbinder;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.presenter.createaccount.EncryptSeedContract;
 import tech.duchess.luminawallet.view.common.BaseViewFragment;
@@ -39,8 +37,6 @@ public class EncryptSeedFragment extends BaseViewFragment<EncryptSeedContract.En
     @BindView(R.id.btn_finish)
     Button finishButton;
 
-    private Unbinder unbinder;
-
     public static EncryptSeedFragment newInstance(@NonNull String seed) {
         EncryptSeedFragment encryptSeedFragment = new EncryptSeedFragment();
         Bundle args = new Bundle();
@@ -54,10 +50,13 @@ public class EncryptSeedFragment extends BaseViewFragment<EncryptSeedContract.En
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.encrypt_seed_fragment, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        return inflater.inflate(R.layout.encrypt_seed_fragment, container, false);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
         initMessage();
-        return view;
     }
 
     private void initMessage() {
@@ -80,12 +79,6 @@ public class EncryptSeedFragment extends BaseViewFragment<EncryptSeedContract.En
         ViewUtils.whenNonNull(getActivity(), activity ->
                 ((ICreateAccountFlowManager) activity)
                         .setTitle(getString(R.string.encrypt_seed_fragment_title)));
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     @Override

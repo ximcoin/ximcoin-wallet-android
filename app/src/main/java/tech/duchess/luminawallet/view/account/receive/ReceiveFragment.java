@@ -1,16 +1,19 @@
 package tech.duchess.luminawallet.view.account.receive;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -94,16 +97,22 @@ public class ReceiveFragment extends Fragment implements IAccountPerspectiveView
 
     @OnClick(R.id.view_full_address_button)
     public void onViewFullAddressClicked() {
-        ViewUtils.whenNonNull(getContext(), context ->
-                new AlertDialog.Builder(context, R.style.DefaultAlertDialog)
-                        .setTitle(R.string.view_full_address_dialog_title)
-                        .setMessage(address)
-                        .setPositiveButton(R.string.ok, null)
-                        .setNeutralButton(R.string.copy,
-                                ((dialog, which) -> copyAddressToClipboard()))
-                        .setCancelable(true)
-                        .create()
-                        .show());
+        ViewUtils.whenNonNull(getContext(), context -> {
+            Dialog dialog = new AlertDialog.Builder(context, R.style.DefaultAlertDialog)
+                    .setTitle(R.string.view_full_address_dialog_title)
+                    .setMessage(address)
+                    .setPositiveButton(R.string.ok, null)
+                    .setNeutralButton(R.string.copy,
+                            ((d, which) -> copyAddressToClipboard()))
+                    .setCancelable(true)
+                    .create();
+            dialog.show();
+            // You must show the dialog prior to retrieving the message text view.
+            TextView message = dialog.findViewById(android.R.id.message);
+            ViewUtils.whenNonNull(message, m -> {
+                m.setTypeface(ResourcesCompat.getFont(context, R.font.string_literal));
+            });
+        });
     }
 
     private void copyAddressToClipboard() {

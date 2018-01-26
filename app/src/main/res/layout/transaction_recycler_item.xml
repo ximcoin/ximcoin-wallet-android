@@ -53,10 +53,10 @@
             android:text="@string/sender_label" />
 
         <TextView
-            android:id="@+id/receiver_label"
+            android:id="@+id/recipient_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/receiver_label"
+            android:text="@string/recipient_label"
             tools:visibility="gone" />
 
         <TextView
@@ -66,6 +66,7 @@
             android:layout_marginStart="@dimen/margin_large"
             android:ellipsize="end"
             android:maxLines="1"
+            app:fontFamily="@font/string_literal"
             tools:text="AREALLYREALLYREALLYREALLYREALLYLONGSEED" />
     </LinearLayout>
 
