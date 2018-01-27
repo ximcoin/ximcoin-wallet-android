@@ -81,7 +81,7 @@
     </style>
 
     <style name="AddressEditText" parent="Base.Widget.AppCompat.EditText">
-        <item name="android:maxLength">56</item>
+        <item name="android:maxLength">@integer/address_length</item>
         <item name="android:inputType">textFilter|textCapCharacters|textMultiLine</item>
         <item name="android:digits">@string/address_validation</item>
         <item name="fontFamily">@font/string_literal</item>

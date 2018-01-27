@@ -1,7 +1,11 @@
 package tech.duchess.luminawallet.model.api;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import tech.duchess.luminawallet.model.fees.Fees;
@@ -25,4 +29,8 @@ public interface HorizonApi {
 
     @GET("transactions/{transactionHash}")
     Single<Transaction> getTransaction(@Path("transactionHash") String transactionHash);
+
+    @FormUrlEncoded
+    @POST("transactions")
+    Completable postTransaction(@Field("tx") String transactionEnvelopeXDRBase64);
 }

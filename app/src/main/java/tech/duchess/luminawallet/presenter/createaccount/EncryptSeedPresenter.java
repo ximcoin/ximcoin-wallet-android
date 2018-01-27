@@ -20,10 +20,6 @@ import timber.log.Timber;
 
 public class EncryptSeedPresenter extends BasePresenter<EncryptSeedContract.EncryptSeedView>
         implements EncryptSeedContract.EncryptSeedPresenter {
-    // Make sure to update the respective xml layout and copy when changing the length requirements.
-    private static final int MAX_PASSWORD_LENGTH = 20;
-    private static final int MIN_PASSWORD_LENGTH = 8;
-
     @NonNull
     private final AccountPrivateKeyDao accountPrivateKeyDao;
 
@@ -99,7 +95,7 @@ public class EncryptSeedPresenter extends BasePresenter<EncryptSeedContract.Encr
                                      @Nullable String passwordValidation) {
         hideAllFieldErrors();
 
-        if (!checkPasswordLength(password)) {
+        if (!SeedEncryptionUtil.checkPasswordLength(password)) {
             view.showPasswordLengthError();
             return true;
         } else if (!checkPasswordsMatch(password, passwordValidation)) {
@@ -110,18 +106,6 @@ public class EncryptSeedPresenter extends BasePresenter<EncryptSeedContract.Encr
         // Primary password field is of proper length. Secondary password field either matches or
         // is not visible due to primary password field content visibility. Form is valid!
         return false;
-    }
-
-    /**
-     * Checks the password length.
-     *
-     * @param password The password to check.
-     * @return {@code True} if the password is valid length.
-     */
-    private boolean checkPasswordLength(@Nullable String password) {
-        return password != null
-                && password.length() >= MIN_PASSWORD_LENGTH
-                && password.length() <= MAX_PASSWORD_LENGTH;
     }
 
     /**

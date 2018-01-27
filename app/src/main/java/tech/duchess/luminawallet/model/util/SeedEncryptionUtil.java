@@ -1,6 +1,7 @@
 package tech.duchess.luminawallet.model.util;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -27,6 +28,20 @@ public class SeedEncryptionUtil {
     private static final int ITERATION_COUNT = 1000; // Iteration count as recommended by PKCS#5
     private static final int KEY_LENGTH = 256;
     private static final int SALT_LENGTH = KEY_LENGTH / 8; // Same size as key output
+    private static final int MAX_PASSWORD_LENGTH = 20;
+    private static final int MIN_PASSWORD_LENGTH = 8;
+
+    /**
+     * Checks the password length.
+     *
+     * @param password The password to check.
+     * @return {@code True} if the password is valid length.
+     */
+    public static boolean checkPasswordLength(@Nullable String password) {
+        return password != null
+                && password.length() >= MIN_PASSWORD_LENGTH
+                && password.length() <= MAX_PASSWORD_LENGTH;
+    }
 
     /**
      * Encrypts a seed given a password.

@@ -10,7 +10,7 @@ public class AssetUtil {
     public static final String LUMEN_ASSET_CODE = "XLM";
 
     public static String getAssetCode(@Nullable String assetType,
-                               @Nullable String assetCode) {
+                                      @Nullable String assetCode) {
         return LUMEN_ASSET_TYPE.equals(assetType) ? LUMEN_ASSET_CODE : assetCode;
     }
 

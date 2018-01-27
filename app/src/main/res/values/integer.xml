@@ -2,4 +2,5 @@
 <resources>
     <integer name="address_length">56</integer>
     <integer name="max_memo_length">28</integer>
+    <integer name="password_max_length">20</integer>
 </resources>

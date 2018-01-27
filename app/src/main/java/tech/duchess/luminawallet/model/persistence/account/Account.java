@@ -13,6 +13,9 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 
+import org.stellar.sdk.KeyPair;
+import org.stellar.sdk.TransactionBuilderAccount;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +29,7 @@ import tech.duchess.luminawallet.view.util.TextUtils;
 
 @Entity
 @TypeConverters(Account.AccountTypeConverters.class)
-public class Account implements Parcelable {
+public class Account implements Parcelable, TransactionBuilderAccount {
     public static final String INVALID_ID = "INVALID_ID";
 
     @NonNull
@@ -205,6 +208,26 @@ public class Account implements Parcelable {
             return new Account[size];
         }
     };
+
+    @Override
+    public KeyPair getKeypair() {
+        return KeyPair.fromAccountId(account_id);
+    }
+
+    @Override
+    public Long getSequenceNumber() {
+        return sequence;
+    }
+
+    @Override
+    public Long getIncrementedSequenceNumber() {
+        return sequence + 1;
+    }
+
+    @Override
+    public void incrementSequenceNumber() {
+        sequence++;
+    }
 
     public static class AccountTypeConverters {
         private static final JsonAdapter<List<Balance>> balanceAdapter;

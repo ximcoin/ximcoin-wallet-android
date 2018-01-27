@@ -5,6 +5,8 @@ import android.arch.persistence.room.Room;
 
 import com.squareup.moshi.Moshi;
 
+import org.stellar.sdk.Network;
+
 import javax.inject.Singleton;
 
 import dagger.Binds;
@@ -88,6 +90,11 @@ public abstract class AppModule {
     @Provides
     @Singleton
     static HorizonApi providesHorizonApi(Retrofit retrofit) {
+        if (EnvironmentConstants.IS_PRODUCTION) {
+            Network.usePublicNetwork();
+        } else {
+            Network.useTestNetwork();
+        }
         return retrofit.create(HorizonApi.class);
     }
 
