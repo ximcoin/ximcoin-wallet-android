@@ -104,7 +104,7 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     }
 
     private void initTabs() {
-        viewPager.setOffscreenPageLimit((AccountPerspective.values().length + 1) / 2);
+        viewPager.setOffscreenPageLimit(AccountPerspective.values().length);
         adapter = new AccountFragmentPagerAdapter(fragmentManager);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);

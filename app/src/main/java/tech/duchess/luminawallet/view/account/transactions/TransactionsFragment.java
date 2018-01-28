@@ -39,7 +39,6 @@ public class TransactionsFragment extends Fragment implements IAccountPerspectiv
     @Nullable
     private String accountId;
 
-    private LinearLayoutManager layoutManager;
     private Unbinder unbinder;
     private TransactionsAdapter adapter;
     private LiveData<PagedList<Operation>> liveData;
@@ -91,7 +90,7 @@ public class TransactionsFragment extends Fragment implements IAccountPerspectiv
             return;
         }
 
-        layoutManager = new LinearLayoutManager(context);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         //recyclerView.setItemAnimator(new SlideUpAnimator());
@@ -108,6 +107,7 @@ public class TransactionsFragment extends Fragment implements IAccountPerspectiv
 
     private void setDataListener() {
         if (liveData != null) {
+            liveData.removeObservers(this);
             liveData.observe(this, operations -> adapter.setList(operations));
         }
     }
