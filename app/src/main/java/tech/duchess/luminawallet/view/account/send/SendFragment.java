@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.persistence.account.Account;
+import tech.duchess.luminawallet.presenter.account.AccountsContract;
 import tech.duchess.luminawallet.presenter.account.send.SendContract;
 import tech.duchess.luminawallet.view.account.IAccountPerspectiveView;
 import tech.duchess.luminawallet.view.common.BaseViewFragment;
@@ -147,7 +148,7 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
     }
 
     @Override
-    public void showTransactionSuccess() {
-
+    public void showTransactionSuccess(@NonNull Account account) {
+        ((AccountsContract.AccountsView) activityContext).onTransactionPosted(account);
     }
 }

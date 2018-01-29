@@ -24,6 +24,9 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
 
     private boolean hasLoadedAccounts = false;
 
+    @Nullable
+    private String currentAccountId;
+
     AccountsPresenter(@NonNull AccountsContract.AccountsView view,
                       @NonNull AccountRepository accountRepository,
                       @NonNull SchedulerProvider schedulerProvider) {
@@ -58,9 +61,11 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
                 .subscribe(accounts -> {
                     view.showLoading(false);
                     if (accounts.isEmpty()) {
+                        currentAccountId = null;
                         view.showNoAccountFound();
                     } else {
                         Account account = accounts.get(0);
+                        currentAccountId = account.getAccount_id();
                         if (!account.isOnNetwork()) {
                             view.showAccountNotOnNetwork(account);
                         } else {
@@ -70,6 +75,7 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
                 }, throwable -> {
                     Timber.e(throwable, "Failed to load accounts");
                     view.showLoading(false);
+                    currentAccountId = null;
                     view.showAccountLoadFailure();
                 });
     }
@@ -82,5 +88,16 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
     @Override
     public void onUserRequestAccountCreation(boolean isImportingSeed) {
         view.startCreateAccountFlow(isImportingSeed);
+    }
+
+    @Override
+    public void onTransactionPosted(@NonNull Account account) {
+        if (currentAccountId == null) {
+            return;
+        }
+
+        if (currentAccountId.equals(account.getAccount_id())) {
+            view.updateForTransaction(account);
+        }
     }
 }

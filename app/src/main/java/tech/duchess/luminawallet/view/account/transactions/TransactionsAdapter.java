@@ -32,9 +32,8 @@ public class TransactionsAdapter extends PagedListAdapter<Operation, Transaction
     @Nullable
     private String accountId;
 
-    protected TransactionsAdapter(@Nullable String accountId) {
+    protected TransactionsAdapter() {
         super(OPERATION_COMPARATOR);
-        this.accountId = accountId;
     }
 
     public void setAccountId(@Nullable String accountId) {

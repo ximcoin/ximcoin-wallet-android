@@ -13,10 +13,13 @@ public interface AccountsContract {
         void showAccount(@NonNull Account account);
         void showAccountNotOnNetwork(@NonNull Account account);
         void startCreateAccountFlow(boolean isImportingSeed);
+        void onTransactionPosted(@NonNull Account account);
+        void updateForTransaction(@NonNull Account account);
     }
 
     interface AccountsPresenter extends Presenter {
         void onAccountCreationReturned(boolean didCreateNewAccount);
         void onUserRequestAccountCreation(boolean isImportingSeed);
+        void onTransactionPosted(@NonNull Account account);
     }
 }

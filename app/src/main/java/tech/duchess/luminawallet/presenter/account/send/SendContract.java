@@ -24,7 +24,7 @@ public interface SendContract {
 
         void clearForm();
 
-        void showTransactionSuccess();
+        void showTransactionSuccess(@NonNull Account account);
     }
 
     interface SendPresenter extends Presenter {

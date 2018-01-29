@@ -83,6 +83,12 @@ public class ReceiveFragment extends Fragment implements IAccountPerspectiveView
     }
 
     private void setAddress(@Nullable String address) {
+        if (!TextUtils.isEmpty(this.address) && this.address.equals(address)) {
+            // No change in address (which is the only data we reflect corresponding to an account),
+            // thus no updates necessary.
+            return;
+        }
+
         this.address = address;
         if (TextUtils.isEmpty(address)) {
             qrCode.setImageDrawable(null);

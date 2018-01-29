@@ -115,8 +115,9 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
             return;
         }
 
+        final String sourceAccountId = pendingTransaction.getSourceAccount().getAccountId();
         accountRepository
-                .getEncryptedSeed(pendingTransaction.getSourceAccount().getAccountId())
+                .getEncryptedSeed(sourceAccountId)
                 .map(accountPrivateKey -> {
                     KeyPair signer = KeyPair.fromSecretSeed(SeedEncryptionUtil
                             .decryptSeed(accountPrivateKey.getEncryptedSeedPackage(), password));
@@ -125,12 +126,13 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
                 })
                 .flatMapCompletable(transaction ->
                         horizonApi.postTransaction(TransactionUtil.getEnvelopeXDRBase64(transaction)))
-                .compose(schedulerProvider.completableScheduler())
+                .andThen(accountRepository.getAccountById(sourceAccountId, true))
+                .compose(schedulerProvider.singleScheduler())
                 .doOnSubscribe(disposable -> {
                     addDisposable(disposable);
                     view.showLoading(true);
                 })
-                .doOnTerminate(() -> {
+                .doAfterTerminate(() -> {
                     view.showLoading(false);
                     pendingTransaction = null;
                 })

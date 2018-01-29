@@ -2,11 +2,13 @@ package tech.duchess.luminawallet.model.repository;
 
 import android.arch.paging.PageKeyedDataSource;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -27,7 +29,7 @@ public class OperationPageDataSource extends PageKeyedDataSource<String, Operati
     @NonNull
     private final OkHttpClient okHttpClient;
 
-    @NonNull
+    @Nullable
     private final String accountId;
 
     @NonNull
@@ -36,7 +38,7 @@ public class OperationPageDataSource extends PageKeyedDataSource<String, Operati
     public OperationPageDataSource(@NonNull HorizonApi horizonApi,
                                    @NonNull OkHttpClient okHttpClient,
                                    @NonNull Moshi moshi,
-                                   @NonNull String accountId) {
+                                   @Nullable String accountId) {
         this.horizonApi = horizonApi;
         this.okHttpClient = okHttpClient;
         this.accountId = accountId;
@@ -46,6 +48,11 @@ public class OperationPageDataSource extends PageKeyedDataSource<String, Operati
     @Override
     public void loadInitial(@NonNull LoadInitialParams<String> params,
                             @NonNull LoadInitialCallback<String, Operation> callback) {
+        if (accountId == null) {
+            callback.onResult(new ArrayList<>(), null, null);
+            return;
+        }
+
         AtomicReference<String> nextPage = new AtomicReference<>();
         AtomicReference<String> prevPage = new AtomicReference<>();
         List<Operation> operationList =
@@ -73,6 +80,11 @@ public class OperationPageDataSource extends PageKeyedDataSource<String, Operati
     @Override
     public void loadAfter(@NonNull LoadParams<String> params,
                           @NonNull LoadCallback<String, Operation> callback) {
+        if (accountId == null) {
+            callback.onResult(new ArrayList<>(), null);
+            return;
+        }
+
         Request request = new Request.Builder().url(params.key).build();
         try {
             Response response = okHttpClient.newCall(request).execute();

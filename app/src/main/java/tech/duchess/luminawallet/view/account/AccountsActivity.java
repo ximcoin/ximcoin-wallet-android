@@ -174,6 +174,17 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     }
 
     @Override
+    public void onTransactionPosted(@NonNull Account account) {
+        presenter.onTransactionPosted(account);
+    }
+
+    @Override
+    public void updateForTransaction(@NonNull Account account) {
+        accountHeaderView.setAccount(account);
+        adapter.setAccount(account);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
