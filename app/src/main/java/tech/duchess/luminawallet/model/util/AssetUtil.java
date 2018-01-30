@@ -14,6 +14,11 @@ public class AssetUtil {
         return LUMEN_ASSET_TYPE.equals(assetType) ? LUMEN_ASSET_CODE : assetCode;
     }
 
+    public static String getAssetIssuer(@Nullable String assetType,
+                                        @Nullable String assetIssuer) {
+        return LUMEN_ASSET_TYPE.equals(assetType) ? LUMEN_ASSET_TYPE : assetIssuer;
+    }
+
     public static boolean isLumenBalance(@NonNull Balance balance) {
         return LUMEN_ASSET_TYPE.equals(balance.getAsset_type());
     }

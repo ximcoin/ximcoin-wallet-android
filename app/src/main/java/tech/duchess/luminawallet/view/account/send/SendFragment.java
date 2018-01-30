@@ -120,12 +120,7 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
     }
 
     @Override
-    public void showNewAccountWarning() {
-
-    }
-
-    @Override
-    public void showPaymentSummaryConfirmation() {
+    public void showConfirmation(@NonNull SendContract.SendPresenter.TransactionSummary transactionSummary) {
         presenter.onUserConfirmPayment("badpassword");
     }
 

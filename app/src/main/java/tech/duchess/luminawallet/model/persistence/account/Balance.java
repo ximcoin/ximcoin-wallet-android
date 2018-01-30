@@ -31,7 +31,7 @@ public class Balance implements Parcelable {
     }
 
     public String getAsset_issuer() {
-        return asset_issuer;
+        return AssetUtil.getAssetIssuer(asset_type, asset_issuer);
     }
 
     public void setAsset_issuer(String asset_issuer) {
