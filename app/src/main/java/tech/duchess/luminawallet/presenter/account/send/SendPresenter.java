@@ -17,7 +17,6 @@ import org.stellar.sdk.Transaction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -26,7 +25,6 @@ import retrofit2.HttpException;
 import tech.duchess.luminawallet.dagger.SchedulerProvider;
 import tech.duchess.luminawallet.model.api.HorizonApi;
 import tech.duchess.luminawallet.model.fees.Fees;
-import tech.duchess.luminawallet.model.persistence.HorizonDB;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.model.persistence.account.Balance;
 import tech.duchess.luminawallet.model.persistence.account.DisconnectedAccount;
@@ -49,9 +47,6 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
     private final HorizonApi horizonApi;
 
     @NonNull
-    private final HorizonDB horizonDB;
-
-    @NonNull
     private final AccountRepository accountRepository;
 
     @NonNull
@@ -64,15 +59,15 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
     private Transaction pendingTransaction;
 
     private final Map<String, String> assetCodeToIssuerMap = new HashMap<>();
+    private boolean isBuildingTransaction = false;
+    private boolean isPostingTransaction = false;
 
     SendPresenter(@NonNull SendContract.SendView view,
                   @NonNull HorizonApi horizonApi,
-                  @NonNull HorizonDB horizonDB,
                   @NonNull AccountRepository accountRepository,
                   @NonNull SchedulerProvider schedulerProvider) {
         super(view);
         this.horizonApi = horizonApi;
-        this.horizonDB = horizonDB;
         this.accountRepository = accountRepository;
         this.schedulerProvider = schedulerProvider;
     }
@@ -82,6 +77,11 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
                                   @Nullable String amount,
                                   @Nullable String currency,
                                   @Nullable String memo) {
+        if (isBuildingTransaction) {
+            return;
+        }
+
+        isBuildingTransaction = true;
         if (sourceAccount == null) {
             return;
         }
@@ -118,15 +118,11 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
 
         if (error != null) {
             view.showError(error);
+            isBuildingTransaction = false;
             return;
         }
 
         horizonApi.getAccount(recipient)
-                .doOnSubscribe(disposable -> {
-                    addDisposable(disposable);
-                    view.showLoading(true);
-                })
-                .doAfterTerminate(() -> view.showLoading(false))
                 .onErrorResumeNext(throwable -> {
                     if (throwable instanceof HttpException
                             && ((HttpException) throwable).code() == 404) {
@@ -144,6 +140,14 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
                                         currencyBalance.get(), memo))
                                 .ignoreElements())
                 .compose(schedulerProvider.completableScheduler())
+                .doOnSubscribe(disposable -> {
+                    addDisposable(disposable);
+                    view.showLoading(true, true);
+                })
+                .doAfterTerminate(() -> {
+                    isBuildingTransaction = false;
+                    view.showLoading(false, true);
+                })
                 .subscribe(() -> {
 
                 }, throwable -> {
@@ -161,8 +165,9 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
                                               double assetBalance,
                                               @Nullable String memo) {
         boolean isNativeAsset = AssetUtil.LUMEN_ASSET_CODE.equals(assetCode);
+        boolean isCreatingAccount = !recipient.isOnNetwork();
 
-        if (!recipient.isOnNetwork() && !isNativeAsset) {
+        if (isCreatingAccount && !isNativeAsset) {
             view.showError(SendError.ADDRESS_DOES_NOT_EXIST);
             return;
         } else if (!AccountUtil.trustsAsset(recipient, assetCode, assetIssuer)) {
@@ -171,12 +176,26 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
         }
 
         TransactionSummary transactionSummary = new TransactionSummary();
-        transactionSummary.fees = FeesUtil.getTransactionFee(fees, 1);
-        transactionSummary.minimumBalance = FeesUtil.getMinimumAccountBalance(fees, sourceAccount);
+        transactionSummary.transactionFees = FeesUtil.getTransactionFee(fees, 1);
         transactionSummary.sendAmount = sendAmount;
-        transactionSummary.assetCode = assetCode;
-        transactionSummary.isCreatingAccount = !recipient.isOnNetwork();
-        double newLumenBalance = sourceAccount.getLumens().getBalance() - transactionSummary.fees;
+        transactionSummary.sendingAssetCode = assetCode;
+        transactionSummary.recipient = recipient.getAccount_id();
+        transactionSummary.selfMinimumBalance =
+                FeesUtil.getMinimumAccountBalance(fees, sourceAccount);
+
+        if (isCreatingAccount) {
+            transactionSummary.isCreatingAccount = true;
+            transactionSummary.createdAccountMinimumBalance =
+                    FeesUtil.getMinimumAccountBalance(fees, recipient);
+            transactionSummary.createdAccountMinimumBalanceMet =
+                    sendAmount >= transactionSummary.createdAccountMinimumBalance;
+        } else {
+            transactionSummary.isCreatingAccount = false;
+            transactionSummary.createdAccountMinimumBalanceMet = true;
+        }
+
+        double newLumenBalance =
+                sourceAccount.getLumens().getBalance() - transactionSummary.transactionFees;
 
         if (isNativeAsset) {
             // Sending lumens
@@ -189,14 +208,12 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
             transactionSummary.remainingBalances.put(assetCode, assetBalance);
         }
 
-        transactionSummary.minimumBalanceViolated =
-                newLumenBalance < transactionSummary.minimumBalance;
+        transactionSummary.selfMinimumBalanceViolated =
+                newLumenBalance < transactionSummary.selfMinimumBalance;
 
-        if (!transactionSummary.minimumBalanceViolated) {
+        if (!transactionSummary.selfMinimumBalanceViolated && transactionSummary.createdAccountMinimumBalanceMet) {
             Operation operation;
-            if (transactionSummary.isCreatingAccount) {
-                transactionSummary.createdAccountBalanceFulfilled =
-                        sendAmount >= Double.parseDouble(fees.getBase_reserve());
+            if (isCreatingAccount) {
                 operation = getAccountCreationOperation(sourceAccount, recipient.getAccount_id(),
                         String.valueOf(sendAmount));
             } else {
@@ -215,15 +232,23 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
 
     @Override
     public void onUserConfirmPayment(@Nullable String password) {
+        if (isPostingTransaction) {
+            return;
+        }
+
+        isPostingTransaction = true;
+
         if (pendingTransaction == null) {
             Timber.e("Pending transaction was null");
             view.showError(SendError.TRANSACTION_FAILED);
             view.clearForm();
+            isPostingTransaction = false;
             return;
         }
 
         if (!SeedEncryptionUtil.checkPasswordLength(password)) {
             view.showError(SendError.PASSWORD_INVALID);
+            isPostingTransaction = false;
             return;
         }
 
@@ -243,11 +268,12 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
                 .compose(schedulerProvider.singleScheduler())
                 .doOnSubscribe(disposable -> {
                     addDisposable(disposable);
-                    view.showLoading(true);
+                    view.showLoading(true, false);
                 })
                 .doAfterTerminate(() -> {
-                    view.showLoading(false);
+                    view.showLoading(false, false);
                     pendingTransaction = null;
+                    isPostingTransaction = false;
                 })
                 .subscribe(view::showTransactionSuccess,
                         throwable -> {
@@ -331,56 +357,5 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
         }
 
         view.setAvailableCurrencies(new ArrayList<>(assetCodeToIssuerMap.keySet()));
-    }
-
-    private class TransactionSummary implements SendContract.SendPresenter.TransactionSummary {
-        double minimumBalance;
-        double fees;
-        double sendAmount;
-        String assetCode;
-        final LinkedHashMap<String, Double> remainingBalances = new LinkedHashMap<>();
-        boolean minimumBalanceViolated;
-        boolean isCreatingAccount;
-        boolean createdAccountBalanceFulfilled;
-
-        @Override
-        public double getMinimumBalance() {
-            return minimumBalance;
-        }
-
-        @Override
-        public double getFees() {
-            return fees;
-        }
-
-        @Override
-        public double getSendAmount() {
-            return sendAmount;
-        }
-
-        @Override
-        public String getAssetCode() {
-            return assetCode;
-        }
-
-        @Override
-        public LinkedHashMap<String, Double> getRemainingBalances() {
-            return remainingBalances;
-        }
-
-        @Override
-        public boolean isMinimumBalanceViolated() {
-            return minimumBalanceViolated;
-        }
-
-        @Override
-        public boolean isCreatingAccount() {
-            return isCreatingAccount;
-        }
-
-        @Override
-        public boolean isCreatedAccountBalanceFulfilled() {
-            return createdAccountBalanceFulfilled;
-        }
     }
 }

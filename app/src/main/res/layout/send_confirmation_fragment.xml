@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_margin">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/send_payment_title"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:gravity="start"
+            android:text="@string/sending_label"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/send_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            tools:text="1,000,000 XLM" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:gravity="start"
+            android:text="@string/to_label"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/recipient_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            app:fontFamily="@font/string_literal"
+            tools:text="NOTAREALADDRESS" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:gravity="start"
+            android:text="@string/transaction_fees"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/transaction_fee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            tools:text=".000001 XLM" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:gravity="start"
+            android:text="@string/remaining_balances"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/remaining_balances"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end" />
+
+        <LinearLayout
+            android:id="@+id/balances_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/info_message_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/minimum_balance_info"
+                android:layout_width="@dimen/help_icon_width_height"
+                android:layout_height="@dimen/help_icon_width_height"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_info"
+                android:tint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/info_message"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:textColor="@color/warningColor"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/minimum_balance_info"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/self_account_balance_violated" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/password_field_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/initial_password_field_hint"
+            app:hintTextAppearance="@style/HintTextAppearance"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/white">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/password_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:maxLength="@integer/password_max_length" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/confirm_button"
+            style="@style/RaisedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:enabled="false"
+            tools:text="@string/confirm_transaction" />
+
+        <Button
+            android:id="@+id/cancel_button"
+            style="@style/RaisedButtonSecondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/RaisedButtonSecondaryTheme"
+            tools:text="@string/cancel" />
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

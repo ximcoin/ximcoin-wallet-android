@@ -87,4 +87,11 @@
         <item name="fontFamily">@font/string_literal</item>
     </style>
 
+    <style name="DefaultDialogFragment" parent="Theme.AppCompat.Dialog.MinWidth">
+        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
+        <item name="android:textColor">@color/colorAccentLight</item>
+        <item name="colorAccent">@color/colorAccentLight</item>
+        <item name="android:background">@color/mainBackground</item>
+    </style>
+
 </resources>

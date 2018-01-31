@@ -6,7 +6,9 @@ import javax.inject.Named;
 
 import dagger.Binds;
 import dagger.Module;
+import dagger.android.ContributesAndroidInjector;
 import tech.duchess.luminawallet.dagger.module.BaseFragmentModule;
+import tech.duchess.luminawallet.dagger.scope.PerChildFragment;
 import tech.duchess.luminawallet.dagger.scope.PerFragment;
 import tech.duchess.luminawallet.presenter.account.send.SendContract;
 import tech.duchess.luminawallet.presenter.account.send.SendPresenterModule;
@@ -21,4 +23,8 @@ public abstract class SendFragmentModule {
     @Binds
     @PerFragment
     abstract SendContract.SendView provideSendView(SendFragment sendFragment);
+
+    @PerChildFragment
+    @ContributesAndroidInjector(modules = SendConfirmationFragmentModule.class)
+    abstract SendConfirmationFragment sendConfirmationFragmentInjector();
 }

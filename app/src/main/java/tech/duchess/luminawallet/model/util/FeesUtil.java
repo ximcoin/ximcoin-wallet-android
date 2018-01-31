@@ -20,9 +20,13 @@ public class FeesUtil {
      */
     public static double getMinimumAccountBalance(@NonNull Fees fees,
                                                   @NonNull Account account) {
-        // TODO: Figure out which equation is proper.
-        return (2 + account.getSubentry_count()) * Double.parseDouble(fees.getBase_reserve());
-        // return (2+ account.getSubentry_count() + account.getSigners().size()) * fees.getBase_reserve();
+        if (!account.isOnNetwork()) {
+            return 2 * Double.parseDouble(fees.getBase_reserve());
+        } else {
+            // TODO: Figure out which equation is proper.
+            return (2 + account.getSubentry_count()) * Double.parseDouble(fees.getBase_reserve());
+            // return (2+ account.getSubentry_count() + account.getSigners().size()) * fees.getBase_reserve();
+        }
     }
 
     /**

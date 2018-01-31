@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.DialogFragment;
 import android.text.InputFilter;
 import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
@@ -22,18 +23,20 @@ import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.presenter.account.AccountsContract;
 import tech.duchess.luminawallet.presenter.account.send.SendContract;
+import tech.duchess.luminawallet.presenter.account.send.TransactionSummary;
 import tech.duchess.luminawallet.view.account.IAccountPerspectiveView;
 import tech.duchess.luminawallet.view.common.BaseViewFragment;
 
 public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
-        implements IAccountPerspectiveView, SendContract.SendView {
+        implements IAccountPerspectiveView, SendContract.SendView,
+        SendConfirmationFragment.TransactionConfirmationListener {
     private static final String ACCOUNT_KEY = "SendFragment.ACCOUNT_KEY";
 
     private static final InputFilter ASCII_FILTER = (source, start, end, dest, dstart, dend) -> {
         SpannableStringBuilder ret;
 
         if (source instanceof SpannableStringBuilder) {
-            ret = (SpannableStringBuilder)source;
+            ret = (SpannableStringBuilder) source;
         } else {
             ret = new SpannableStringBuilder(source);
         }
@@ -41,7 +44,7 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
         for (int i = end - 1; i >= start; i--) {
             char currentChar = source.charAt(i);
             if (currentChar > 127) {
-                ret.delete(i, i+1);
+                ret.delete(i, i + 1);
             }
         }
 
@@ -68,6 +71,8 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
 
     @BindView(R.id.send_payment_button)
     Button sendPaymentButton;
+
+    private DialogFragment confirmationFragment;
 
     public static SendFragment newInstance(@Nullable Account account) {
         Bundle args = new Bundle();
@@ -97,6 +102,15 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        if (confirmationFragment != null) {
+            confirmationFragment.dismiss();
+            confirmationFragment = null;
+        }
+    }
+
+    @Override
     public void setAccount(@Nullable Account account) {
         presenter.onAccountUpdated(account);
     }
@@ -110,7 +124,7 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
     }
 
     @Override
-    public void showLoading(boolean isLoading) {
+    public void showLoading(boolean isLoading, boolean isBuildingTransaction) {
 
     }
 
@@ -120,8 +134,10 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
     }
 
     @Override
-    public void showConfirmation(@NonNull SendContract.SendPresenter.TransactionSummary transactionSummary) {
-        presenter.onUserConfirmPayment("badpassword");
+    public void showConfirmation(@NonNull TransactionSummary transactionSummary) {
+        confirmationFragment = SendConfirmationFragment.newInstance(transactionSummary);
+        confirmationFragment.show(childFragmentManager,
+                SendConfirmationFragment.class.getSimpleName());
     }
 
     @Override
@@ -145,5 +161,10 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
     @Override
     public void showTransactionSuccess(@NonNull Account account) {
         ((AccountsContract.AccountsView) activityContext).onTransactionPosted(account);
+    }
+
+    @Override
+    public void onTransactionConfirmed(@Nullable String password) {
+        presenter.onUserConfirmPayment(password);
     }
 }

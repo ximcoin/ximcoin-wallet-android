@@ -15,6 +15,7 @@ package tech.duchess.luminawallet.view.common;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// Modifications copyright (C) 2018 Duchess Technologies
 
 import android.app.Dialog;
 import android.content.Context;
@@ -65,7 +66,7 @@ public abstract class BaseFragment extends AppCompatDialogFragment
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Quick fix for the dialog width not taking up most of the screen width.
-        setStyle(AppCompatDialogFragment.STYLE_NORMAL, R.style.Theme_AppCompat_Dialog_MinWidth);
+        setStyle(AppCompatDialogFragment.STYLE_NO_TITLE, R.style.DefaultDialogFragment);
         return super.onCreateDialog(savedInstanceState);
     }
 

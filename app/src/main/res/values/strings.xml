@@ -13,6 +13,7 @@
     <string name="seed_clipboard_label">Stellar Account Seed</string>
     <string name="seed_copied_success_toast">Seed copied to clipboard!</string>
     <string name="seed_copy_failed_toast">Failed to copy seed to clipboard</string>
+    <string name="asset_balance">%1$s %2$s</string>
 
     <!-- Accounts Activity -->
     <string name="account_id_label">Wallet Address:&#160;</string>
@@ -83,6 +84,17 @@
     <string name="send_payment">SEND PAYMENT</string>
     <string name="invalid_ascii">Invalid ASCII Character</string>
 
+    <!-- Send Confirmation Fragment -->
+    <string name="send_payment_title">Payment Confirmation</string>
+    <string name="create_account_title">Create Account Confirmation</string>
+    <string name="confirm_transaction">CONFIRM TRANSACTION</string>
+    <string name="sending_label">Sending:</string>
+    <string name="to_label">To:</string>
+    <string name="transaction_fees">Transaction Fee:</string>
+    <string name="remaining_balances">Remaining Balances:</string>
+    <string name="self_account_balance_violated">Your account must retain a minimum balance of %1$s.</string>
+    <string name="new_account_balance_violated">The new account must be sent a minimum balance of %1$s.</string>
+
     <!-- Account Header View -->
     <string name="account_label">Public Address:</string>
     <string name="balance_label">Lumen (XLM) Balance:</string>
@@ -103,8 +115,8 @@
     <string name="operation_unknown">UNKNOWN</string>
 
     <plurals name="lumens">
-        <item quantity="one">%d Lumen</item>
-        <item quantity="other">%d Lumens</item>
+        <item quantity="one">%s Lumen</item>
+        <item quantity="other">%s Lumens</item>
     </plurals>
 
     <string name="address_validation">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>

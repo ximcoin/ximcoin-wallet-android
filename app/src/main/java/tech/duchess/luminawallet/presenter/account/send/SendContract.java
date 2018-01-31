@@ -3,7 +3,6 @@ package tech.duchess.luminawallet.presenter.account.send;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import tech.duchess.luminawallet.model.persistence.account.Account;
@@ -11,11 +10,11 @@ import tech.duchess.luminawallet.presenter.common.Presenter;
 
 public interface SendContract {
     interface SendView {
-        void showLoading(boolean isLoading);
+        void showLoading(boolean isLoading, boolean isBuildingTransaction);
 
         void showError(@NonNull SendPresenter.SendError error);
 
-        void showConfirmation(@NonNull SendPresenter.TransactionSummary transactionSummary);
+        void showConfirmation(@NonNull TransactionSummary transactionSummary);
 
         void showNoAccount();
 
@@ -81,23 +80,5 @@ public interface SendContract {
         void onUserConfirmPayment(@Nullable String password);
 
         void onAccountUpdated(@Nullable Account account);
-
-        interface TransactionSummary {
-            double getMinimumBalance();
-
-            double getFees();
-
-            double getSendAmount();
-
-            String getAssetCode();
-
-            LinkedHashMap<String, Double> getRemainingBalances();
-
-            boolean isMinimumBalanceViolated();
-
-            boolean isCreatingAccount();
-
-            boolean isCreatedAccountBalanceFulfilled();
-        }
     }
 }
