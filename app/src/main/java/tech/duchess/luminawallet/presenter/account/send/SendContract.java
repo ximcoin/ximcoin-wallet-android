@@ -41,6 +41,10 @@ public interface SendContract {
              */
             ADDRESS_BAD_LENGTH,
             /**
+             * Denotes a user attempting to send to a malformed address.
+             */
+            ADDRESS_INVALID,
+            /**
              * Denotes a user attempting to send to an address of improper prefix.
              */
             ADDRESS_BAD_PREFIX,

@@ -3,6 +3,8 @@ package tech.duchess.luminawallet.model.util;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.stellar.sdk.KeyPair;
+
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -21,6 +23,20 @@ public class AccountUtil {
 
     public static boolean publicKeyOfProperPrefix(@Nullable String publicKey) {
         return publicKey != null && publicKey.startsWith(PUBLIC_PREFIX);
+    }
+
+    public static boolean publicKeyCanBeDecoded(@Nullable String publicKey) {
+        if (publicKey == null) {
+            return false;
+        }
+
+        try {
+            KeyPair.fromAccountId(publicKey);
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
     }
 
     public static boolean secretSeedOfProperLength(@Nullable String seed) {

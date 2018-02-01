@@ -94,6 +94,8 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
             error = SendError.ADDRESS_BAD_LENGTH;
         } else if (!AccountUtil.publicKeyOfProperPrefix(recipient)) {
             error = SendError.ADDRESS_BAD_PREFIX;
+        } else if (!AccountUtil.publicKeyCanBeDecoded(recipient)) {
+            error = SendError.ADDRESS_INVALID;
         } else if (recipient.equals(sourceAccount.getAccount_id())) {
             error = SendError.DEST_SAME_AS_SOURCE;
         } else if (TextUtils.isEmpty(amount) || Double.parseDouble(amount) <= 0) {
@@ -175,6 +177,7 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
             return;
         }
 
+        // TODO: Make into builder.
         TransactionSummary transactionSummary = new TransactionSummary();
         transactionSummary.transactionFees = FeesUtil.getTransactionFee(fees, 1);
         transactionSummary.sendAmount = sendAmount;
@@ -182,6 +185,7 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
         transactionSummary.recipient = recipient.getAccount_id();
         transactionSummary.selfMinimumBalance =
                 FeesUtil.getMinimumAccountBalance(fees, sourceAccount);
+        transactionSummary.memo = memo;
 
         if (isCreatingAccount) {
             transactionSummary.isCreatingAccount = true;

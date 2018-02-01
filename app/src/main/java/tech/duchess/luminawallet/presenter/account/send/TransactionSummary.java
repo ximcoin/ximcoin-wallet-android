@@ -17,6 +17,7 @@ public class TransactionSummary implements Parcelable {
     boolean createdAccountMinimumBalanceMet;
     double createdAccountMinimumBalance;
     String recipient;
+    String memo;
 
     public TransactionSummary() {
 
@@ -62,6 +63,10 @@ public class TransactionSummary implements Parcelable {
         return recipient;
     }
 
+    public String getMemo() {
+        return memo;
+    }
+
     protected TransactionSummary(Parcel in) {
         selfMinimumBalance = in.readDouble();
         transactionFees = in.readDouble();
@@ -72,6 +77,7 @@ public class TransactionSummary implements Parcelable {
         createdAccountMinimumBalanceMet = in.readByte() != 0x00;
         createdAccountMinimumBalance = in.readDouble();
         recipient = in.readString();
+        memo = in.readString();
 
         for (int i = 0; i < in.readInt(); i++) {
             remainingBalances.put(in.readString(), in.readDouble());
@@ -94,6 +100,7 @@ public class TransactionSummary implements Parcelable {
         dest.writeByte((byte) (createdAccountMinimumBalanceMet ? 0x01 : 0x00));
         dest.writeDouble(createdAccountMinimumBalance);
         dest.writeString(recipient);
+        dest.writeString(memo);
 
         dest.writeInt(remainingBalances.size());
         for (Map.Entry<String, Double> entry : remainingBalances.entrySet()) {

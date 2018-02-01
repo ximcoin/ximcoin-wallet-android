@@ -23,6 +23,7 @@ import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.api.HelpLinks;
 import tech.duchess.luminawallet.presenter.account.send.TransactionSummary;
 import tech.duchess.luminawallet.view.common.BaseFragment;
+import tech.duchess.luminawallet.view.util.TextUtils;
 import tech.duchess.luminawallet.view.util.ViewUtils;
 import timber.log.Timber;
 
@@ -41,6 +42,12 @@ public class SendConfirmationFragment extends BaseFragment {
 
     @BindView(R.id.transaction_fee)
     TextView transactionFee;
+
+    @BindView(R.id.memo_label)
+    TextView memoLabel;
+
+    @BindView(R.id.memo)
+    TextView memo;
 
     @BindView(R.id.remaining_balances)
     TextView remainingBalances;
@@ -104,6 +111,12 @@ public class SendConfirmationFragment extends BaseFragment {
     }
 
     private void init() {
+        addStaticContent();
+        addBalances();
+        checkViolations();
+    }
+
+    private void addStaticContent() {
         title.setText(transactionSummary.isCreatingAccount()
                 ? R.string.create_account_title
                 : R.string.send_payment_title);
@@ -114,8 +127,15 @@ public class SendConfirmationFragment extends BaseFragment {
         transactionFee.setText(getResources().getQuantityString(R.plurals.lumens,
                 (int) transactionSummary.getTransactionFees(),
                 transactionSummary.getTransactionFees()));
-        addBalances();
-        checkViolations();
+
+        if (!TextUtils.isEmpty(transactionSummary.getMemo())) {
+            memoLabel.setVisibility(View.VISIBLE);
+            memo.setVisibility(View.VISIBLE);
+            memo.setText(transactionSummary.getMemo());
+        } else {
+            memo.setVisibility(View.VISIBLE);
+            memoLabel.setVisibility(View.GONE);
+        }
     }
 
     private void addBalances() {
@@ -145,7 +165,9 @@ public class SendConfirmationFragment extends BaseFragment {
 
             if (transactionSummary.isSelfMinimumBalanceViolated()) {
                 info += getString(R.string.self_account_balance_violated,
-                        Double.toString(transactionSummary.getSelfMinimumBalance()));
+                        getResources().getQuantityString(R.plurals.lumens,
+                                (int) transactionSummary.getSelfMinimumBalance(),
+                                transactionSummary.getSelfMinimumBalance()));
 
                 if (createBalanceViolated) {
                     info += "\n";
@@ -154,7 +176,9 @@ public class SendConfirmationFragment extends BaseFragment {
 
             if (createBalanceViolated) {
                 info += getString(R.string.new_account_balance_violated,
-                        Double.toString(transactionSummary.getCreatedAccountMinimumBalance()));
+                        getResources().getQuantityString(R.plurals.lumens,
+                                (int) transactionSummary.getCreatedAccountMinimumBalance(),
+                                transactionSummary.getCreatedAccountMinimumBalance()));
             }
 
             infoMessage.setText(info);
