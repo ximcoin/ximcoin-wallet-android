@@ -15,6 +15,7 @@
         <item name="android:actionBarSize">46dp</item>
         <item name="colorButtonNormal">@color/colorAccent</item>
         <item name="actionMenuTextColor">@color/colorPrimaryText</item>
+        <item name="overlayStyle">@style/OverlayStyle</item>
     </style>
 
     <style name="Title" parent="@style/TextAppearance.AppCompat.Title">
@@ -100,6 +101,15 @@
         <item name="android:textColorHint">@color/white_70</item>
         <item name="android:background">@color/mainBackground</item>
         <item name="colorButtonNormal">@color/colorAccent</item>
+    </style>
+
+    <style name="OverlayStyle" >
+        <item name="android:alpha">0.4</item>
+        <item name="android:animateLayoutChanges">true</item>
+        <item name="android:background">@color/black_70</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:visibility">gone</item>
     </style>
 
 </resources>

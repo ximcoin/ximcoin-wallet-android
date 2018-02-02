@@ -23,6 +23,7 @@ import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.presenter.account.AccountsContract;
 import tech.duchess.luminawallet.view.common.BaseActivity;
+import tech.duchess.luminawallet.view.common.ProgressOverlay;
 import tech.duchess.luminawallet.view.createaccount.CreateAccountActivity;
 import tech.duchess.luminawallet.view.util.ViewUtils;
 import timber.log.Timber;
@@ -33,6 +34,9 @@ import timber.log.Timber;
  */
 public class AccountsActivity extends BaseActivity implements AccountsContract.AccountsView {
     private static final int CREATE_ACCOUNT_REQUEST_CODE = 1;
+
+    @BindView(R.id.progress_overlay)
+    ProgressOverlay progressOverlay;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -133,6 +137,18 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     @Override
     public void showLoading(boolean isLoading) {
         progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void showBlockedLoading(@Nullable String message) {
+        progressOverlay.show(message);
+    }
+
+    // TODO: Blocked loading may get bit complex w/ the options. Turn into a POJO event we can pass
+    // (likely via eventbus).
+    @Override
+    public void hideBlockedLoading(@Nullable String message, boolean wasSuccess, boolean immediate) {
+        progressOverlay.hide(message, wasSuccess, immediate);
     }
 
     @Override

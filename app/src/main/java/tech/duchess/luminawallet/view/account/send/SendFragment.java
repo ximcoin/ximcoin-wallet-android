@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.persistence.account.Account;
-import tech.duchess.luminawallet.presenter.account.AccountsContract;
+import tech.duchess.luminawallet.presenter.account.AccountsContract.AccountsView;
 import tech.duchess.luminawallet.presenter.account.send.SendContract;
 import tech.duchess.luminawallet.presenter.account.send.TransactionSummary;
 import tech.duchess.luminawallet.view.account.IAccountPerspectiveView;
@@ -124,8 +124,29 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
     }
 
     @Override
-    public void showLoading(boolean isLoading, boolean isBuildingTransaction) {
+    public void showBlockedLoading(boolean isLoading,
+                                   boolean isBuildingTransaction,
+                                   boolean wasSuccess) {
+        AccountsView accountsView = (AccountsView) activityContext;
+        if (isLoading) {
+            accountsView.showBlockedLoading(getString(isBuildingTransaction ?
+                            R.string.loading_building_transaction
+                            : R.string.loading_sending_payment));
+        } else {
+            int successResource;
+            if (wasSuccess) {
+                // We immediately hide overlay on success, since the transaction confirmation
+                // dialog is coming.
+                successResource = isBuildingTransaction ? 0 : R.string.send_payment_success;
+            } else {
+                successResource = isBuildingTransaction ? R.string.build_transaction_fail
+                        : R.string.send_payment_fail;
+            }
 
+            String successMessage = successResource == 0 ? null : getString(successResource);
+            accountsView.hideBlockedLoading(successMessage, wasSuccess,
+                    isBuildingTransaction && wasSuccess);
+        }
     }
 
     @Override
@@ -155,12 +176,14 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
 
     @Override
     public void clearForm() {
-
+        recipient.setText(null);
+        amountField.setText(null);
+        memoField.setText(null);
     }
 
     @Override
     public void showTransactionSuccess(@NonNull Account account) {
-        ((AccountsContract.AccountsView) activityContext).onTransactionPosted(account);
+        ((AccountsView) activityContext).onTransactionPosted(account);
     }
 
     @Override

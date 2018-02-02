@@ -81,6 +81,11 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
+    <tech.duchess.luminawallet.view.common.ProgressOverlay
+        android:id="@+id/progress_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <include layout="@layout/navigation_view" />
 
 </android.support.v4.widget.DrawerLayout>

@@ -144,18 +144,15 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
                 .compose(schedulerProvider.completableScheduler())
                 .doOnSubscribe(disposable -> {
                     addDisposable(disposable);
-                    view.showLoading(true, true);
+                    view.showBlockedLoading(true, true, true);
                 })
-                .doAfterTerminate(() -> {
-                    isBuildingTransaction = false;
-                    view.showLoading(false, true);
-                })
-                .subscribe(() -> {
-
-                }, throwable -> {
-                    Timber.e(throwable, "Failed to build transaction");
-                    view.showError(SendError.TRANSACTION_BUILD_FAILED);
-                });
+                .doAfterTerminate(() -> isBuildingTransaction = false)
+                .subscribe(() -> view.showBlockedLoading(false, true, true),
+                        throwable -> {
+                            Timber.e(throwable, "Failed to build transaction");
+                            view.showError(SendError.TRANSACTION_BUILD_FAILED);
+                            view.showBlockedLoading(false, true, false);
+                        });
     }
 
     private void buildTransactionConfirmation(@NonNull Account sourceAccount,
@@ -272,17 +269,20 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
                 .compose(schedulerProvider.singleScheduler())
                 .doOnSubscribe(disposable -> {
                     addDisposable(disposable);
-                    view.showLoading(true, false);
+                    view.showBlockedLoading(true, false, false);
                 })
                 .doAfterTerminate(() -> {
-                    view.showLoading(false, false);
                     pendingTransaction = null;
                     isPostingTransaction = false;
                 })
-                .subscribe(view::showTransactionSuccess,
+                .subscribe(account -> {
+                            view.showBlockedLoading(false, false, true);
+                            view.showTransactionSuccess(account);
+                        },
                         throwable -> {
                             Timber.e(throwable, "Transaction failed");
                             view.showError(SendError.TRANSACTION_FAILED);
+                            view.showBlockedLoading(false, false, false);
                         });
     }
 

@@ -81,8 +81,13 @@
     <string name="recipient_hint">Recipient Address</string>
     <string name="amount_hint">Amount</string>
     <string name="memo_hint">Memo (Optional)</string>
-    <string name="send_payment">SEND PAYMENT</string>
     <string name="invalid_ascii">Invalid ASCII Character</string>
+    <string name="loading_building_transaction">Building Transaction&#8230;</string>
+    <string name="build_transaction_fail">Transaction Build Failure</string>
+    <string name="loading_sending_payment">Posting Transaction&#8230;</string>
+    <string name="send_payment_fail">Transaction Failed</string>
+    <string name="send_payment_success">Transaction Successful!</string>
+
 
     <!-- Send Confirmation Fragment -->
     <string name="send_payment_title">Payment Confirmation</string>

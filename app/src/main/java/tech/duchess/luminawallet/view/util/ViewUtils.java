@@ -1,5 +1,7 @@
 package tech.duchess.luminawallet.view.util;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -144,5 +146,24 @@ public final class ViewUtils {
             return null;
         }
         return bitmap;
+    }
+
+    public static void animateView(View view, boolean visibleAtEnd, float endAlpha, int duration) {
+        if (visibleAtEnd) {
+            view.setAlpha(0);
+        } else {
+            view.setAlpha(1);
+        }
+
+        view.setVisibility(View.VISIBLE);
+        view.animate()
+                .setDuration(duration)
+                .alpha(visibleAtEnd ? endAlpha : 0)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        view.setVisibility(visibleAtEnd ? View.VISIBLE : View.GONE);
+                    }
+                });
     }
 }

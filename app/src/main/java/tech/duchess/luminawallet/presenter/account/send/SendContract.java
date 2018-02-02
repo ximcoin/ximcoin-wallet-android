@@ -10,7 +10,9 @@ import tech.duchess.luminawallet.presenter.common.Presenter;
 
 public interface SendContract {
     interface SendView {
-        void showLoading(boolean isLoading, boolean isBuildingTransaction);
+        void showBlockedLoading(boolean isLoading,
+                                boolean isBuildingTransaction,
+                                boolean wasSuccess);
 
         void showError(@NonNull SendPresenter.SendError error);
 
