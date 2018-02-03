@@ -6,11 +6,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import dagger.android.support.AndroidSupportInjection;
@@ -18,6 +20,7 @@ import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.model.persistence.transaction.Operation;
 import tech.duchess.luminawallet.presenter.account.transactions.TransactionsContract;
+import tech.duchess.luminawallet.presenter.account.transactions.TransactionsContract.NetworkState;
 import tech.duchess.luminawallet.view.account.IAccountPerspectiveView;
 import tech.duchess.luminawallet.view.common.BaseViewFragment;
 import tech.duchess.luminawallet.view.util.ViewUtils;
@@ -26,6 +29,9 @@ import tech.duchess.luminawallet.view.util.ViewUtils;
 public class TransactionsFragment extends BaseViewFragment<TransactionsContract.TransactionsPresenter>
         implements IAccountPerspectiveView, TransactionsContract.TransactionsView {
     private static final String ACCOUNT_KEY = "TransactionsFragment.ACCOUNT_KEY";
+
+    @BindView(R.id.swipe_refresh)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -51,7 +57,7 @@ public class TransactionsFragment extends BaseViewFragment<TransactionsContract.
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.recycler_fragment, container, false);
+        return inflater.inflate(R.layout.transactions_fragment, container, false);
     }
 
     @Override
@@ -60,10 +66,12 @@ public class TransactionsFragment extends BaseViewFragment<TransactionsContract.
         initRecyclerView();
         if (savedInstanceState == null) {
             ViewUtils.whenNonNull(getArguments(), args ->
-                    ViewUtils.whenNonNull(args.getParcelable(ACCOUNT_KEY), account -> {
-                        presenter.onAccountSet((Account) account);
-                    }));
+                    ViewUtils.whenNonNull(args.getParcelable(ACCOUNT_KEY), account ->
+                            presenter.onAccountSet((Account) account)));
         }
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimaryLight,
+                R.color.colorAccentLight);
+        swipeRefreshLayout.setOnRefreshListener(() -> presenter.onUserRefreshed());
     }
 
     private void initRecyclerView() {
@@ -92,11 +100,41 @@ public class TransactionsFragment extends BaseViewFragment<TransactionsContract.
     public void observeData(@Nullable LiveData<PagedList<Operation>> oldData,
                             @NonNull LiveData<PagedList<Operation>> liveData,
                             @Nullable String accountId) {
-        ViewUtils.whenNonNull(oldData, old -> old.removeObservers(this));
-
+        removeObservers(oldData);
         adapter.setAccountId(accountId);
-        liveData.observe(this, operations -> {
-            adapter.setList(operations);
+        liveData.observe(this, operations -> adapter.setList(operations));
+    }
+
+    @Override
+    public void observeNetworkState(@Nullable LiveData<NetworkState> oldData,
+                                    @NonNull LiveData<NetworkState> newData) {
+        removeObservers(oldData);
+        newData.observe(this, networkState -> {
+            adapter.setLoading(networkState == NetworkState.LOADING);
+            if (networkState == NetworkState.FAILED) {
+                onLoadFailed();
+            }
         });
+    }
+
+    @Override
+    public void observeRefreshState(@Nullable LiveData<NetworkState> oldData,
+                                    @NonNull LiveData<NetworkState> newData) {
+        removeObservers(oldData);
+        newData.observe(this, networkState -> {
+            swipeRefreshLayout.setRefreshing(networkState == NetworkState.LOADING);
+            if (networkState == NetworkState.FAILED) {
+                onLoadFailed();
+            }
+        });
+    }
+
+    private void onLoadFailed() {
+        Toast.makeText(getContext(), R.string.failed_load_transactions,
+                Toast.LENGTH_SHORT).show();
+    }
+
+    private void removeObservers(@Nullable LiveData oldData) {
+        ViewUtils.whenNonNull(oldData, old -> old.removeObservers(this));
     }
 }

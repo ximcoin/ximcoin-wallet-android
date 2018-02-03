@@ -18,11 +18,12 @@ import tech.duchess.luminawallet.model.api.HorizonApi;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.model.persistence.transaction.Operation;
 import tech.duchess.luminawallet.model.repository.OperationPageDataSource;
+import tech.duchess.luminawallet.presenter.account.transactions.TransactionsContract.NetworkState;
 import tech.duchess.luminawallet.presenter.common.BasePresenter;
 import tech.duchess.luminawallet.view.util.ViewUtils;
 
 public class TransactionsPresenter extends BasePresenter<TransactionsContract.TransactionsView>
-        implements TransactionsContract.TransactionsPresenter{
+        implements TransactionsContract.TransactionsPresenter {
     private static final String ACCOUNT_ID_KEY = "TransactionsPresenter.ACCOUNT_ID_KEY";
     private final static int PAGE_SIZE = 7;
 
@@ -42,15 +43,15 @@ public class TransactionsPresenter extends BasePresenter<TransactionsContract.Tr
     private LiveData<PagedList<Operation>> liveData;
 
     @NonNull
-    private MutableLiveData<DataSource<String, Operation>> source = new MutableLiveData<>();
+    private MutableLiveData<OperationPageDataSource> source = new MutableLiveData<>();
 
     private boolean hasBoundData = false;
 
     @Inject
-    public TransactionsPresenter(@NonNull TransactionsContract.TransactionsView view,
-                                 @NonNull HorizonApi horizonApi,
-                                 @NonNull OkHttpClient okHttpClient,
-                                 @NonNull Moshi moshi) {
+    TransactionsPresenter(@NonNull TransactionsContract.TransactionsView view,
+                          @NonNull HorizonApi horizonApi,
+                          @NonNull OkHttpClient okHttpClient,
+                          @NonNull Moshi moshi) {
         super(view);
         this.horizonApi = horizonApi;
         this.okHttpClient = okHttpClient;
@@ -120,8 +121,19 @@ public class TransactionsPresenter extends BasePresenter<TransactionsContract.Tr
 
         @Override
         public DataSource<String, Operation> create() {
-            DataSource<String, Operation> dataSource =
+            OperationPageDataSource dataSource =
                     new OperationPageDataSource(horizonApi, okHttpClient, moshi, accountId);
+            OperationPageDataSource oldSource = source.getValue();
+
+            LiveData<NetworkState> oldNetworkState = null;
+            LiveData<NetworkState> oldRefreshState = null;
+            if (oldSource != null) {
+                oldNetworkState = oldSource.getNetworkState();
+                oldRefreshState = oldSource.getInitialLoadState();
+            }
+
+            view.observeRefreshState(oldRefreshState, dataSource.getInitialLoadState());
+            view.observeNetworkState(oldNetworkState, dataSource.getNetworkState());
             source.postValue(dataSource);
             return dataSource;
         }

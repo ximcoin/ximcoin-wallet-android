@@ -1,5 +1,7 @@
 package tech.duchess.luminawallet.model.repository;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.paging.PageKeyedDataSource;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,7 +9,6 @@ import android.support.annotation.Nullable;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -19,6 +20,7 @@ import okhttp3.Response;
 import tech.duchess.luminawallet.model.api.HorizonApi;
 import tech.duchess.luminawallet.model.persistence.transaction.Operation;
 import tech.duchess.luminawallet.model.persistence.transaction.OperationPage;
+import tech.duchess.luminawallet.presenter.account.transactions.TransactionsContract.NetworkState;
 import tech.duchess.luminawallet.view.util.TextUtils;
 import timber.log.Timber;
 
@@ -34,6 +36,12 @@ public class OperationPageDataSource extends PageKeyedDataSource<String, Operati
 
     @NonNull
     private final JsonAdapter<OperationPage> operationPageAdapter;
+
+    @NonNull
+    private final MutableLiveData<NetworkState> networkState = new MutableLiveData<>();
+
+    @NonNull
+    private final MutableLiveData<NetworkState> initialLoadState = new MutableLiveData<>();
 
     public OperationPageDataSource(@NonNull HorizonApi horizonApi,
                                    @NonNull OkHttpClient okHttpClient,
@@ -53,22 +61,37 @@ public class OperationPageDataSource extends PageKeyedDataSource<String, Operati
             return;
         }
 
-        AtomicReference<String> nextPage = new AtomicReference<>();
-        AtomicReference<String> prevPage = new AtomicReference<>();
-        List<Operation> operationList =
-                horizonApi.getFirstOperationsPage(accountId, params.requestedLoadSize)
-                        .toObservable()
-                        .doOnNext(operationPage -> {
-                            nextPage.set(operationPage.getNextPageLink());
-                            prevPage.set(operationPage.getPreviousPageLink());
-                        })
-                        .map(OperationPage::getOperations)
-                        .flatMapIterable(operations -> operations)
-                        .flatMap(this::populateOperationTransaction)
-                        .toList()
-                        .blockingGet();
+        initialLoadState.postValue(NetworkState.LOADING);
+        try {
+            AtomicReference<String> nextPage = new AtomicReference<>();
+            AtomicReference<String> prevPage = new AtomicReference<>();
+            List<Operation> operationList =
+                    horizonApi.getFirstOperationsPage(accountId, params.requestedLoadSize)
+                            .toObservable()
+                            .doOnNext(operationPage -> {
+                                nextPage.set(operationPage.getNextPageLink());
+                                prevPage.set(operationPage.getPreviousPageLink());
+                            })
+                            .map(OperationPage::getOperations)
+                            .flatMapIterable(operations -> operations)
+                            .flatMap(this::populateOperationTransaction)
+                            .toList()
+                            .blockingGet();
 
-        callback.onResult(operationList, prevPage.get(), nextPage.get());
+            callback.onResult(operationList, prevPage.get(), nextPage.get());
+            initialLoadState.postValue(NetworkState.SUCCESS);
+        } catch (Exception e) {
+            Timber.e(e, "Failed to load initial transactions");
+            initialLoadState.postValue(NetworkState.FAILED);
+        }
+    }
+
+    public LiveData<NetworkState> getNetworkState() {
+        return networkState;
+    }
+
+    public LiveData<NetworkState> getInitialLoadState() {
+        return initialLoadState;
     }
 
     @Override
@@ -85,6 +108,7 @@ public class OperationPageDataSource extends PageKeyedDataSource<String, Operati
             return;
         }
 
+        networkState.postValue(NetworkState.LOADING);
         Request request = new Request.Builder().url(params.key).build();
         try {
             Response response = okHttpClient.newCall(request).execute();
@@ -92,7 +116,8 @@ public class OperationPageDataSource extends PageKeyedDataSource<String, Operati
 
             List<Operation> operations = operationPage.getOperations();
             if (operations.isEmpty()) {
-                callback.onResult(operations, operationPage.getNextPageLink());
+                callback.onResult(operations, null);
+                networkState.postValue(NetworkState.SUCCESS);
                 return;
             }
 
@@ -102,8 +127,10 @@ public class OperationPageDataSource extends PageKeyedDataSource<String, Operati
                     .blockingGet();
 
             callback.onResult(filledOperations, operationPage.getNextPageLink());
-        } catch (IOException e) {
+            networkState.postValue(NetworkState.SUCCESS);
+        } catch (Exception e) {
             Timber.e(e, "Failed to load more operations");
+            networkState.postValue(NetworkState.FAILED);
         }
     }
 

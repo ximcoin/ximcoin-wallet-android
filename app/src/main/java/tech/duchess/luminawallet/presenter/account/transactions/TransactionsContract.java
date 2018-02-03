@@ -17,10 +17,23 @@ public interface TransactionsContract {
         void observeData(@Nullable LiveData<PagedList<Operation>> oldData,
                          @NonNull LiveData<PagedList<Operation>> liveData,
                          @Nullable String accountId);
+
+        void observeNetworkState(@Nullable LiveData<NetworkState> oldData,
+                                 @NonNull LiveData<NetworkState> newData);
+
+        void observeRefreshState(@Nullable LiveData<NetworkState> oldData,
+                                 @NonNull LiveData<NetworkState> newData);
     }
 
     interface TransactionsPresenter extends Presenter {
         void onAccountSet(@Nullable Account account);
+
         void onUserRefreshed();
+    }
+
+    enum NetworkState {
+        LOADING,
+        SUCCESS,
+        FAILED
     }
 }

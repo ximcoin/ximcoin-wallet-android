@@ -76,6 +76,7 @@
     <string name="sender_label">Sender:</string>
     <string name="receive_amount_prefix">+%1$s %2$s</string>
     <string name="send_amount_prefix">-%1$s %2$s</string>
+    <string name="failed_load_transactions">Failed to load transactions</string>
 
     <!-- Send Fragment -->
     <string name="recipient_hint">Recipient Address</string>
