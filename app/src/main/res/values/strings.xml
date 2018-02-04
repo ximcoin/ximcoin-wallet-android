@@ -70,6 +70,7 @@
     <string name="passwords_match_error">Passwords don\'t match</string>
 
     <!-- Operations Fragment -->
+    <string name="date_label">Date:</string>
     <string name="operation_type_label">Action Performed:</string>
     <string name="memo_label">Memo:</string>
     <string name="recipient_label">Recipient:</string>

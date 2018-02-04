@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import org.threeten.bp.format.FormatStyle;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tech.duchess.luminawallet.R;
@@ -21,6 +23,9 @@ import timber.log.Timber;
 class TransactionsViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.amount_transferred)
     TextView transferAmount;
+
+    @BindView(R.id.date)
+    TextView date;
 
     @BindView(R.id.operation_type)
     TextView operationType;
@@ -51,7 +56,8 @@ class TransactionsViewHolder extends RecyclerView.ViewHolder {
             Timber.e("Viewing account was null");
             viewingAccount = "";
         }
-        OperationAdapter operationAdapter = new OperationAdapter(operation, viewingAccount);
+        OperationAdapter operationAdapter =
+                new OperationAdapter(operation, viewingAccount, context);
 
         if (TextUtils.isEmpty(operationAdapter.memo)) {
             memoLabel.setVisibility(View.GONE);
@@ -61,6 +67,8 @@ class TransactionsViewHolder extends RecyclerView.ViewHolder {
             memo.setVisibility(View.VISIBLE);
             memo.setText(operationAdapter.memo);
         }
+
+        date.setText(operationAdapter.date);
 
         operationType.setText(context.getString(operationAdapter.operationType));
 
@@ -87,6 +95,9 @@ class TransactionsViewHolder extends RecyclerView.ViewHolder {
     // TODO: Should probably move this data abstraction into the presenter itself.
     private static class OperationAdapter {
         @NonNull
+        String date = "";
+
+        @NonNull
         String address = "";
 
         @NonNull
@@ -104,7 +115,8 @@ class TransactionsViewHolder extends RecyclerView.ViewHolder {
         boolean isTransferIn = false;
 
         OperationAdapter(@Nullable Operation operation,
-                                @NonNull String viewingAccount) {
+                         @NonNull String viewingAccount,
+                         @NonNull Context context) {
             if (operation == null) {
                 return;
             }
@@ -118,6 +130,7 @@ class TransactionsViewHolder extends RecyclerView.ViewHolder {
 
             operationType = operation.getOperationType().getFriendlyName();
             assetCode = operation.getAsset_code();
+            date = TextUtils.parseDateTime(operation.getCreated_at(), FormatStyle.MEDIUM);
 
             // TODO: Fill the rest of these in.
             switch (operation.getOperationType()) {

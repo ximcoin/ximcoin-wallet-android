@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.squareup.moshi.Moshi;
 
 import javax.inject.Inject;
@@ -33,6 +34,7 @@ public class LuminaWalletApp extends Application implements HasActivityInjector 
     @Override
     public void onCreate() {
         super.onCreate();
+        AndroidThreeTen.init(this);
         application = this;
         DaggerAppComponent
                 .builder()

@@ -8,6 +8,16 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 
+import org.threeten.bp.Instant;
+import org.threeten.bp.ZoneId;
+import org.threeten.bp.ZonedDateTime;
+import org.threeten.bp.format.DateTimeFormatter;
+import org.threeten.bp.format.FormatStyle;
+
+import java.util.Locale;
+
+import timber.log.Timber;
+
 public class TextUtils {
 
     public static boolean isEmpty(String string) {
@@ -38,5 +48,17 @@ public class TextUtils {
             sb.append(spannable);
         }
         return sb;
+    }
+
+    public static String parseDateTime(@Nullable String zuluDate,
+                                       @NonNull FormatStyle formatStyle) {
+        if (TextUtils.isEmpty(zuluDate)) {
+            Timber.e("DateTime was empty!");
+            return "Unknown";
+        }
+
+        return ZonedDateTime.ofInstant(Instant.parse(zuluDate), ZoneId.systemDefault())
+                .format(DateTimeFormatter.ofLocalizedDateTime(formatStyle)
+                        .withLocale(Locale.getDefault()));
     }
 }
