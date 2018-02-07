@@ -61,6 +61,7 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
     private final Map<String, String> assetCodeToIssuerMap = new HashMap<>();
     private boolean isBuildingTransaction = false;
     private boolean isPostingTransaction = false;
+    private boolean awaitingAccountPropogation = false;
 
     SendPresenter(@NonNull SendContract.SendView view,
                   @NonNull HorizonApi horizonApi,
@@ -277,6 +278,7 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
                 })
                 .subscribe(account -> {
                             view.showBlockedLoading(false, false, true);
+                            awaitingAccountPropogation = true;
                             view.showTransactionSuccess(account);
                         },
                         throwable -> {
@@ -288,9 +290,17 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
 
     @Override
     public void onAccountUpdated(@Nullable Account account) {
+        Account previousAccount = sourceAccount;
         sourceAccount = account;
-        view.clearForm();
         updateView();
+
+        if (previousAccount == null
+                || sourceAccount == null
+                || !previousAccount.getAccount_id().equals(sourceAccount.getAccount_id())
+                || awaitingAccountPropogation) {
+            awaitingAccountPropogation = false;
+            view.clearForm();
+        }
     }
 
     private static Operation getPaymentOperation(@NonNull Account sourceAccount,

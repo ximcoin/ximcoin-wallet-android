@@ -202,10 +202,10 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == CREATE_ACCOUNT_REQUEST_CODE) {
             presenter.onAccountCreationReturned(resultCode == Activity.RESULT_OK);
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 

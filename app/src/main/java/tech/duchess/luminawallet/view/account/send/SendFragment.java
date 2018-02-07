@@ -1,5 +1,6 @@
 package tech.duchess.luminawallet.view.account.send;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,13 +8,15 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.DialogFragment;
 import android.text.InputFilter;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Spinner;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.util.List;
 
@@ -60,17 +63,8 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
     @BindView(R.id.memo_field)
     TextInputEditText memoField;
 
-    @BindView(R.id.pick_contact)
-    ImageView pickContact;
-
-    @BindView(R.id.take_picture)
-    ImageView qrCode;
-
     @BindView(R.id.unit_spinner)
     Spinner currencyUnitSpinner;
-
-    @BindView(R.id.send_payment_button)
-    Button sendPaymentButton;
 
     private DialogFragment confirmationFragment;
 
@@ -95,7 +89,7 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
         super.onViewStateRestored(savedInstanceState);
         memoField.setFilters(new InputFilter[]{ASCII_FILTER});
 
-        if (savedInstanceState != null) {
+        if (savedInstanceState == null) {
             Bundle args = getArguments();
             presenter.onAccountUpdated(args == null ? null : args.getParcelable(ACCOUNT_KEY));
         }
@@ -189,5 +183,25 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
     @Override
     public void onTransactionConfirmed(@Nullable String password) {
         presenter.onUserConfirmPayment(password);
+    }
+
+    @OnClick(R.id.take_picture)
+    public void onUserRequestQRScanner() {
+        IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(this);
+        intentIntegrator.setBeepEnabled(false);
+        intentIntegrator.setBarcodeImageEnabled(false);
+        intentIntegrator.initiateScan();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (!TextUtils.isEmpty(result.getContents())) {
+                recipient.setText(result.getContents());
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

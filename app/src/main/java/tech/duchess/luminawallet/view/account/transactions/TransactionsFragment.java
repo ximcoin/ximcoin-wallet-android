@@ -4,6 +4,8 @@ import android.arch.lifecycle.LiveData;
 import android.arch.paging.PagedList;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -135,6 +137,8 @@ public class TransactionsFragment extends BaseViewFragment<TransactionsContract.
     }
 
     private void removeObservers(@Nullable LiveData oldData) {
-        ViewUtils.whenNonNull(oldData, old -> old.removeObservers(this));
+        new Handler(Looper.getMainLooper()).post(() ->
+                ViewUtils.whenNonNull(oldData, old ->
+                        old.removeObservers(TransactionsFragment.this)));
     }
 }
