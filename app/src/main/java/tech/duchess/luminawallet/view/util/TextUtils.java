@@ -50,14 +50,23 @@ public class TextUtils {
         return sb;
     }
 
-    public static String parseDateTime(@Nullable String zuluDate,
-                                       @NonNull FormatStyle formatStyle) {
+    public static String parseDateTimeZuluDate(@Nullable String zuluDate,
+                                               @NonNull FormatStyle formatStyle) {
         if (TextUtils.isEmpty(zuluDate)) {
             Timber.e("DateTime was empty!");
             return "Unknown";
         }
 
-        return ZonedDateTime.ofInstant(Instant.parse(zuluDate), ZoneId.systemDefault())
+        return getDateTimeFromInstant(Instant.parse(zuluDate), formatStyle);
+    }
+
+    public static String parseDateTimeEpochSeconds(long millis, @NonNull FormatStyle formatStyle) {
+        return getDateTimeFromInstant(Instant.ofEpochSecond(millis), formatStyle);
+    }
+
+    private static String getDateTimeFromInstant(@NonNull Instant instant,
+                                          @NonNull FormatStyle formatStyle) {
+        return ZonedDateTime.ofInstant(instant, ZoneId.systemDefault())
                 .format(DateTimeFormatter.ofLocalizedDateTime(formatStyle)
                         .withLocale(Locale.getDefault()));
     }

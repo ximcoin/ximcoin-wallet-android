@@ -70,10 +70,10 @@ public abstract class BaseFragment extends AppCompatDialogFragment
         return super.onCreateDialog(savedInstanceState);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Override
-    public void onViewStateRestored(Bundle savedInstanceState) {
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
+        //noinspection ConstantConditions
         unbinder = ButterKnife.bind(this, getView());
     }
 

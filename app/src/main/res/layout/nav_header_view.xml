@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/activity_margin"
+    android:layout_marginEnd="@dimen/activity_margin"
+    android:layout_marginStart="@dimen/activity_margin"
+    android:layout_marginTop="48dp">
+
+    <TextView
+        android:id="@+id/fiat_conversion_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fiat_conversion_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/fiat_conversion_value"
+        style="@style/Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_normal"
+        app:layout_constraintStart_toStartOf="@id/fiat_conversion_label"
+        app:layout_constraintTop_toBottomOf="@id/fiat_conversion_label"
+        tools:text="1 XLM = 1 USD" />
+
+    <TextView
+        android:id="@+id/last_updated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/fiat_conversion_value"
+        app:layout_constraintTop_toBottomOf="@id/fiat_conversion_value"
+        tools:text="Last Updated March 1st 12:24PM" />
+
+    <ImageButton
+        android:id="@+id/info"
+        android:layout_width="@dimen/image_button_width_height"
+        android:layout_height="@dimen/image_button_width_height"
+        android:layout_gravity="center_vertical"
+        android:background="?selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_info"
+        android:tint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/last_updated" />
+
+    <ImageButton
+        android:id="@+id/refresh_conversion"
+        android:layout_width="@dimen/image_button_width_height"
+        android:layout_height="@dimen/image_button_width_height"
+        android:layout_gravity="center_vertical"
+        android:background="?selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_refresh"
+        android:tint="@color/white"
+        app:layout_constraintEnd_toStartOf="@id/info"
+        app:layout_constraintTop_toBottomOf="@id/last_updated" />
+
+    <ProgressBar
+        android:id="@+id/nav_progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/refresh_conversion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

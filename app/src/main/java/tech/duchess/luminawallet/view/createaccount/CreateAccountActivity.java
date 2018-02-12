@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -20,8 +19,6 @@ import tech.duchess.luminawallet.view.util.ViewUtils;
 
 public class CreateAccountActivity extends BaseActivity implements ICreateAccountFlowManager {
     private static final String SEED_KEY = "CreateAccountActivity.SEED_KEY";
-    @BindView(R.id.drawer_layout)
-    DrawerLayout drawerLayout;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -39,12 +36,6 @@ public class CreateAccountActivity extends BaseActivity implements ICreateAccoun
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
         });
-
-        // Lock the drawer. Only one way out of this activity, and that's either canceling the
-        // account creation or completing it. This prevents users from backing into this activity
-        // (or expecting to be able to back into this activity) after having navigated elsewhere
-        // throughout the application.
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
         Bundle extras = getIntent().getExtras();
         String seed = extras == null ? null : extras.getString(SEED_KEY, null);

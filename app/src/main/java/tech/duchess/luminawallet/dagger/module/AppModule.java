@@ -7,9 +7,9 @@ import com.squareup.moshi.Moshi;
 
 import org.stellar.sdk.Network;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
-import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import dagger.android.AndroidInjectionModule;
@@ -21,11 +21,12 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 import tech.duchess.luminawallet.EnvironmentConstants;
-import tech.duchess.luminawallet.LuminaWalletApp;
 import tech.duchess.luminawallet.dagger.scope.PerActivity;
+import tech.duchess.luminawallet.model.api.CoinMarketCapApi;
 import tech.duchess.luminawallet.model.api.CurlLoggingInterceptor;
 import tech.duchess.luminawallet.model.api.HorizonApi;
 import tech.duchess.luminawallet.model.persistence.HorizonDB;
+import tech.duchess.luminawallet.model.persistence.coinmarketcap.ConversionRateAdapter;
 import tech.duchess.luminawallet.view.account.AccountsActivity;
 import tech.duchess.luminawallet.view.account.AccountsActivityModule;
 import tech.duchess.luminawallet.view.createaccount.CreateAccountActivity;
@@ -36,9 +37,8 @@ import tech.duchess.luminawallet.view.createaccount.CreateAccountActivityModule;
  */
 @Module(includes = AndroidInjectionModule.class)
 public abstract class AppModule {
-    @Binds
-    @Singleton
-    abstract Application application(LuminaWalletApp app);
+    private static final String HORIZON_RETROFIT_QUALIFIER = "HorizonRetrofit";
+    private static final String CMC_RETROFIT_QUALIFIER = "CMCRetrofit";
 
     @Provides
     @Singleton
@@ -49,7 +49,9 @@ public abstract class AppModule {
     @Provides
     @Singleton
     static Moshi provideMoshi() {
-        return new Moshi.Builder().build();
+        return new Moshi.Builder()
+                .add(new ConversionRateAdapter())
+                .build();
     }
 
     @Provides
@@ -78,7 +80,8 @@ public abstract class AppModule {
 
     @Provides
     @Singleton
-    static Retrofit provideRetrofit(Moshi moshi, OkHttpClient okHttpClient) {
+    @Named(HORIZON_RETROFIT_QUALIFIER)
+    static Retrofit provideHorizonRetrofit(Moshi moshi, OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -89,13 +92,31 @@ public abstract class AppModule {
 
     @Provides
     @Singleton
-    static HorizonApi providesHorizonApi(Retrofit retrofit) {
+    @Named(CMC_RETROFIT_QUALIFIER)
+    static Retrofit provideCMCRetrofit(Moshi moshi, OkHttpClient okHttpClient) {
+        return new Retrofit.Builder()
+                .addConverterFactory(MoshiConverterFactory.create(moshi))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .baseUrl(EnvironmentConstants.COIN_MARKET_CAP_API_ENDPOINT)
+                .client(okHttpClient)
+                .build();
+    }
+
+    @Provides
+    @Singleton
+    static HorizonApi providesHorizonApi(@Named(HORIZON_RETROFIT_QUALIFIER) Retrofit retrofit) {
         if (EnvironmentConstants.IS_PRODUCTION) {
             Network.usePublicNetwork();
         } else {
             Network.useTestNetwork();
         }
         return retrofit.create(HorizonApi.class);
+    }
+
+    @Provides
+    @Singleton
+    static CoinMarketCapApi providesCoinMarketCapApi(@Named(CMC_RETROFIT_QUALIFIER) Retrofit retrofit) {
+        return retrofit.create(CoinMarketCapApi.class);
     }
 
     @PerActivity

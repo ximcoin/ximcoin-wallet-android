@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
+import tech.duchess.luminawallet.dagger.component.AppComponent;
 import tech.duchess.luminawallet.dagger.component.DaggerAppComponent;
 import timber.log.Timber;
 
@@ -31,15 +32,18 @@ public class LuminaWalletApp extends Application implements HasActivityInjector 
     @Nullable
     private static LuminaWalletApp application;
 
+    private AppComponent appComponent;
+
     @Override
     public void onCreate() {
         super.onCreate();
         AndroidThreeTen.init(this);
         application = this;
-        DaggerAppComponent
+        appComponent = DaggerAppComponent
                 .builder()
-                .create(this)
-                .inject(this);
+                .application(this)
+                .build();
+        appComponent.inject(this);
 
         if (EnvironmentConstants.IS_PRODUCTION) {
             Timber.plant(new CrashReportingTree());
@@ -59,6 +63,10 @@ public class LuminaWalletApp extends Application implements HasActivityInjector 
 
     public Moshi getMoshi() {
         return moshi;
+    }
+
+    public AppComponent getAppComponent() {
+        return appComponent;
     }
 
     @Override

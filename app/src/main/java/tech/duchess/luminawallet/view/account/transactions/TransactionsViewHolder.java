@@ -130,7 +130,7 @@ class TransactionsViewHolder extends RecyclerView.ViewHolder {
 
             operationType = operation.getOperationType().getFriendlyName();
             assetCode = operation.getAsset_code();
-            date = TextUtils.parseDateTime(operation.getCreated_at(), FormatStyle.MEDIUM);
+            date = TextUtils.parseDateTimeZuluDate(operation.getCreated_at(), FormatStyle.MEDIUM);
 
             // TODO: Fill the rest of these in.
             switch (operation.getOperationType()) {

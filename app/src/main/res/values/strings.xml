@@ -121,6 +121,15 @@
     <string name="operation_manage_data">Data Entry Modified</string>
     <string name="operation_unknown">UNKNOWN</string>
 
+    <!-- Navigation Drawer -->
+    <string name="fiat_conversion_label">Fiat Conversion:</string>
+    <string name="fiat_conversion_prefix">1 XLM = %s</string>
+    <string name="fiat_conversion_suffix">%1$s %2$s</string>
+    <string name="fiat_conversion_last_updated">Last updated: %s</string>
+    <string name="fiat_conversion_unknown">No Data</string>
+    <string name="fiat_conversion_load_failure">Failed to load conversion rate</string>
+    <string name="fiat_conversion_info">Conversion rates are provided by www.coinmarketcap.com</string>
+
     <plurals name="lumens">
         <item quantity="one">%s Lumen</item>
         <item quantity="other">%s Lumens</item>

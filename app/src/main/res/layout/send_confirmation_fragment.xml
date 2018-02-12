@@ -111,8 +111,8 @@
 
             <ImageView
                 android:id="@+id/minimum_balance_info"
-                android:layout_width="@dimen/help_icon_width_height"
-                android:layout_height="@dimen/help_icon_width_height"
+                android:layout_width="@dimen/image_button_width_height"
+                android:layout_height="@dimen/image_button_width_height"
                 android:layout_marginEnd="@dimen/margin_normal"
                 android:background="?selectableItemBackgroundBorderless"
                 android:clickable="true"
