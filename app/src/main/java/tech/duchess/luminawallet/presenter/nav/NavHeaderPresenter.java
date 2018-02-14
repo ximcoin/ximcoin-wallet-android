@@ -68,8 +68,9 @@ public class NavHeaderPresenter implements NavHeaderContract.NavHeaderPresenter 
                     String lastUpdated = conversionRate.getLastUpdated();
                     if (!TextUtils.isEmpty(conversion) && !TextUtils.isEmpty(lastUpdated)) {
                         this.conversion = conversion;
+                        this.currency = CURRENCY;
                         this.lastUpdatedSeconds = Long.parseLong(lastUpdated);
-                        view.showConversion(this.conversion, CURRENCY, this.lastUpdatedSeconds);
+                        view.showConversion(this.conversion, currency, this.lastUpdatedSeconds);
                     }
                 }, throwable -> {
                     Timber.e(throwable, "Failed to get conversion rate for %s", CURRENCY);

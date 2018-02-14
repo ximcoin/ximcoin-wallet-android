@@ -1,6 +1,9 @@
 package tech.duchess.luminawallet.view.nav;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -57,18 +60,26 @@ public class NavHeaderView extends FrameLayout implements NavHeaderContract.NavH
 
     private void initView() {
         inflate(getContext(), R.layout.nav_header_view, this);
-        unbinder = ButterKnife.bind(this);
         LuminaWalletApp.getInstance()
                 .getAppComponent()
                 .plus(new NavHeaderViewModule(this))
                 .inject(this);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        unbinder = ButterKnife.bind(this);
         presenter.onViewAttached();
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        unbinder.unbind();
+        if (unbinder != null) {
+            unbinder.unbind();
+            unbinder = null;
+        }
         presenter.onViewDetached();
     }
 
@@ -123,4 +134,50 @@ public class NavHeaderView extends FrameLayout implements NavHeaderContract.NavH
                 Toast.LENGTH_SHORT)
                 .show();
     }
+
+    @Nullable
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        CustomViewSavedState savedState = new CustomViewSavedState(superState);
+        savedState.presenterState = new Bundle();
+        presenter.onSaveInstanceState(savedState.presenterState);
+        return savedState;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        CustomViewSavedState savedState = (CustomViewSavedState) state;
+        presenter.onViewStateRestored(savedState.presenterState);
+        super.onRestoreInstanceState(savedState.getSuperState());
+    }
+
+    private static class CustomViewSavedState extends BaseSavedState {
+        Bundle presenterState;
+
+        public static final Parcelable.Creator<CustomViewSavedState> CREATOR = new Creator<CustomViewSavedState>() {
+            @Override public CustomViewSavedState createFromParcel(Parcel source) {
+                return new CustomViewSavedState(source);
+            }
+
+            @Override public CustomViewSavedState[] newArray(int size) {
+                return new CustomViewSavedState[size];
+            }
+        };
+
+        CustomViewSavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        private CustomViewSavedState(Parcel source) {
+            super(source);
+            presenterState = source.readBundle(getClass().getClassLoader());
+        }
+
+        @Override public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeBundle(presenterState);
+        }
+    }
+
 }

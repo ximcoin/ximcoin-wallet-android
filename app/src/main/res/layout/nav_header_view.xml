@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="@dimen/activity_margin"
-    android:layout_marginEnd="@dimen/activity_margin"
-    android:layout_marginStart="@dimen/activity_margin"
-    android:layout_marginTop="48dp">
+    android:paddingBottom="@dimen/activity_margin"
+    android:paddingEnd="@dimen/activity_margin"
+    android:paddingStart="@dimen/activity_margin"
+    android:paddingTop="48dp"
+    android:background="@color/colorPrimary">
 
     <TextView
         android:id="@+id/fiat_conversion_label"
