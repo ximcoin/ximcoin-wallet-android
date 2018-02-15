@@ -4,10 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Observable;
 import tech.duchess.luminawallet.dagger.SchedulerProvider;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.model.repository.AccountRepository;
 import tech.duchess.luminawallet.presenter.common.BasePresenter;
+import tech.duchess.luminawallet.view.util.TextUtils;
 import tech.duchess.luminawallet.view.util.ViewUtils;
 import timber.log.Timber;
 
@@ -58,26 +63,44 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
                     addDisposable(disposable);
                     view.showLoading(true);
                 })
+                .doAfterTerminate(() -> view.showLoading(false))
                 .subscribe(accounts -> {
-                    view.showLoading(false);
-                    if (accounts.isEmpty()) {
-                        currentAccountId = null;
-                        view.showNoAccountFound();
-                    } else {
-                        Account account = accounts.get(0);
-                        currentAccountId = account.getAccount_id();
-                        if (!account.isOnNetwork()) {
-                            view.showAccountNotOnNetwork(account);
-                        } else {
-                            view.showAccount(account);
-                        }
-                    }
+                    view.updateAccountList(accounts);
+                    updateViewForSelectedAccount(accounts.isEmpty() ? null
+                            : getCurrentAccount(accounts, currentAccountId));
                 }, throwable -> {
                     Timber.e(throwable, "Failed to load accounts");
-                    view.showLoading(false);
+                    view.updateAccountList(new ArrayList<>());
                     currentAccountId = null;
-                    view.showAccountLoadFailure();
+                    view.showAccountsLoadFailure();
                 });
+    }
+
+    private Account getCurrentAccount(@NonNull List<Account> accounts,
+                                      @Nullable String currentAccountId) {
+        if (TextUtils.isEmpty(currentAccountId)) {
+            return accounts.get(0);
+        }
+
+        return Observable.fromIterable(accounts)
+                .filter(account -> currentAccountId.equals(account.getAccount_id()))
+                .defaultIfEmpty(accounts.get(0))
+                .blockingFirst();
+    }
+
+    private void updateViewForSelectedAccount(@Nullable Account account) {
+        if (account == null) {
+            currentAccountId = null;
+            view.showNoAccountFound();
+            return;
+        }
+
+        currentAccountId = account.getAccount_id();
+        if (!account.isOnNetwork()) {
+            view.showAccountNotOnNetwork(account);
+        } else {
+            view.showAccount(account);
+        }
     }
 
     @Override
@@ -99,5 +122,25 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
         if (currentAccountId.equals(account.getAccount_id())) {
             view.updateForTransaction(account);
         }
+    }
+
+    @Override
+    public void onAccountNavigated(@NonNull String accountId) {
+        if (accountId.equals(currentAccountId)) {
+            return;
+        }
+
+        accountRepository.getAccountById(accountId, false)
+                .compose(schedulerProvider.singleScheduler())
+                .doOnSubscribe(disposable -> {
+                    addDisposable(disposable);
+                    view.showLoading(true);
+                })
+                .doAfterTerminate(() -> view.showLoading(false))
+                .subscribe(this::updateViewForSelectedAccount,
+                        throwable -> {
+                            Timber.e(throwable, "Failed to navigate to account");
+                            view.showAccountNavigationFailure();
+                        });
     }
 }

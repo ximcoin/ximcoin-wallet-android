@@ -8,12 +8,20 @@ import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -32,7 +40,8 @@ import timber.log.Timber;
  * Displays a Stellar Account, with its respective features (transactions, send, receive, etc...).
  * Will also display the option to create a new account if no account is found.
  */
-public class AccountsActivity extends BaseActivity implements AccountsContract.AccountsView {
+public class AccountsActivity extends BaseActivity implements AccountsContract.AccountsView,
+        NavigationView.OnNavigationItemSelectedListener {
     private static final int CREATE_ACCOUNT_REQUEST_CODE = 1;
 
     @BindView(R.id.progress_overlay)
@@ -56,8 +65,17 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     @BindView(R.id.account_header_view)
     AccountHeaderView accountHeaderView;
 
+    @BindView(R.id.navigation_view)
+    NavigationView navigationView;
+
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
+
     @Inject
     AccountsContract.AccountsPresenter presenter;
+
+    @NonNull
+    private final List<String> accountList = new ArrayList<>();
 
     private int selectedTabColor;
     private int normalTabColor;
@@ -90,8 +108,9 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
         super.onCreate(savedInstanceState);
         setContentView(R.layout.accounts_activity);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
+        setupActionBar();
         initTabs();
+        navigationView.setNavigationItemSelectedListener(this);
         presenter.start(savedInstanceState);
     }
 
@@ -107,6 +126,14 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
         presenter.pause();
     }
 
+    private void setupActionBar() {
+        setSupportActionBar(toolbar);
+        ViewUtils.whenNonNull(getSupportActionBar(), actionBar -> {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        });
+    }
+
     private void initTabs() {
         viewPager.setOffscreenPageLimit(AccountPerspective.values().length);
         adapter = new AccountFragmentPagerAdapter(fragmentManager);
@@ -114,7 +141,8 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
         tabLayout.setupWithViewPager(viewPager);
 
         for (AccountPerspective accountPerspective : AccountPerspective.values()) {
-            tabLayout.getTabAt(accountPerspective.ordinal()).setIcon(accountPerspective.getTabIcon(this));
+            tabLayout.getTabAt(accountPerspective.ordinal())
+                    .setIcon(accountPerspective.getTabIcon(this));
         }
 
         selectedTabColor = ContextCompat.getColor(this, R.color.white);
@@ -158,7 +186,12 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     }
 
     @Override
-    public void showAccountLoadFailure() {
+    public void showAccountsLoadFailure() {
+
+    }
+
+    @Override
+    public void showAccountNavigationFailure() {
 
     }
 
@@ -190,6 +223,33 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            drawerLayout.openDrawer(GravityCompat.START);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.add_wallet) {
+
+        } else if (item.getItemId() == R.id.contacts) {
+
+        } else if (item.getItemId() == R.id.settings) {
+
+        } else if (item.getGroupId() == R.id.wallet_menu_group) {
+            presenter.onAccountNavigated(accountList.get(item.getOrder()));
+        }
+
+        drawerLayout.closeDrawers();
+        // We'll update the checked item post-navigation.
+        return false;
+    }
+
+    @Override
     public void onTransactionPosted(@NonNull Account account) {
         presenter.onTransactionPosted(account);
     }
@@ -198,6 +258,25 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     public void updateForTransaction(@NonNull Account account) {
         accountHeaderView.setAccount(account);
         adapter.setAccount(account);
+    }
+
+    @Override
+    public void updateAccountList(@NonNull List<Account> accounts) {
+        accountList.clear();
+        Menu menu = navigationView.getMenu();
+        menu.removeGroup(R.id.wallet_menu_group);
+
+        for (int i = 0; i < accounts.size(); i++) {
+            Account account = accounts.get(i);
+            accountList.add(account.getAccount_id());
+            menu.add(R.id.wallet_menu_group, Menu.NONE, i, account.getAccount_id());
+        }
+
+        menu.setGroupCheckable(R.id.wallet_menu_group, true, true);
+    }
+
+    private void updateSelectedAccount(@NonNull String selectedAccountId) {
+        navigationView.getMenu().getItem(accountList.indexOf(selectedAccountId)).setChecked(true);
     }
 
     @Override
@@ -215,6 +294,7 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
         updateTitle(account);
         setTabsEnabled(tabsEnabled);
         setSoloFragmentVisibility(isSoloFragmentVisible);
+        ViewUtils.whenNonNull(account, acc -> updateSelectedAccount(acc.getAccount_id()));
         accountHeaderView.setAccount(account);
         adapter.setAccount(account);
     }

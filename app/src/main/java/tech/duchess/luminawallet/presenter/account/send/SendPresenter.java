@@ -364,7 +364,7 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
     private void populateAssets() {
         assetCodeToIssuerMap.clear();
 
-        if (sourceAccount != null) {
+        if (sourceAccount != null && sourceAccount.isOnNetwork()) {
             for (Balance balance : sourceAccount.getBalances()) {
                 assetCodeToIssuerMap.put(balance.getAsset_code(), balance.getAsset_issuer());
             }

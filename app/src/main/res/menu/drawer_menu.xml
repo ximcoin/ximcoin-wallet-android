@@ -1,29 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/nav_drawer_wallets_group"
-        android:icon="@drawable/ic_wallet">
-        <menu>
-            <group android:checkableBehavior="single">
-                <item
-                    android:id="@+id/wallet_one_id"
-                    android:title="Wallet One" />
-                <item
-                    android:id="@+id/wallet_two_id"
-                    android:title="Wallet Two" />
-            </group>
-        </menu>
-    </item>
+    <group
+        android:id="@+id/wallet_menu_group"
+        android:checkableBehavior="single" />
 
     <item
+        android:orderInCategory="9998"
         android:id="@+id/add_wallet"
         android:icon="@drawable/ic_add"
         android:title="@string/nav_drawer_add_wallet" />
     <item
+        android:orderInCategory="9999"
         android:id="@+id/contacts"
         android:icon="@drawable/ic_contacts"
         android:title="@string/nav_drawer_contacts" />
     <item
+        android:orderInCategory="10000"
         android:id="@+id/settings"
         android:icon="@drawable/ic_settings"
         android:title="@string/nav_drawer_settings" />
