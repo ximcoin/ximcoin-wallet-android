@@ -72,7 +72,7 @@ public abstract class BaseActivity extends AppCompatActivity implements HasSuppo
     private void replaceFragmentInternal(@IdRes int containerViewId,
                                          @NonNull Fragment fragment,
                                          boolean executeImmediately,
-                                         @NonNull String stackId) {
+                                         @Nullable String stackId) {
         FragmentTransaction transaction = fragmentManager.beginTransaction()
                 .replace(containerViewId, fragment);
 

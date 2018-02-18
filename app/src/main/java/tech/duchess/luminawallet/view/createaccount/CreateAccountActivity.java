@@ -1,12 +1,12 @@
 package tech.duchess.luminawallet.view.createaccount;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -17,14 +17,32 @@ import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.view.common.BaseActivity;
 import tech.duchess.luminawallet.view.util.ViewUtils;
 
-public class CreateAccountActivity extends BaseActivity implements ICreateAccountFlowManager {
-    private static final String SEED_KEY = "CreateAccountActivity.SEED_KEY";
+public class CreateAccountActivity extends BaseActivity implements ICreateAccountFlowManager,
+        AccountSourceReceiver {
+    private static final String IS_NEW_TO_LUMINA_KEY = "CreateAccountActivity.IS_NEW_TO_LUMINA_KEY";
+    private static final String IS_IMPORTING_SEED_KEY = "CreateAccountActivity.IS_IMPORTING_SEED_KEY";
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
+
+    /**
+     * Intent for when a user has already chosen if they want to create a new wallet or import a
+     * pre-existing seed.
+     */
+    public static Intent createIntentForSeedGeneration(Context context, boolean isImportingSeed) {
+        Intent intent = new Intent(context, CreateAccountActivity.class);
+        intent.putExtra(IS_IMPORTING_SEED_KEY, isImportingSeed);
+        return intent;
+    }
+
+    public static Intent createIntentForAccountSource(Context context, boolean isNewToLumina) {
+        Intent intent = new Intent(context, CreateAccountActivity.class);
+        intent.putExtra(IS_NEW_TO_LUMINA_KEY, isNewToLumina);
+        return new Intent(context, CreateAccountActivity.class);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,15 +56,15 @@ public class CreateAccountActivity extends BaseActivity implements ICreateAccoun
         });
 
         Bundle extras = getIntent().getExtras();
-        String seed = extras == null ? null : extras.getString(SEED_KEY, null);
 
         if (savedInstanceState == null) {
-            // First activity instance, need to initialize a fragment. We do a check here in case
-            // we're being started with the intent of importing an account via seed.
-            if (TextUtils.isEmpty(seed)) {
-                startSeedFragment();
+            if (didStartWithAccountSourceFragment()) {
+                startSourceFragment(extras != null
+                        && extras.getBoolean(IS_NEW_TO_LUMINA_KEY));
             } else {
-                startSeedEncryptionFragment(true, seed);
+                // didStartWithAccountSourceFragment() checks extras nullability
+                // noinspection ConstantConditions
+                startSeedCreationFragment(extras.getBoolean(IS_IMPORTING_SEED_KEY));
             }
         }
 
@@ -66,18 +84,35 @@ public class CreateAccountActivity extends BaseActivity implements ICreateAccoun
         return super.onOptionsItemSelected(item);
     }
 
-    private void startSeedFragment() {
-        replaceFragment(R.id.fragment_container, new GenerateSeedFragment(), true);
+    private void startSourceFragment(boolean isNewToLumina) {
+        replaceFragment(R.id.fragment_container,
+                AddAccountSourceFragment.getInstance(isNewToLumina), true);
     }
 
-    private void startSeedEncryptionFragment(boolean isFirstFragment, String seed) {
-        Fragment fragment = EncryptSeedFragment.newInstance(seed);
-        if (isFirstFragment) {
-            replaceFragment(R.id.fragment_container, fragment, true,
-                    EncryptSeedFragment.class.getSimpleName());
+    private void startSeedCreationFragment(boolean isImportingSeed) {
+        if (isImportingSeed) {
+            startImportFragment();
         } else {
-            replaceFragment(R.id.fragment_container, fragment, true);
+            startSeedFragment();
         }
+    }
+
+    private void startSeedFragment() {
+        if (didStartWithAccountSourceFragment()) {
+            replaceFragment(R.id.fragment_container, new GenerateSeedFragment(), true,
+                    GenerateSeedFragment.class.getSimpleName());
+        } else {
+            replaceFragment(R.id.fragment_container, new GenerateSeedFragment(), true);
+        }
+    }
+
+    private void startImportFragment() {
+        // TODO:
+    }
+
+    private void startSeedEncryptionFragment(String seed) {
+        replaceFragment(R.id.fragment_container, EncryptSeedFragment.newInstance(seed), true,
+                EncryptSeedFragment.class.getSimpleName());
     }
 
     @Override
@@ -87,7 +122,7 @@ public class CreateAccountActivity extends BaseActivity implements ICreateAccoun
 
     @Override
     public void onSeedCreated(@NonNull String seed) {
-        startSeedEncryptionFragment(false, seed);
+        startSeedEncryptionFragment(seed);
     }
 
     @Override
@@ -104,5 +139,15 @@ public class CreateAccountActivity extends BaseActivity implements ICreateAccoun
     @Override
     public void setTitle(@NonNull String title) {
         super.setTitle(title);
+    }
+
+    private boolean didStartWithAccountSourceFragment() {
+        Bundle extras = getIntent().getExtras();
+        return extras == null || extras.containsKey(IS_NEW_TO_LUMINA_KEY);
+    }
+
+    @Override
+    public void onUserRequestedAccountCreation(boolean isImportingSeed) {
+        startSeedCreationFragment(isImportingSeed);
     }
 }

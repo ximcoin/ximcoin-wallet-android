@@ -1,4 +1,4 @@
-package tech.duchess.luminawallet.view.account;
+package tech.duchess.luminawallet.view.createaccount;
 
 import android.support.v4.app.Fragment;
 
@@ -10,9 +10,9 @@ import tech.duchess.luminawallet.dagger.module.BaseFragmentModule;
 import tech.duchess.luminawallet.dagger.scope.PerFragment;
 
 @Module(includes = BaseFragmentModule.class)
-abstract class NoAccountFoundFragmentModule {
+public abstract class AddAccountSourceFragmentModule {
     @Binds
     @Named(BaseFragmentModule.FRAGMENT)
     @PerFragment
-    abstract Fragment fragment(NoAccountFoundFragment noAccountFoundFragment);
+    abstract Fragment fragment(AddAccountSourceFragment addAccountSourceFragment);
 }

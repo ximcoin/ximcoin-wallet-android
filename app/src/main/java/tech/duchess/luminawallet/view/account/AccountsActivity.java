@@ -32,6 +32,8 @@ import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.presenter.account.AccountsContract;
 import tech.duchess.luminawallet.view.common.BaseActivity;
 import tech.duchess.luminawallet.view.common.ProgressOverlay;
+import tech.duchess.luminawallet.view.createaccount.AccountSourceReceiver;
+import tech.duchess.luminawallet.view.createaccount.AddAccountSourceFragment;
 import tech.duchess.luminawallet.view.createaccount.CreateAccountActivity;
 import tech.duchess.luminawallet.view.util.ViewUtils;
 import timber.log.Timber;
@@ -41,7 +43,7 @@ import timber.log.Timber;
  * Will also display the option to create a new account if no account is found.
  */
 public class AccountsActivity extends BaseActivity implements AccountsContract.AccountsView,
-        NavigationView.OnNavigationItemSelectedListener {
+        NavigationView.OnNavigationItemSelectedListener, AccountSourceReceiver {
     private static final int CREATE_ACCOUNT_REQUEST_CODE = 1;
 
     @BindView(R.id.progress_overlay)
@@ -182,7 +184,8 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     @Override
     public void showNoAccountFound() {
         updateUI(false, true, null);
-        replaceFragment(R.id.solo_fragment_container, new NoAccountFoundFragment(), true);
+        replaceFragment(R.id.solo_fragment_container, AddAccountSourceFragment.getInstance(true),
+                true);
     }
 
     @Override
@@ -214,12 +217,14 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
 
     @Override
     public void startCreateAccountFlow(boolean isImportingSeed) {
-        if (!isImportingSeed) {
-            startActivityForResult(new Intent(this, CreateAccountActivity.class),
-                    CREATE_ACCOUNT_REQUEST_CODE);
-        } else {
-            //TODO
-        }
+        startActivityForResult(CreateAccountActivity.createIntentForSeedGeneration(this,
+                isImportingSeed), CREATE_ACCOUNT_REQUEST_CODE);
+    }
+
+    @Override
+    public void navigateToCreateAccountFlow(boolean isNewToLumina) {
+        startActivityForResult(CreateAccountActivity.createIntentForAccountSource(this,
+                isNewToLumina), CREATE_ACCOUNT_REQUEST_CODE);
     }
 
     @Override
@@ -235,7 +240,7 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.add_wallet) {
-
+            presenter.onUserNavigatedToAddAccount();
         } else if (item.getItemId() == R.id.contacts) {
 
         } else if (item.getItemId() == R.id.settings) {
@@ -330,7 +335,7 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
         }
     }
 
-    void onUserRequestedAccountCreation(boolean isImportingSeed) {
+    public void onUserRequestedAccountCreation(boolean isImportingSeed) {
         presenter.onUserRequestAccountCreation(isImportingSeed);
     }
 }

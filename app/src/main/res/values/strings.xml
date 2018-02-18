@@ -38,8 +38,9 @@
     <string name="developer_title">A word from our humble developer</string>
     <string name="developer_description">Thanks for installing my app! If you enjoy it, please consider rating it in the Play Store or donating!</string>
 
-    <!-- No Account Found Fragment -->
-    <string name="no_account_found_message">New to Lumina?</string>
+    <!-- Add Account Source Fragment -->
+    <string name="new_to_lumina_message">New to Lumina?</string>
+    <string name="account_source_message">How will you add your account?</string>
     <string name="create_account_button">CREATE NEW ACCOUNT</string>
     <string name="import_account_button">IMPORT ACCOUNT</string>
 

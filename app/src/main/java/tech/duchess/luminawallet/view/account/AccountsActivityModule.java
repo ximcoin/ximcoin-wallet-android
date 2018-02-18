@@ -18,6 +18,8 @@ import tech.duchess.luminawallet.view.account.send.SendFragment;
 import tech.duchess.luminawallet.view.account.send.SendFragmentModule;
 import tech.duchess.luminawallet.view.account.transactions.TransactionsFragment;
 import tech.duchess.luminawallet.view.account.transactions.TransactionsFragmentModule;
+import tech.duchess.luminawallet.view.createaccount.AddAccountSourceFragment;
+import tech.duchess.luminawallet.view.createaccount.AddAccountSourceFragmentModule;
 
 @Module(includes = {BaseActivityModule.class, AccountsPresenterModule.class})
 public abstract class AccountsActivityModule {
@@ -30,8 +32,8 @@ public abstract class AccountsActivityModule {
     abstract AppCompatActivity appCompatActivity(AccountsActivity accountsActivity);
 
     @PerFragment
-    @ContributesAndroidInjector(modules = NoAccountFoundFragmentModule.class)
-    abstract NoAccountFoundFragment noAccountFoundFragmentInjector();
+    @ContributesAndroidInjector(modules = AddAccountSourceFragmentModule.class)
+    abstract AddAccountSourceFragment addAccountSourceFragmentInjector();
 
     @PerFragment
     @ContributesAndroidInjector(modules = BalancesFragmentModule.class)

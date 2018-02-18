@@ -19,6 +19,7 @@ public interface AccountsContract {
         void showAccount(@NonNull Account account);
         void showAccountNotOnNetwork(@NonNull Account account);
         void startCreateAccountFlow(boolean isImportingSeed);
+        void navigateToCreateAccountFlow(boolean isNewToLumina);
         void onTransactionPosted(@NonNull Account account);
         void updateForTransaction(@NonNull Account account);
         void updateAccountList(@NonNull List<Account> accounts);
@@ -29,5 +30,6 @@ public interface AccountsContract {
         void onUserRequestAccountCreation(boolean isImportingSeed);
         void onTransactionPosted(@NonNull Account account);
         void onAccountNavigated(@NonNull String accountId);
+        void onUserNavigatedToAddAccount();
     }
 }

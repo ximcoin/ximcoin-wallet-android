@@ -143,4 +143,9 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
                             view.showAccountNavigationFailure();
                         });
     }
+
+    @Override
+    public void onUserNavigatedToAddAccount() {
+        view.navigateToCreateAccountFlow(!TextUtils.isEmpty(currentAccountId));
+    }
 }

@@ -16,6 +16,14 @@ public abstract class CreateAccountActivityModule {
     abstract AppCompatActivity appCompatActivity(CreateAccountActivity createAccountActivity);
 
     @PerFragment
+    @ContributesAndroidInjector(modules = AddAccountSourceFragmentModule.class)
+    abstract AddAccountSourceFragment addAccountSourceFragmentInjector();
+
+    @PerFragment
+    @ContributesAndroidInjector(modules = GenerateSeedFragmentModule.class)
+    abstract GenerateSeedFragment generateSeedFragmentInjector();
+
+    @PerFragment
     @ContributesAndroidInjector(modules = EncryptSeedFragmentModule.class)
     abstract EncryptSeedFragment encryptSeedFragmentInjector();
 }

@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="@dimen/activity_margin">
 
     <ImageView
-        android:id="@+id/no_account_image"
+        android:id="@+id/wallet_image"
         android:layout_width="@dimen/intro_image_width_height"
         android:layout_height="@dimen/intro_image_width_height"
         android:src="@drawable/ic_wallet"
@@ -20,12 +21,12 @@
         android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/no_account_found_message"
         android:layout_marginTop="@dimen/margin_normal"
         style="@style/Title"
-        app:layout_constraintTop_toBottomOf="@+id/no_account_image"
+        app:layout_constraintTop_toBottomOf="@+id/wallet_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        tools:text="@string/account_source_message"
         />
 
     <LinearLayout
