@@ -107,7 +107,12 @@ public class CreateAccountActivity extends BaseActivity implements ICreateAccoun
     }
 
     private void startImportFragment() {
-        // TODO:
+        if (didStartWithAccountSourceFragment()) {
+            replaceFragment(R.id.fragment_container, new ImportSeedFragment(), true,
+                    ImportSeedFragment.class.getSimpleName());
+        } else {
+            replaceFragment(R.id.fragment_container, new ImportSeedFragment(), true);
+        }
     }
 
     private void startSeedEncryptionFragment(String seed) {

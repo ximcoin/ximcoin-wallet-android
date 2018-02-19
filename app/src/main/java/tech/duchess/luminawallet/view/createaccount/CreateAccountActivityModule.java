@@ -20,6 +20,10 @@ public abstract class CreateAccountActivityModule {
     abstract AddAccountSourceFragment addAccountSourceFragmentInjector();
 
     @PerFragment
+    @ContributesAndroidInjector(modules = ImportSeedFragmentModule.class)
+    abstract ImportSeedFragment importSeedFragmentInjector();
+
+    @PerFragment
     @ContributesAndroidInjector(modules = GenerateSeedFragmentModule.class)
     abstract GenerateSeedFragment generateSeedFragmentInjector();
 

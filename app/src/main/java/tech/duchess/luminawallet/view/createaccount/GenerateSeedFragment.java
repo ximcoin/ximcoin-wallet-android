@@ -100,7 +100,7 @@ public class GenerateSeedFragment extends Fragment {
                         null,
                         c,
                         R.string.seed_warning_bullet1,
-                        R.string.seed_warning_bullet2,
+                        R.string.seed_warning_bullet2_generate,
                         R.string.seed_warning_bullet3,
                         R.string.seed_warning_bullet4)));
     }

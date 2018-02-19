@@ -39,18 +39,27 @@
     <string name="developer_description">Thanks for installing my app! If you enjoy it, please consider rating it in the Play Store or donating!</string>
 
     <!-- Add Account Source Fragment -->
+    <string name="add_account_source_fragment_title">Add Account</string>
     <string name="new_to_lumina_message">New to Lumina?</string>
-    <string name="account_source_message">How will you add your account?</string>
+    <string name="account_source_message">Adding an account?</string>
     <string name="create_account_button">CREATE NEW ACCOUNT</string>
     <string name="import_account_button">IMPORT ACCOUNT</string>
+
+    <!-- Import Seed Fragment -->
+    <string name="import_seed_fragment_title">Import Seed</string>
+    <string name="seed_warning_bullet2_import">Copy this seed somewhere very safe.</string>
+    <string name="seed_hint">Account Seed</string>
+    <string name="seed_prefix_error">Account seed must start with "S"</string>
+    <string name="seed_length_error">Account seed must be %d characters long</string>
+    <string name="seed_format_error">Invalid seed format</string>
 
     <!-- Generate Seed Fragment -->
     <string name="generate_seed_fragment_title">Generate Seed</string>
     <string name="seed_message">Here is your account \"seed\". For all intents and purposes, your seed represents the entirety of your Stellar account.</string>
     <string name="seed_warning_header">WARNING:</string>
     <string name="seed_warning_bullet1">Do not share your seed with anyone.</string>
-    <string name="seed_warning_bullet2">View and copy this seed somewhere very safe.</string>
-    <string name="seed_warning_bullet3">Lumina makes no guarantee of keeping this for you under any circumstances. If you do not retain this, you risk losing access to your account and funds.</string>
+    <string name="seed_warning_bullet2_generate">View and copy this seed somewhere very safe.</string>
+    <string name="seed_warning_bullet3">Lumina makes no guarantee of keeping this for you under any circumstances. If you do not retain your seed, you risk losing access to your account and funds.</string>
     <string name="seed_warning_bullet4">We will encrypt this seed using a passphrase you provide in the next step.</string>
     <string name="show_seed">SHOW SEED</string>
     <string name="copy_seed">COPY SEED</string>
@@ -59,7 +68,7 @@
     <!-- Encrypt Seed Fragment -->
     <string name="encrypt_seed_fragment_title">Set Passphrase</string>
     <string name="encryption_message">You will now enter a passphrase to encrypt your account seed with.</string>
-    <string name="encryption_message_bullet1">This allows us to safely store your seed.</string>
+    <string name="encryption_message_bullet1">This allows us to safely store your seed on your device.</string>
     <string name="encryption_message_bullet2">You will need to enter this passphrase before completing any transactions.</string>
     <string name="encryption_message_bullet3">Forgetting this is not an issue! You can always recover your account with the account seed.</string>
     <string name="encryption_message_bullet4">We will never store your passphrase on the device.</string>

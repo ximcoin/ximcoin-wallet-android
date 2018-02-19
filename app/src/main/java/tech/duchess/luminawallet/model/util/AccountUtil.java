@@ -47,6 +47,20 @@ public class AccountUtil {
         return seed != null && seed.startsWith(SECRET_PREFIX);
     }
 
+    public static boolean secretSeedCanBeDecoded(@Nullable String secretSeed) {
+        if (secretSeed == null) {
+            return false;
+        }
+
+        try {
+            KeyPair.fromSecretSeed(secretSeed);
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
+
     // TODO: Verify the presence of a balance infers a trustline having been set.
     public static boolean trustsAsset(@NonNull Account account,
                                       @NonNull String assetCode,

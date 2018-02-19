@@ -43,6 +43,14 @@ public class AddAccountSourceFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ViewUtils.whenNonNull(getActivity(), activity ->
+                ((ICreateAccountFlowManager) activity)
+                        .setTitle(getString(R.string.add_account_source_fragment_title)));
+    }
+
     private void initMessage() {
         Bundle args = getArguments();
         boolean isNew = args != null && args.getBoolean(IS_NEW_TO_LUMINA_ARG, false);

@@ -8,7 +8,6 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.DialogFragment;
 import android.text.InputFilter;
 import android.text.SpannableStringBuilder;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +28,7 @@ import tech.duchess.luminawallet.presenter.account.send.SendContract;
 import tech.duchess.luminawallet.presenter.account.send.TransactionSummary;
 import tech.duchess.luminawallet.view.account.IAccountPerspectiveView;
 import tech.duchess.luminawallet.view.common.BaseViewFragment;
+import tech.duchess.luminawallet.view.util.TextUtils;
 
 public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
         implements IAccountPerspectiveView, SendContract.SendView,
