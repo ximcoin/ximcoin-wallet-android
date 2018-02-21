@@ -8,5 +8,6 @@
         android:indeterminate="true"
         android:visibility="gone"
         android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="128dp"/>
 </merge>

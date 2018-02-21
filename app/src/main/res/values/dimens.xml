@@ -22,4 +22,7 @@
     <!-- Send Fragment -->
     <dimen name="address_icon_width_height">28dp</dimen>
 
+    <!-- Contact List Fragment -->
+    <dimen name="initials_width_height">56dp</dimen>
+
 </resources>

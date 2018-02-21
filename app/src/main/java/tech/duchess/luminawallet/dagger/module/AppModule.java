@@ -25,10 +25,13 @@ import tech.duchess.luminawallet.dagger.scope.PerActivity;
 import tech.duchess.luminawallet.model.api.CoinMarketCapApi;
 import tech.duchess.luminawallet.model.api.CurlLoggingInterceptor;
 import tech.duchess.luminawallet.model.api.HorizonApi;
+import tech.duchess.luminawallet.model.persistence.ContactDB;
 import tech.duchess.luminawallet.model.persistence.HorizonDB;
 import tech.duchess.luminawallet.model.persistence.coinmarketcap.ConversionRateAdapter;
 import tech.duchess.luminawallet.view.account.AccountsActivity;
 import tech.duchess.luminawallet.view.account.AccountsActivityModule;
+import tech.duchess.luminawallet.view.contacts.ContactsActivity;
+import tech.duchess.luminawallet.view.contacts.ContactsActivityModule;
 import tech.duchess.luminawallet.view.createaccount.CreateAccountActivity;
 import tech.duchess.luminawallet.view.createaccount.CreateAccountActivityModule;
 
@@ -44,6 +47,12 @@ public abstract class AppModule {
     @Singleton
     static HorizonDB provideHorizonDB(Application application) {
         return Room.databaseBuilder(application, HorizonDB.class, HorizonDB.DATABASE_NAME).build();
+    }
+
+    @Provides
+    @Singleton
+    static ContactDB provideContactDB(Application application) {
+        return Room.databaseBuilder(application, ContactDB.class, ContactDB.DATABASE_NAME).build();
     }
 
     @Provides
@@ -126,4 +135,8 @@ public abstract class AppModule {
     @PerActivity
     @ContributesAndroidInjector(modules = CreateAccountActivityModule.class)
     abstract CreateAccountActivity bindCreateAccountActivity();
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = ContactsActivityModule.class)
+    abstract ContactsActivity bindContactsActivity();
 }

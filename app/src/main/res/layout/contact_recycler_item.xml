@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/balance_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="horizontal"
+    android:padding="@dimen/activity_margin">
+
+    <com.github.ivbaranov.mli.MaterialLetterIcon
+        android:id="@+id/initials"
+        android:layout_width="@dimen/initials_width_height"
+        android:layout_height="@dimen/initials_width_height"
+        android:layout_gravity="center_vertical"
+        app:mli_initials="true"
+        app:mli_initials_number="2"
+        app:mli_letter_color="@color/colorPrimaryText"
+        app:mli_shape_type="circle" />
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="2"
+        tools:text="Test Contact with a really really really really really long name" />
+
+</LinearLayout>

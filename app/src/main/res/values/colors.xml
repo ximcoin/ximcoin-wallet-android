@@ -60,4 +60,18 @@
         <item>@color/intro_open_source_dark_dot</item>
         <item>@color/intro_developer_dark_dot</item>
     </array>
+
+    <color name="contact_red">#f37368</color>
+    <color name="contact_orange">#f89947</color>
+    <color name="contact_green">#27a965</color>
+    <color name="contact_blue">#5781c0</color>
+    <color name="contact_purple">#5c4970</color>
+
+    <array name="contact_colors">
+        <item>@color/contact_red</item>
+        <item>@color/contact_orange</item>
+        <item>@color/contact_green</item>
+        <item>@color/contact_blue</item>
+        <item>@color/contact_purple</item>
+    </array>
 </resources>

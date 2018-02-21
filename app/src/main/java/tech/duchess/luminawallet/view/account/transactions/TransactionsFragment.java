@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import butterknife.BindView;
-import dagger.android.support.AndroidSupportInjection;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.model.persistence.transaction.Operation;
@@ -46,12 +45,6 @@ public class TransactionsFragment extends BaseViewFragment<TransactionsContract.
         TransactionsFragment fragment = new TransactionsFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        AndroidSupportInjection.inject(this);
-        super.onCreate(savedInstanceState);
     }
 
     @Nullable

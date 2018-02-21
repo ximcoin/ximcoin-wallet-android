@@ -8,7 +8,7 @@ import tech.duchess.luminawallet.model.persistence.account.AccountDao;
 import tech.duchess.luminawallet.model.persistence.account.AccountPrivateKey;
 import tech.duchess.luminawallet.model.persistence.account.AccountPrivateKeyDao;
 
-@Database(entities = {Account.class, AccountPrivateKey.class}, version = 1)
+@Database(entities = {Account.class, AccountPrivateKey.class}, version = HorizonDB.VERSION)
 public abstract class HorizonDB extends RoomDatabase {
     public static final String DATABASE_NAME = "HorizonDB";
     public static final int VERSION = 1;

@@ -148,4 +148,9 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
     public void onUserNavigatedToAddAccount() {
         view.navigateToCreateAccountFlow(!TextUtils.isEmpty(currentAccountId));
     }
+
+    @Override
+    public void onUserNavigatedToContacts() {
+        view.navigateToContacts();
+    }
 }

@@ -112,6 +112,10 @@
     <string name="self_account_balance_violated">Your account must retain a minimum balance of %1$s.</string>
     <string name="new_account_balance_violated">The new account must be sent a minimum balance of %1$s.</string>
 
+    <!-- Contact List Fragment -->
+    <string name="contacts_load_error_message">Failed to load contacts</string>
+    <string name="contacts_empty_message">No contacts found</string>
+
     <!-- Account Header View -->
     <string name="account_label">Public Address:</string>
     <string name="balance_label">Lumen (XLM) Balance:</string>

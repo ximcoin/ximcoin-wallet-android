@@ -32,6 +32,7 @@ import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.presenter.account.AccountsContract;
 import tech.duchess.luminawallet.view.common.BaseActivity;
 import tech.duchess.luminawallet.view.common.ProgressOverlay;
+import tech.duchess.luminawallet.view.contacts.ContactsActivity;
 import tech.duchess.luminawallet.view.createaccount.AccountSourceReceiver;
 import tech.duchess.luminawallet.view.createaccount.AddAccountSourceFragment;
 import tech.duchess.luminawallet.view.createaccount.CreateAccountActivity;
@@ -228,6 +229,11 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     }
 
     @Override
+    public void navigateToContacts() {
+        startActivity(new Intent(this, ContactsActivity.class));
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             drawerLayout.openDrawer(GravityCompat.START);
@@ -242,7 +248,7 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
         if (item.getItemId() == R.id.add_wallet) {
             presenter.onUserNavigatedToAddAccount();
         } else if (item.getItemId() == R.id.contacts) {
-
+            presenter.onUserNavigatedToContacts();
         } else if (item.getItemId() == R.id.settings) {
 
         } else if (item.getGroupId() == R.id.wallet_menu_group) {
