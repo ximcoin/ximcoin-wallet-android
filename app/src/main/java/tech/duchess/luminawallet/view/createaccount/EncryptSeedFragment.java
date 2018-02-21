@@ -77,14 +77,14 @@ public class EncryptSeedFragment extends BaseViewFragment<EncryptSeedContract.En
     public void onResume() {
         super.onResume();
         ViewUtils.whenNonNull(getActivity(), activity ->
-                ((ICreateAccountFlowManager) activity)
+                ((CreateAccountFlowManager) activity)
                         .setTitle(getString(R.string.encrypt_seed_fragment_title)));
     }
 
     @Override
     public void showLoading(boolean isLoading) {
         ViewUtils.whenNonNull(getActivity(), activity ->
-                ((ICreateAccountFlowManager) activity).showLoading(isLoading));
+                ((CreateAccountFlowManager) activity).showLoading(isLoading));
     }
 
     @OnTextChanged({R.id.initial_password_field, R.id.verify_password_field})
@@ -133,7 +133,7 @@ public class EncryptSeedFragment extends BaseViewFragment<EncryptSeedContract.En
     @Override
     public void finish() {
         ViewUtils.whenNonNull(getActivity(),
-                activity -> ((ICreateAccountFlowManager) activity).onAccountCreationCompleted());
+                activity -> ((CreateAccountFlowManager) activity).onAccountCreationCompleted());
     }
 
     @Nullable

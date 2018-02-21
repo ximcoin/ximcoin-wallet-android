@@ -10,6 +10,7 @@
     <dimen name="image_button_width_height">32dp</dimen>
     <dimen name="btn_min_height">48dp</dimen>
     <dimen name="tab_layout_height">48dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
     <!-- Intro Slides -->
     <dimen name="dots_height">30dp</dimen>

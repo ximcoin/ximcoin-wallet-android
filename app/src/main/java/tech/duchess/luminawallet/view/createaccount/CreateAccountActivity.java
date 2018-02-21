@@ -17,7 +17,7 @@ import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.view.common.BaseActivity;
 import tech.duchess.luminawallet.view.util.ViewUtils;
 
-public class CreateAccountActivity extends BaseActivity implements ICreateAccountFlowManager,
+public class CreateAccountActivity extends BaseActivity implements CreateAccountFlowManager,
         AccountSourceReceiver {
     private static final String IS_NEW_TO_LUMINA_KEY = "CreateAccountActivity.IS_NEW_TO_LUMINA_KEY";
     private static final String IS_IMPORTING_SEED_KEY = "CreateAccountActivity.IS_IMPORTING_SEED_KEY";

@@ -89,7 +89,7 @@ public class GenerateSeedFragment extends Fragment {
     public void onResume() {
         super.onResume();
         ViewUtils.whenNonNull(getActivity(), activity ->
-                ((ICreateAccountFlowManager) activity)
+                ((CreateAccountFlowManager) activity)
                         .setTitle(getString(R.string.generate_seed_fragment_title)));
     }
 
@@ -148,7 +148,7 @@ public class GenerateSeedFragment extends Fragment {
     @OnClick(R.id.btn_next)
     public void goNext() {
         ViewUtils.whenNonNull(getActivity(),
-                activity -> ((ICreateAccountFlowManager) activity)
+                activity -> ((CreateAccountFlowManager) activity)
                         .onSeedCreated(String.valueOf(keyPair.getSecretSeed())));
     }
 

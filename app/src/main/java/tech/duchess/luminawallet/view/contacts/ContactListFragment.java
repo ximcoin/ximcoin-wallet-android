@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.persistence.contacts.Contact;
 import tech.duchess.luminawallet.presenter.contacts.ContactListContract;
@@ -28,6 +30,9 @@ import tech.duchess.luminawallet.view.util.ViewUtils;
 
 public class ContactListFragment extends BaseViewFragment<ContactListContract.ContactListPresenter>
         implements ContactListContract.ContactListView {
+
+    @BindView(R.id.btn_add_contact)
+    FloatingActionButton addContactButton;
 
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
@@ -70,6 +75,17 @@ public class ContactListFragment extends BaseViewFragment<ContactListContract.Co
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         ViewUtils.addDividerDecoration(recyclerView, context, layoutManager.getOrientation());
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 && addContactButton.isShown()) {
+                    addContactButton.hide();
+                } else if (dy < 0 && !addContactButton.isShown()) {
+                    addContactButton.show();
+                }
+            }
+        });
     }
 
     @Override
@@ -94,12 +110,14 @@ public class ContactListFragment extends BaseViewFragment<ContactListContract.Co
 
     @Override
     public void goToAddNewContact() {
-
+        ViewUtils.whenNonNull(getActivity(), parentActivity ->
+                ((ContactsFlowManager) parentActivity).onAddContactRequested());
     }
 
     @Override
-    public void goToViewContact(@NonNull Contact contact) {
-
+    public void propagateContactSelection(@NonNull Contact contact) {
+        ViewUtils.whenNonNull(getActivity(), parentActivity ->
+                ((ContactsFlowManager) parentActivity).onContactSelected(contact));
     }
 
     @Override
@@ -109,6 +127,11 @@ public class ContactListFragment extends BaseViewFragment<ContactListContract.Co
         message.setTextColor(ContextCompat.getColor(activityContext, R.color.warningColor));
         message.setVisibility(View.VISIBLE);
         adapter.setContacts(new ArrayList<>());
+    }
+
+    @OnClick(R.id.btn_add_contact)
+    public void onUserRequestedAddContact() {
+        presenter.onUserRequestAddContact();
     }
 
     private int getContactColor(int colorPosition) {
@@ -145,7 +168,7 @@ public class ContactListFragment extends BaseViewFragment<ContactListContract.Co
         }
     }
 
-    class ContactViewHolder extends RecyclerView.ViewHolder {
+    class ContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.initials)
         MaterialLetterIcon initials;
 
@@ -155,12 +178,18 @@ public class ContactListFragment extends BaseViewFragment<ContactListContract.Co
         ContactViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
 
         void bindData(@NonNull Contact contact) {
             initials.setShapeColor(getContactColor(contact.getColorIndex()));
             initials.setLetter(contact.getName());
             name.setText(contact.getName());
+        }
+
+        @Override
+        public void onClick(View v) {
+            presenter.onUserSelectedContact(adapter.contacts.get(getAdapterPosition()));
         }
     }
 }

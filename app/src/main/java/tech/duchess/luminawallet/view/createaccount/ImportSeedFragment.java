@@ -74,7 +74,7 @@ public class ImportSeedFragment extends BaseViewFragment<ImportSeedContract.Impo
     public void onResume() {
         super.onResume();
         ViewUtils.whenNonNull(getActivity(), activity ->
-                ((ICreateAccountFlowManager) activity)
+                ((CreateAccountFlowManager) activity)
                         .setTitle(getString(R.string.import_seed_fragment_title)));
     }
 

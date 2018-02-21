@@ -1,7 +1,6 @@
 package tech.duchess.luminawallet.presenter.contacts;
 
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 
 import tech.duchess.luminawallet.dagger.SchedulerProvider;
 import tech.duchess.luminawallet.model.persistence.contacts.Contact;
@@ -53,6 +52,6 @@ public class ContactListPresenter extends BasePresenter<ContactListContract.Cont
 
     @Override
     public void onUserSelectedContact(@NonNull Contact contact) {
-        view.goToViewContact(contact);
+        view.propagateContactSelection(contact);
     }
 }

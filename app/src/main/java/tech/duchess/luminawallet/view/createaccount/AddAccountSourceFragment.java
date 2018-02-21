@@ -47,7 +47,7 @@ public class AddAccountSourceFragment extends Fragment {
     public void onResume() {
         super.onResume();
         ViewUtils.whenNonNull(getActivity(), activity ->
-                ((ICreateAccountFlowManager) activity)
+                ((CreateAccountFlowManager) activity)
                         .setTitle(getString(R.string.add_account_source_fragment_title)));
     }
 
