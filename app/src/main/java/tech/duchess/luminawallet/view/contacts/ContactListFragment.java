@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.ivbaranov.mli.MaterialLetterIcon;
@@ -34,9 +33,6 @@ public class ContactListFragment extends BaseViewFragment<ContactListContract.Co
     @BindView(R.id.btn_add_contact)
     FloatingActionButton addContactButton;
 
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
-
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
@@ -52,6 +48,14 @@ public class ContactListFragment extends BaseViewFragment<ContactListContract.Co
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.contact_list_fragment, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ViewUtils.whenNonNull(getActivity(), activity ->
+                ((ContactsFlowManager) activity)
+                        .setTitle(getString(R.string.contact_list_fragment_title)));
     }
 
     @Override
@@ -90,7 +94,8 @@ public class ContactListFragment extends BaseViewFragment<ContactListContract.Co
 
     @Override
     public void showLoading(boolean isLoading) {
-        progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        ViewUtils.whenNonNull(getActivity(), activity ->
+                ((ContactsFlowManager) activity).showLoading(isLoading));
     }
 
     @Override
@@ -115,9 +120,9 @@ public class ContactListFragment extends BaseViewFragment<ContactListContract.Co
     }
 
     @Override
-    public void propagateContactSelection(@NonNull Contact contact) {
+    public void propagateContactSelection(long contactId) {
         ViewUtils.whenNonNull(getActivity(), parentActivity ->
-                ((ContactsFlowManager) parentActivity).onContactSelected(contact));
+                ((ContactsFlowManager) parentActivity).onContactSelected(contactId));
     }
 
     @Override
@@ -182,7 +187,8 @@ public class ContactListFragment extends BaseViewFragment<ContactListContract.Co
         }
 
         void bindData(@NonNull Contact contact) {
-            initials.setShapeColor(getContactColor(contact.getColorIndex()));
+            initials.setShapeColor(ContactUtil.getContactColor(activityContext,
+                    contact.getColorIndex()));
             initials.setLetter(contact.getName());
             name.setText(contact.getName());
         }

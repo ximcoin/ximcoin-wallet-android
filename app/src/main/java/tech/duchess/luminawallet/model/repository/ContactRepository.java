@@ -27,6 +27,11 @@ public class ContactRepository {
     }
 
     @NonNull
+    public Single<Contact> getContactById(long contactId) {
+        return contactDao.getContactById(contactId);
+    }
+
+    @NonNull
     public Completable addOrUpdate(@NonNull Contact contact) {
         return Completable.fromAction(() -> contactDao.insert(contact));
     }

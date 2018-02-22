@@ -15,6 +15,9 @@ public interface ContactDao {
     @Query("SELECT * FROM contact ORDER BY name ASC")
     Single<List<Contact>> getAll();
 
+    @Query("SELECT * FROM contact WHERE id = :contactId")
+    Single<Contact> getContactById(long contactId);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Contact contact);
 

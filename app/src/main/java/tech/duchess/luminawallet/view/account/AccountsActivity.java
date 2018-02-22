@@ -337,7 +337,7 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
         if (account == null) {
             toolbar.setTitle(R.string.app_name);
         } else {
-            toolbar.setTitle(getString(R.string.account_id_label) + account.getAccount_id());
+            toolbar.setTitle(getString(R.string.account_id_label_inline, account.getAccount_id()));
         }
     }
 

@@ -99,7 +99,7 @@ public final class ViewUtils {
      */
     public static boolean copyToClipboard(@NonNull Context context,
                                           @NonNull String label,
-                                          @NonNull String value) {
+                                          @NonNull CharSequence value) {
         ClipboardManager clipboardManager =
                 (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
 

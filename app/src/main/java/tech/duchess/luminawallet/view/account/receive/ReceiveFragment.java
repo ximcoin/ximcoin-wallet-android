@@ -105,7 +105,7 @@ public class ReceiveFragment extends Fragment implements IAccountPerspectiveView
     public void onViewFullAddressClicked() {
         ViewUtils.whenNonNull(getContext(), context -> {
             Dialog dialog = new AlertDialog.Builder(context, R.style.DefaultAlertDialog)
-                    .setTitle(R.string.view_full_address_dialog_title)
+                    .setTitle(R.string.account_id_label)
                     .setMessage(address)
                     .setPositiveButton(R.string.ok, null)
                     .setNeutralButton(R.string.copy,

@@ -9,7 +9,7 @@
         android:orderInCategory="9998"
         android:id="@+id/add_wallet"
         android:icon="@drawable/ic_add"
-        android:title="@string/nav_drawer_add_wallet" />
+        android:title="@string/nav_drawer_add_account" />
     <item
         android:orderInCategory="9999"
         android:id="@+id/contacts"

@@ -52,6 +52,12 @@ public class ContactListPresenter extends BasePresenter<ContactListContract.Cont
 
     @Override
     public void onUserSelectedContact(@NonNull Contact contact) {
-        view.propagateContactSelection(contact);
+        Long contactId = contact.getId();
+
+        if (contactId == null) {
+            Timber.e("Selected contact's id was null");
+        } else {
+            view.propagateContactSelection(contactId);
+        }
     }
 }
