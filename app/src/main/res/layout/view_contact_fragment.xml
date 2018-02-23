@@ -66,6 +66,7 @@
                     android:layout_width="@dimen/image_button_width_height"
                     android:layout_height="@dimen/image_button_width_height"
                     android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_gravity="center_vertical"
                     android:background="?selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_content_copy"
                     android:tint="@color/white" />

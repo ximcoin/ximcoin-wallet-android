@@ -22,4 +22,8 @@ public abstract class ContactsActivityModule {
     @PerFragment
     @ContributesAndroidInjector(modules = ViewContactFragmentModule.class)
     abstract ViewContactFragment viewContactFragmentInjector();
+
+    @PerFragment
+    @ContributesAndroidInjector(modules = EditContactFragmentModule.class)
+    abstract EditContactFragment editContactFragmentInjector();
 }

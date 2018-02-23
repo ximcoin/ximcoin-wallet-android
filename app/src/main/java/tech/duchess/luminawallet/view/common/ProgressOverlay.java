@@ -15,6 +15,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.functions.Action;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.view.util.ViewUtils;
 
@@ -63,10 +64,17 @@ public class ProgressOverlay extends FrameLayout {
         determinateImage.setVisibility(INVISIBLE);
         progressBar.setVisibility(VISIBLE);
         loadingMessage.setText(message);
-        ViewUtils.animateView(this, true, 1f, ANIMATION_DURATION_IN);
+        ViewUtils.animateView(this, true, 1f, ANIMATION_DURATION_IN, null);
     }
 
     public void hide(@Nullable String message, boolean wasSuccess, boolean immediate) {
+        hide(message, wasSuccess, immediate, null);
+    }
+
+    public void hide(@Nullable String message,
+                     boolean wasSuccess,
+                     boolean immediate,
+                     @Nullable Action action) {
         if (immediate) {
             this.setVisibility(GONE);
             return;
@@ -84,7 +92,7 @@ public class ProgressOverlay extends FrameLayout {
         determinateImage.setImageDrawable(ContextCompat.getDrawable(context, drawable));
         ImageViewCompat.setImageTintList(determinateImage, tint);
 
-        ViewUtils.animateView(determinateImage, true, 1f, ANIMATION_DURATION_IN);
-        ViewUtils.animateView(this, false, 1f, ANIMATION_DURATION_OUT);
+        ViewUtils.animateView(determinateImage, true, 1f, ANIMATION_DURATION_IN, null);
+        ViewUtils.animateView(this, false, 1f, ANIMATION_DURATION_OUT, action);
     }
 }

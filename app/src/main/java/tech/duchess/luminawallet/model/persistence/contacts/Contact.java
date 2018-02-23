@@ -21,7 +21,7 @@ public class Contact implements Parcelable {
     @Nullable
     private String notes;
 
-    private int colorIndex;
+    private int colorIndex = 0;
 
     public Contact() {
     }
@@ -69,6 +69,16 @@ public class Contact implements Parcelable {
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public Contact deepCopy() {
+        Contact contact = new Contact();
+        contact.setId(id);
+        contact.setName(name);
+        contact.setAddress(address);
+        contact.setNotes(notes);
+        contact.setColorIndex(colorIndex);
+        return contact;
     }
 
     @Override

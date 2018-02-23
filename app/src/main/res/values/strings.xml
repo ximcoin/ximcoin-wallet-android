@@ -18,6 +18,14 @@
     <string name="account_id_label">Account Address:</string>
     <string name="account_id_label_inline">Account Address: %s</string>
 
+    <!-- Address Field Errors -->
+    <string name="account_address_prefix_error">Account address must start with "G"</string>
+    <string name="account_address_length_error">Account address must be %d characters long</string>
+    <string name="account_address_format_error">Invalid account address format</string>
+    <string name="seed_prefix_error">Account seed must start with "S"</string>
+    <string name="seed_length_error">Account seed must be %d characters long</string>
+    <string name="seed_format_error">Invalid seed format</string>
+
     <!-- Receive Fragment -->
     <string name="copy_address">Copy Address</string>
     <string name="view_full_address">View Full Address</string>
@@ -48,9 +56,6 @@
     <string name="import_seed_fragment_title">Import Seed</string>
     <string name="seed_warning_bullet2_import">Copy this seed somewhere very safe.</string>
     <string name="seed_hint">Account Seed</string>
-    <string name="seed_prefix_error">Account seed must start with "S"</string>
-    <string name="seed_length_error">Account seed must be %d characters long</string>
-    <string name="seed_format_error">Invalid seed format</string>
 
     <!-- Generate Seed Fragment -->
     <string name="generate_seed_fragment_title">Generate Seed</string>
@@ -99,7 +104,6 @@
     <string name="send_payment_fail">Transaction Failed</string>
     <string name="send_payment_success">Transaction Successful!</string>
 
-
     <!-- Send Confirmation Fragment -->
     <string name="send_payment_title">Payment Confirmation</string>
     <string name="create_account_title">Create Account Confirmation</string>
@@ -127,6 +131,22 @@
     <string name="contact_notes_label">Notes:</string>
     <string name="contact_menu_edit">Edit</string>
     <string name="contact_menu_delete">Delete</string>
+
+    <!-- Edit Contact Fragment -->
+    <string name="edit_contact_fragment_title">Edit Contact</string>
+    <string name="add_contact_fragment_title">Add Contact</string>
+    <string name="discard_changes_title">Discard Changes?</string>
+    <string name="discard_changes_message">You have unsaved changes</string>
+    <string name="save_contact">Save Contact</string>
+    <string name="contact_name_hint">Name</string>
+    <string name="contact_address_hint">Account Address</string>
+    <string name="contact_notes_hint">Notes (Optional)</string>
+    <string name="contact_color_label">Color:</string>
+    <string name="saving_contact_progress_message">Saving Contact&#8230;</string>
+    <string name="saving_contact_progress_success">Contact Saved</string>
+    <string name="saving_contact_progress_fail">Save Failed</string>
+    <string name="contact_name_empty_error">Contact name cannot be empty</string>
+    <string name="contact_color_dialog_title">Choose Color</string>
 
     <!-- Account Header View -->
     <string name="account_label">Public Address:</string>

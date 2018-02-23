@@ -22,6 +22,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import tech.duchess.luminawallet.R;
 import timber.log.Timber;
@@ -148,7 +149,8 @@ public final class ViewUtils {
         return bitmap;
     }
 
-    public static void animateView(View view, boolean visibleAtEnd, float endAlpha, int duration) {
+    public static void animateView(View view, boolean visibleAtEnd, float endAlpha, int duration,
+                                   @Nullable Action action) {
         if (visibleAtEnd) {
             view.setAlpha(0);
         } else {
@@ -163,6 +165,14 @@ public final class ViewUtils {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         view.setVisibility(visibleAtEnd ? View.VISIBLE : View.GONE);
+
+                        if (action != null) {
+                            try {
+                                action.run();
+                            } catch (Exception e) {
+                                Timber.e(e, "Failed to invoke end of animation action");
+                            }
+                        }
                     }
                 });
     }

@@ -59,7 +59,7 @@ public class ReceiveFragment extends Fragment implements IAccountPerspectiveView
             Bundle args = getArguments();
             setAccount(args == null ? null : args.getParcelable(ACCOUNT_KEY));
         } else {
-            setAddress(savedInstanceState.getParcelable(ADDRESS_KEY));
+            setAddress(savedInstanceState.getString(ADDRESS_KEY));
         }
 
         return view;

@@ -3,17 +3,20 @@ package tech.duchess.luminawallet.view.contacts;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.functions.Action;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.persistence.contacts.Contact;
+import tech.duchess.luminawallet.view.common.BackPressListener;
 import tech.duchess.luminawallet.view.common.BaseActivity;
+import tech.duchess.luminawallet.view.common.ProgressOverlay;
 import tech.duchess.luminawallet.view.util.ViewUtils;
 
 public class ContactsActivity extends BaseActivity implements ContactsFlowManager {
@@ -22,6 +25,9 @@ public class ContactsActivity extends BaseActivity implements ContactsFlowManage
 
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
+
+    @BindView(R.id.progress_overlay)
+    ProgressOverlay progressOverlay;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,14 +54,33 @@ public class ContactsActivity extends BaseActivity implements ContactsFlowManage
                 true, ViewContactFragment.class.getSimpleName());
     }
 
+    private void startEditContactFragment(@Nullable Contact contact) {
+        replaceFragment(R.id.fragment_container, EditContactFragment.getInstance(contact),
+                true, EditContactFragment.class.getSimpleName());
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
+            if (!checkFragmentConsumedBackPress()) {
+                goBack();
+            }
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!checkFragmentConsumedBackPress()) {
+            goBack();
+        }
+    }
+
+    @Override
+    public void goBack() {
+        super.onBackPressed();
     }
 
     @Override
@@ -65,7 +90,7 @@ public class ContactsActivity extends BaseActivity implements ContactsFlowManage
 
     @Override
     public void onAddContactRequested() {
-        Toast.makeText(this, "Add contact requested", Toast.LENGTH_SHORT).show();
+        startEditContactFragment(null);
     }
 
     @Override
@@ -75,11 +100,34 @@ public class ContactsActivity extends BaseActivity implements ContactsFlowManage
 
     @Override
     public void onEditContactRequested(@NonNull Contact contact) {
-
+        startEditContactFragment(contact);
     }
 
     @Override
     public void setTitle(@NonNull String title) {
         super.setTitle(title);
+    }
+
+    @Override
+    public void showBlockedLoading(@Nullable String message) {
+        progressOverlay.show(message);
+    }
+
+    @Override
+    public void hideBlockedLoading(@Nullable String message,
+                                   boolean wasSuccess,
+                                   boolean immediate,
+                                   @Nullable Action action) {
+        progressOverlay.hide(message, wasSuccess, immediate, action);
+    }
+
+    boolean checkFragmentConsumedBackPress() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (fragment != null && fragment instanceof BackPressListener) {
+            ((BackPressListener) fragment).onBackPressed();
+            return true;
+        } else {
+            return false;
+        }
     }
 }
