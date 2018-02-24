@@ -25,6 +25,7 @@ import tech.duchess.luminawallet.dagger.scope.PerActivity;
 import tech.duchess.luminawallet.model.api.CoinMarketCapApi;
 import tech.duchess.luminawallet.model.api.CurlLoggingInterceptor;
 import tech.duchess.luminawallet.model.api.HorizonApi;
+import tech.duchess.luminawallet.model.persistence.AppFlagDB;
 import tech.duchess.luminawallet.model.persistence.ContactDB;
 import tech.duchess.luminawallet.model.persistence.HorizonDB;
 import tech.duchess.luminawallet.model.persistence.coinmarketcap.ConversionRateAdapter;
@@ -53,6 +54,12 @@ public abstract class AppModule {
     @Singleton
     static ContactDB provideContactDB(Application application) {
         return Room.databaseBuilder(application, ContactDB.class, ContactDB.DATABASE_NAME).build();
+    }
+
+    @Provides
+    @Singleton
+    static AppFlagDB provideAppFlagDB(Application application) {
+        return Room.databaseBuilder(application, AppFlagDB.class, AppFlagDB.DATABASE_NAME).build();
     }
 
     @Provides
