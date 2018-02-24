@@ -45,7 +45,7 @@ import timber.log.Timber;
  */
 public class AccountsActivity extends BaseActivity implements AccountsContract.AccountsView,
         NavigationView.OnNavigationItemSelectedListener, AccountSourceReceiver {
-    private static final int CREATE_ACCOUNT_REQUEST_CODE = 1;
+    private static int CREATE_ACCOUNT_REQUEST_CODE = 1;
 
     @BindView(R.id.progress_overlay)
     ProgressOverlay progressOverlay;
@@ -230,7 +230,7 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
 
     @Override
     public void navigateToContacts() {
-        startActivity(new Intent(this, ContactsActivity.class));
+        startActivity(ContactsActivity.createIntentForViewContacts(this));
     }
 
     @Override

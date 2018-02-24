@@ -12,7 +12,7 @@ public interface ContactListContract {
         void showLoading(boolean isLoading);
         void showContacts(@NonNull List<Contact> contacts);
         void goToAddNewContact();
-        void propagateContactSelection(long contactId);
+        void propagateContactSelection(@NonNull Contact contact);
         void showLoadFailedError();
     }
 

@@ -7,8 +7,10 @@ import io.reactivex.functions.Action;
 import tech.duchess.luminawallet.model.persistence.contacts.Contact;
 
 public interface ContactsFlowManager {
+    String CONTACT_SELECTION_RESULT_KEY = "ContactsActivity.CONTACT_SELECTION_RESULT_KEY";
+
     void goBack();
-    void onContactSelected(long contactId);
+    void onContactSelected(@NonNull Contact contact);
     void onAddContactRequested();
     void showLoading(boolean isLoading);
     void onEditContactRequested(@NonNull Contact contact);

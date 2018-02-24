@@ -1,5 +1,7 @@
 package tech.duchess.luminawallet.view.contacts;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,6 +22,8 @@ import tech.duchess.luminawallet.view.common.ProgressOverlay;
 import tech.duchess.luminawallet.view.util.ViewUtils;
 
 public class ContactsActivity extends BaseActivity implements ContactsFlowManager {
+    private static final String IS_SELECTING_CONTACT_KEY = "ContactsActivity.IS_SELECTING_CONTACT_KEY";
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -28,6 +32,20 @@ public class ContactsActivity extends BaseActivity implements ContactsFlowManage
 
     @BindView(R.id.progress_overlay)
     ProgressOverlay progressOverlay;
+
+    private boolean isSelectingContact = false;
+
+    public static Intent createIntentForContactSelection(@NonNull Context context) {
+        Intent intent = new Intent(context, ContactsActivity.class);
+        intent.putExtra(IS_SELECTING_CONTACT_KEY, true);
+        return intent;
+    }
+
+    public static Intent createIntentForViewContacts(@NonNull Context context) {
+        Intent intent = new Intent(context, ContactsActivity.class);
+        intent.putExtra(IS_SELECTING_CONTACT_KEY, false);
+        return intent;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +60,14 @@ public class ContactsActivity extends BaseActivity implements ContactsFlowManage
 
         if (savedInstanceState == null) {
             startContactListFragment();
+        }
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.getBoolean(IS_SELECTING_CONTACT_KEY, false)) {
+            isSelectingContact = true;
+            // Proactively set result to canceled in case we back out of the activity without
+            // making a selection.
+            setResult(RESULT_CANCELED);
         }
     }
 
@@ -84,8 +110,15 @@ public class ContactsActivity extends BaseActivity implements ContactsFlowManage
     }
 
     @Override
-    public void onContactSelected(long contactId) {
-        startViewContactFragment(contactId);
+    public void onContactSelected(@NonNull Contact contact) {
+        if (isSelectingContact) {
+            Intent returnData = new Intent();
+            returnData.putExtra(CONTACT_SELECTION_RESULT_KEY, contact);
+            setResult(RESULT_OK, returnData);
+            finish();
+        } else {
+            startViewContactFragment(contact.getId());
+        }
     }
 
     @Override

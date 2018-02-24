@@ -1,5 +1,6 @@
 package tech.duchess.luminawallet.view.account.send;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,17 +24,22 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.persistence.account.Account;
+import tech.duchess.luminawallet.model.persistence.contacts.Contact;
 import tech.duchess.luminawallet.presenter.account.AccountsContract.AccountsView;
 import tech.duchess.luminawallet.presenter.account.send.SendContract;
 import tech.duchess.luminawallet.presenter.account.send.TransactionSummary;
 import tech.duchess.luminawallet.view.account.IAccountPerspectiveView;
 import tech.duchess.luminawallet.view.common.BaseViewFragment;
+import tech.duchess.luminawallet.view.contacts.ContactsActivity;
+import tech.duchess.luminawallet.view.contacts.ContactsFlowManager;
 import tech.duchess.luminawallet.view.util.TextUtils;
+import tech.duchess.luminawallet.view.util.ViewUtils;
 
 public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
         implements IAccountPerspectiveView, SendContract.SendView,
         SendConfirmationFragment.TransactionConfirmationListener {
     private static final String ACCOUNT_KEY = "SendFragment.ACCOUNT_KEY";
+    private static final int SELECT_CONTACT_REQUEST_CODE = 1;
 
     private static final InputFilter ASCII_FILTER = (source, start, end, dest, dstart, dend) -> {
         SpannableStringBuilder ret;
@@ -193,8 +199,23 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
         intentIntegrator.initiateScan();
     }
 
+    @OnClick(R.id.pick_contact)
+    public void onUserRequestPickContact() {
+        startActivityForResult(ContactsActivity.createIntentForContactSelection(activityContext),
+                SELECT_CONTACT_REQUEST_CODE);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SELECT_CONTACT_REQUEST_CODE
+                && resultCode == Activity.RESULT_OK) {
+            Contact selectedContact =
+                    data.getParcelableExtra(ContactsFlowManager.CONTACT_SELECTION_RESULT_KEY);
+            ViewUtils.whenNonNull(selectedContact, contact ->
+                    recipient.setText(contact.getAddress()));
+            return;
+        }
+
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             if (!TextUtils.isEmpty(result.getContents())) {

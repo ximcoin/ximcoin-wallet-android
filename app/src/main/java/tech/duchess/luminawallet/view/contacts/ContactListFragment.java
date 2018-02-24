@@ -120,9 +120,9 @@ public class ContactListFragment extends BaseViewFragment<ContactListContract.Co
     }
 
     @Override
-    public void propagateContactSelection(long contactId) {
+    public void propagateContactSelection(@NonNull Contact contact) {
         ViewUtils.whenNonNull(getActivity(), parentActivity ->
-                ((ContactsFlowManager) parentActivity).onContactSelected(contactId));
+                ((ContactsFlowManager) parentActivity).onContactSelected(contact));
     }
 
     @Override
