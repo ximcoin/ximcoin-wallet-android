@@ -2,6 +2,7 @@ package tech.duchess.luminawallet.view.intro;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.view.account.AccountsActivity;
 
 public class IntroActivity extends AppCompatActivity {
+    private static final String INTRO_PREFS_HANDLE = "IntroActivity.INTRO_PREFS_HANDLE";
+    private static final String HAS_VIEWED_INTRO_KEY = "IntroActivity.HAS_VIEWED_INTRO_KEY";
 
     @BindView(R.id.view_pager)
     ViewPager viewPager;
@@ -38,16 +41,19 @@ public class IntroActivity extends AppCompatActivity {
     TextView btnNext;
 
     private int[] layouts;
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Checking for first time launch - before calling setContentView()
-        /*if (false) {
+        preferences = getSharedPreferences(INTRO_PREFS_HANDLE, Context.MODE_PRIVATE);
+
+        // TODO: This is bad and I should feel bad. But I don't.
+        if (preferences.getBoolean(HAS_VIEWED_INTRO_KEY, false)) {
             launchHomeScreen();
             finish();
-        }*/
+        }
 
         // Make notification bar transparent
         if (Build.VERSION.SDK_INT >= 21) {
@@ -118,6 +124,9 @@ public class IntroActivity extends AppCompatActivity {
 
     private void launchHomeScreen() {
         //prefManager.setFirstTimeLaunch(false);
+        SharedPreferences.Editor prefEditor = preferences.edit();
+        prefEditor.putBoolean(HAS_VIEWED_INTRO_KEY, true);
+        prefEditor.apply();
         startActivity(new Intent(this, AccountsActivity.class));
         finish();
     }
