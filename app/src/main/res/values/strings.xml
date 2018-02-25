@@ -161,7 +161,7 @@
     <string name="inflation_description_title">What is Inflation?</string>
     <string name="inflation_description">A mechanism to distribute new Lumens, on a weekly basis, at a rate of 1% per year to existing holders. By not setting a destination, you are in essence, missing out on free Lumens.</string>
     <string name="lumenaut_description_title">Lumenaut Community Pool?</string>
-    <string name="lumenaut_description">Inflation is distributed via a voting system, where only those with 0.5% of the total votes can receive the new Lumens. In order to meet this requirement, you can join a pool, such as Lumenaut, to still participate. Lumenaut is our preferred choice of pool, as they have zero fees, 100% payout, and is supported by the very same community which uses it.</string>
+    <string name="lumenaut_description">Inflation is distributed via a voting system, where only those with 0.5% of the total votes can receive the new Lumens. In order to meet this requirement, you can join a pool, such as Lumenaut, to still participate. Lumenaut is Lumina\'s preferred choice, as they have zero fees, 100% payout, and is supported by the very same community which uses it.</string>
     <string name="inflation_fee_label">Fee to modify inflation destination:</string>
     <string name="inflation_fee_load_error">Failed to load fee for setting inflation</string>
     <string name="inflation_no_account_error">Account Not Found</string>

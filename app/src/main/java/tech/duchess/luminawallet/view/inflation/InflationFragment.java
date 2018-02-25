@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,10 @@ import tech.duchess.luminawallet.view.util.ViewUtils;
 public class InflationFragment extends BaseViewFragment<InflationContract.InflationPresenter>
         implements InflationContract.InflationView {
     private static final String ACCOUNT_ID_ARG = "InflationFragment.ACCOUNT_ID_ARG";
+
+    @BindView(R.id.scroll_view)
+    ScrollView scrollView;
+
 
     @BindView(R.id.inflation_field_layout)
     TextInputLayout inflationFieldLayout;
@@ -142,6 +147,7 @@ public class InflationFragment extends BaseViewFragment<InflationContract.Inflat
     @OnClick(R.id.populate_lumenaut_button)
     public void onUserRequestPopulateLumenautAddress() {
         inflationField.setText(EnvironmentConstants.LUMENAUT_INFLATION_ADDRESS);
+        scrollView.fullScroll(ScrollView.FOCUS_UP);
     }
 
     @OnClick(R.id.inflation_info)

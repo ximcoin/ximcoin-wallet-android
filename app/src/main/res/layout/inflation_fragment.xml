@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -53,13 +54,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/set_inflation_destination" />
-
-        <Button
-            android:id="@+id/populate_lumenaut_button"
-            style="@style/RaisedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/populate_lumenaut_inflation" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -135,6 +129,13 @@
             android:focusable="true"
             android:src="@drawable/ic_info"
             android:tint="@color/white" />
+
+        <Button
+            android:id="@+id/populate_lumenaut_button"
+            style="@style/RaisedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/populate_lumenaut_inflation" />
 
 
     </LinearLayout>
