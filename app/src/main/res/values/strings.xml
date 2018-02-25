@@ -16,7 +16,10 @@
     <string name="seed_copy_failed_toast">Failed to copy seed to clipboard</string>
     <string name="asset_balance">%1$s %2$s</string>
     <string name="account_id_label">Account Address:</string>
-    <string name="account_id_label_inline">Account Address: %s</string>
+    <string name="address_label_inline">Address: %s</string>
+
+    <!-- Accounts Activity -->
+    <string name="set_inflation">Set Inflation</string>
 
     <!-- Address Field Errors -->
     <string name="account_address_prefix_error">Account address must start with "G"</string>
@@ -148,8 +151,22 @@
     <string name="contact_name_empty_error">Contact name cannot be empty</string>
     <string name="contact_color_dialog_title">Choose Color</string>
 
+    <!-- Inflation Fragment -->
+    <string name="inflation_fragment_title">Inflation Destination</string>
+    <string name="inflation_hint">Inflation Destination</string>
+    <string name="set_inflation_destination">Set Inflation Destination</string>
+    <string name="populate_lumenaut_inflation">Copy Lumenaut Inflation Address</string>
+    <string name="clear_inflation_dialog_title">Clear Inflation Destination</string>
+    <string name="clear_inflation_dialog_message">Are you sure you want to clear your inflation destination?</string>
+    <string name="inflation_description_title">What is Inflation?</string>
+    <string name="inflation_description">A mechanism to distribute new Lumens, on a weekly basis, at a rate of 1% per year to existing holders. By not setting a destination, you are in essence, missing out on free Lumens.</string>
+    <string name="lumenaut_description_title">Lumenaut Community Pool?</string>
+    <string name="lumenaut_description">Inflation is distributed via a voting system, where only those with 0.5% of the total votes can receive the new Lumens. In order to meet this requirement, you can join a pool, such as Lumenaut, to still participate. Lumenaut is our preferred choice of pool, as they have zero fees, 100% payout, and is supported by the very same community which uses it.</string>
+    <string name="inflation_fee_label">Fee to modify inflation destination:</string>
+    <string name="inflation_fee_load_error">Failed to load fee for setting inflation</string>
+    <string name="inflation_no_account_error">Account Not Found</string>
+
     <!-- Account Header View -->
-    <string name="account_label">Public Address:</string>
     <string name="balance_label">Lumen (XLM) Balance:</string>
     <string name="account_not_on_network_message">Account not on network. Send at least %1$s to your public address to finish creating this account.</string>
 

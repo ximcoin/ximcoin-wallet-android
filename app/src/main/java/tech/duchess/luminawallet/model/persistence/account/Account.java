@@ -46,6 +46,7 @@ public class Account implements Parcelable, TransactionBuilderAccount {
     private List<Balance> balances;
     private List<Signer> signers;
     private Map<String, String> data;
+    private String inflation_destination;
 
     public Account() {
         id = INVALID_ID;
@@ -142,6 +143,14 @@ public class Account implements Parcelable, TransactionBuilderAccount {
                 .firstElement()
                 .defaultIfEmpty(new Balance())
                 .blockingGet();
+    }
+
+    public String getInflation_destination() {
+        return inflation_destination;
+    }
+
+    public void setInflation_destination(String inflation_destination) {
+        this.inflation_destination = inflation_destination;
     }
 
     protected Account(Parcel in) {

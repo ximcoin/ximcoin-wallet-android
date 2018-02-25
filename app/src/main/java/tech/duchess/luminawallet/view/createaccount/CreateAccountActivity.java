@@ -121,11 +121,6 @@ public class CreateAccountActivity extends BaseActivity implements CreateAccount
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
     public void onSeedCreated(@NonNull String seed) {
         startSeedEncryptionFragment(seed);
     }

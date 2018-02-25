@@ -35,6 +35,8 @@ import tech.duchess.luminawallet.view.contacts.ContactsActivity;
 import tech.duchess.luminawallet.view.contacts.ContactsActivityModule;
 import tech.duchess.luminawallet.view.createaccount.CreateAccountActivity;
 import tech.duchess.luminawallet.view.createaccount.CreateAccountActivityModule;
+import tech.duchess.luminawallet.view.inflation.InflationActivity;
+import tech.duchess.luminawallet.view.inflation.InflationActivityModule;
 
 /**
  * Provides application-wide dependencies.
@@ -146,4 +148,8 @@ public abstract class AppModule {
     @PerActivity
     @ContributesAndroidInjector(modules = ContactsActivityModule.class)
     abstract ContactsActivity bindContactsActivity();
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = InflationActivityModule.class)
+    abstract InflationActivity bindInflationActivity();
 }

@@ -153,4 +153,11 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
     public void onUserNavigatedToContacts() {
         view.navigateToContacts();
     }
+
+    @Override
+    public void onUserNavigatedToInflation() {
+        if (currentAccountId != null) {
+            view.navigateToInflation(currentAccountId);
+        }
+    }
 }

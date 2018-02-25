@@ -21,6 +21,7 @@ public interface AccountsContract {
         void startCreateAccountFlow(boolean isImportingSeed);
         void navigateToCreateAccountFlow(boolean isNewToLumina);
         void navigateToContacts();
+        void navigateToInflation(@NonNull String accountId);
         void onTransactionPosted(@NonNull Account account);
         void updateForTransaction(@NonNull Account account);
         void updateAccountList(@NonNull List<Account> accounts);
@@ -33,5 +34,6 @@ public interface AccountsContract {
         void onAccountNavigated(@NonNull String accountId);
         void onUserNavigatedToAddAccount();
         void onUserNavigatedToContacts();
+        void onUserNavigatedToInflation();
     }
 }

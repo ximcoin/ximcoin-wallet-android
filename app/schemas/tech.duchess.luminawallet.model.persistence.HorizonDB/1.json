@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "14e01ed611b782fde769868af265aa54",
+    "identityHash": "c0e6edc72d8e79eb994e6b099b3dabbb",
     "entities": [
       {
         "tableName": "Account",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `paging_token` TEXT, `account_id` TEXT, `sequence` INTEGER NOT NULL, `subentry_count` INTEGER NOT NULL, `balances` TEXT, `signers` TEXT, `data` TEXT, `low_threshold` INTEGER, `med_threshold` INTEGER, `high_threshold` INTEGER, `auth_required` INTEGER, `auth_revocable` INTEGER, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `paging_token` TEXT, `account_id` TEXT, `sequence` INTEGER NOT NULL, `subentry_count` INTEGER NOT NULL, `balances` TEXT, `signers` TEXT, `data` TEXT, `inflation_destination` TEXT, `low_threshold` INTEGER, `med_threshold` INTEGER, `high_threshold` INTEGER, `auth_required` INTEGER, `auth_revocable` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -53,6 +53,12 @@
           {
             "fieldPath": "data",
             "columnName": "data",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "inflation_destination",
+            "columnName": "inflation_destination",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -137,7 +143,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"14e01ed611b782fde769868af265aa54\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"c0e6edc72d8e79eb994e6b099b3dabbb\")"
     ]
   }
 }

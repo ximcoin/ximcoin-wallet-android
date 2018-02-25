@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-public class NavHeaderContract {
-    public interface NavHeaderView {
+public interface NavHeaderContract {
+    interface NavHeaderView {
         void showConversionUnknown();
         void showConversion(@NonNull String conversion,
                             @NonNull String currency,
@@ -15,7 +15,7 @@ public class NavHeaderContract {
         void showLoadError();
     }
 
-    public interface NavHeaderPresenter {
+    interface NavHeaderPresenter {
         void onViewAttached();
         void onUserRefreshConversion();
         void onUserRequestInfo();

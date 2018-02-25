@@ -6,9 +6,9 @@ import android.support.annotation.Nullable;
 import tech.duchess.luminawallet.model.persistence.contacts.Contact;
 import tech.duchess.luminawallet.presenter.common.Presenter;
 
-public class EditContactContract {
+public interface EditContactContract {
 
-    public interface EditContactView {
+    interface EditContactView {
         @Nullable
         Contact getContact();
 
@@ -25,7 +25,7 @@ public class EditContactContract {
         void showError(EditContactPresenter.EditContactError error);
     }
 
-    public interface EditContactPresenter extends Presenter {
+    interface EditContactPresenter extends Presenter {
 
         enum EditContactError {
             NAME_EMPTY,

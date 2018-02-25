@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_margin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inflation_field_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/inflation_hint"
+                app:counterEnabled="true"
+                app:counterMaxLength="@integer/address_length"
+                app:hintTextAppearance="@style/HintTextAppearance">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/inflation_field"
+                    style="@style/AddressEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/take_picture"
+                android:layout_width="@dimen/address_icon_width_height"
+                android:layout_height="@dimen/address_icon_width_height"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:background="?selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_camera"
+                android:tint="@color/white" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/set_inflation_button"
+            style="@style/RaisedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/set_inflation_destination" />
+
+        <Button
+            android:id="@+id/populate_lumenaut_button"
+            style="@style/RaisedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/populate_lumenaut_inflation" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:text="@string/inflation_fee_label" />
+
+        <ProgressBar
+            android:id="@+id/fee_progress_bar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/margin_small"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/fee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:gravity="end"
+            android:visibility="gone"
+            tools:text=".000001 Lumens"
+            tools:visibility="visible" />
+
+        <TextView
+            style="@style/Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="@string/inflation_description_title" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:text="@string/inflation_description" />
+
+        <ImageButton
+            android:id="@+id/inflation_info"
+            android:layout_width="@dimen/image_button_width_height"
+            android:layout_height="@dimen/image_button_width_height"
+            android:layout_gravity="end"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_info"
+            android:tint="@color/white" />
+
+        <TextView
+            style="@style/Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="@string/lumenaut_description_title" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:text="@string/lumenaut_description" />
+
+        <ImageButton
+            android:id="@+id/lumenaut_info"
+            android:layout_width="@dimen/image_button_width_height"
+            android:layout_height="@dimen/image_button_width_height"
+            android:layout_gravity="end"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_info"
+            android:tint="@color/white" />
+
+
+    </LinearLayout>
+
+</ScrollView>

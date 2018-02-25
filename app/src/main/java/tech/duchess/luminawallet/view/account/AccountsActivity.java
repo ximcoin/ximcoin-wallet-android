@@ -15,6 +15,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -36,6 +37,7 @@ import tech.duchess.luminawallet.view.contacts.ContactsActivity;
 import tech.duchess.luminawallet.view.createaccount.AccountSourceReceiver;
 import tech.duchess.luminawallet.view.createaccount.AddAccountSourceFragment;
 import tech.duchess.luminawallet.view.createaccount.CreateAccountActivity;
+import tech.duchess.luminawallet.view.inflation.InflationActivity;
 import tech.duchess.luminawallet.view.util.ViewUtils;
 import timber.log.Timber;
 
@@ -84,6 +86,7 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     private int normalTabColor;
     private int disabledTabColor;
     private AccountFragmentPagerAdapter adapter;
+    private boolean isMenuVisible = false;
 
     /**
      * Enumeration to represent the tabbed views. Note that the ordering here defines the
@@ -234,9 +237,25 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     }
 
     @Override
+    public void navigateToInflation(@NonNull String accountId) {
+        startActivity(InflationActivity.createIntent(this, accountId));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.accounts_menu, menu);
+        menu.getItem(0).setVisible(isMenuVisible);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             drawerLayout.openDrawer(GravityCompat.START);
+            return true;
+        } else if (item.getItemId() == R.id.set_inflation) {
+            presenter.onUserNavigatedToInflation();
             return true;
         }
 
@@ -308,6 +327,8 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
         ViewUtils.whenNonNull(account, acc -> updateSelectedAccount(acc.getAccount_id()));
         accountHeaderView.setAccount(account);
         adapter.setAccount(account);
+        isMenuVisible = account != null && account.isOnNetwork();
+        invalidateOptionsMenu();
     }
 
     private void setTabsEnabled(boolean tabsEnabled) {
@@ -337,7 +358,7 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
         if (account == null) {
             toolbar.setTitle(R.string.app_name);
         } else {
-            toolbar.setTitle(getString(R.string.account_id_label_inline, account.getAccount_id()));
+            toolbar.setTitle(getString(R.string.address_label_inline, account.getAccount_id()));
         }
     }
 

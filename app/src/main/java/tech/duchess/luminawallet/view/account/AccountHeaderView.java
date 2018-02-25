@@ -76,9 +76,11 @@ public class AccountHeaderView extends FrameLayout {
 
     private void showNoAccountsFound() {
         // TODO:
+        setVisibility(GONE);
     }
 
     private void showAccountNotOnNetwork(@NonNull String accountId) {
+        setVisibility(VISIBLE);
         balanceLabel.setVisibility(GONE);
         lumenBalance.setVisibility(GONE);
         notOnNetworkContainer.setVisibility(VISIBLE);
@@ -90,6 +92,7 @@ public class AccountHeaderView extends FrameLayout {
     }
 
     private void showAccount(@NonNull Account account) {
+        setVisibility(VISIBLE);
         balanceLabel.setVisibility(VISIBLE);
         lumenBalance.setVisibility(VISIBLE);
         notOnNetworkContainer.setVisibility(GONE);
