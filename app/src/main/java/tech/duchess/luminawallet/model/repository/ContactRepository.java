@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -17,6 +18,7 @@ import tech.duchess.luminawallet.model.persistence.contacts.Contact;
 import tech.duchess.luminawallet.model.persistence.contacts.ContactDao;
 import timber.log.Timber;
 
+@Singleton
 public class ContactRepository {
     private static final Contact DONATION_CONTACT;
 

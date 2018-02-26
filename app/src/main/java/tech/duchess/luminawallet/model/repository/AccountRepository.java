@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Single;
 import retrofit2.HttpException;
@@ -19,6 +20,7 @@ import tech.duchess.luminawallet.model.persistence.account.AccountPrivateKey;
 import tech.duchess.luminawallet.model.persistence.account.AccountPrivateKeyDao;
 import tech.duchess.luminawallet.model.persistence.account.DisconnectedAccount;
 
+@Singleton
 public class AccountRepository {
     @NonNull
     private final HorizonApi horizonApi;

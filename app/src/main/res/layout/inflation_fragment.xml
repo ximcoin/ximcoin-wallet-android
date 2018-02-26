@@ -56,33 +56,6 @@
             android:text="@string/set_inflation_destination" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_normal"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:text="@string/inflation_fee_label" />
-
-        <ProgressBar
-            android:id="@+id/fee_progress_bar"
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="@dimen/margin_small"
-            android:visibility="gone"
-            tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/fee"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:gravity="end"
-            android:visibility="gone"
-            tools:text=".000001 Lumens"
-            tools:visibility="visible" />
-
-        <TextView
             style="@style/Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

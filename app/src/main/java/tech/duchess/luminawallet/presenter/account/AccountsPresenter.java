@@ -65,6 +65,7 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
                 })
                 .doAfterTerminate(() -> view.showLoading(false))
                 .subscribe(accounts -> {
+                    hasLoadedAccounts = true;
                     view.updateAccountList(accounts);
                     updateViewForSelectedAccount(accounts.isEmpty() ? null
                             : getCurrentAccount(accounts, currentAccountId));

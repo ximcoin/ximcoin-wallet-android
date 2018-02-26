@@ -162,9 +162,18 @@
     <string name="inflation_description">A mechanism to distribute new Lumens, on a weekly basis, at a rate of 1% per year to existing holders. By not setting a destination, you are in essence, missing out on free Lumens.</string>
     <string name="lumenaut_description_title">Lumenaut Community Pool?</string>
     <string name="lumenaut_description">Inflation is distributed via a voting system, where only those with 0.5% of the total votes can receive the new Lumens. In order to meet this requirement, you can join a pool, such as Lumenaut, to still participate. Lumenaut is Lumina\'s preferred choice, as they have zero fees, 100% payout, and is supported by the very same community which uses it.</string>
-    <string name="inflation_fee_label">Fee to modify inflation destination:</string>
-    <string name="inflation_fee_load_error">Failed to load fee for setting inflation</string>
-    <string name="inflation_no_account_error">Account Not Found</string>
+    <string name="inflation_operation_loading">Setting inflation&#8230;</string>
+    <string name="inflation_operation_success">Inflation set successfully</string>
+    <string name="inflation_operation_fail">Failed to set inflation</string>
+    <string name="inflation_address_prefix_error">Inflation address must start with "G"</string>
+    <string name="inflation_address_length_error">Inflation address must be %d characters long</string>
+    <string name="inflation_address_format_error">Invalid inflation address format</string>
+    <string name="inflation_address_already_set_error">Inflation already set to this address</string>
+    <string name="invalid_password_error">Invalid Password</string>
+
+    <!-- Inflation Confirmation Fragment -->
+    <string name="inflation_confirmation_title">Set Inflation Confirmation</string>
+    <string name="inflation_destination_label">Inflation Destination:</string>
 
     <!-- Account Header View -->
     <string name="balance_label">Lumen (XLM) Balance:</string>

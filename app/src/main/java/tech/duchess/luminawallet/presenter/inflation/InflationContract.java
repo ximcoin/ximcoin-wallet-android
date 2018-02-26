@@ -12,21 +12,13 @@ public interface InflationContract {
 
         void showCurrentInflationAddress(@Nullable String inflationDestination);
 
-        void showOperationConfirmation();
+        void showTransactionConfirmation(@NonNull InflationOperationSummary inflationOperationSummary);
 
-        void showFeeLoading();
+        void showLoading(boolean isLoading);
 
-        void hideFeeLoading(double setInflationFee);
+        void showBlockedLoading(boolean isBuildingTransaction);
 
-        void showFeeLoadFailed();
-
-        void showInflationRemovalConfirmation();
-
-        void showBlockedLoading();
-
-        void hideBlockedLoading(boolean wasSuccess);
-
-        void showNoAccountError();
+        void hideBlockedLoading(boolean wasBuildingTransaction, boolean wasSuccess);
 
         void showInsufficientFundsError(double minimumBalance);
 
@@ -38,13 +30,12 @@ public interface InflationContract {
             ADDRESS_LENGTH,
             ADDRESS_PREFIX,
             ADDRESS_FORMAT,
-            INFLATION_DESTINATION_NOT_EXIST
+            PASSWORD_LENGTH,
+            ALREADY_SET
         }
 
         void onUserSetInflationDestination(@Nullable String destination);
 
-        void onUserConfirmedInflationRemoval();
-
-        void onUserConfirmedOperation(@Nullable String password);
+        void onUserConfirmedTransaction(@Nullable String password);
     }
 }

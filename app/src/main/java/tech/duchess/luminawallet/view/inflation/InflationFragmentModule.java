@@ -6,7 +6,9 @@ import javax.inject.Named;
 
 import dagger.Binds;
 import dagger.Module;
+import dagger.android.ContributesAndroidInjector;
 import tech.duchess.luminawallet.dagger.module.BaseFragmentModule;
+import tech.duchess.luminawallet.dagger.scope.PerChildFragment;
 import tech.duchess.luminawallet.dagger.scope.PerFragment;
 import tech.duchess.luminawallet.presenter.inflation.InflationContract;
 import tech.duchess.luminawallet.presenter.inflation.InflationPresenterModule;
@@ -21,4 +23,8 @@ abstract class InflationFragmentModule {
     @Binds
     @PerFragment
     abstract InflationContract.InflationView provideInflationView(InflationFragment inflationFragment);
+
+    @PerChildFragment
+    @ContributesAndroidInjector(modules = InflationConfirmationFragmentModule.class)
+    abstract InflationConfirmationFragment inflationConfirmationFragmentInjector();
 }
