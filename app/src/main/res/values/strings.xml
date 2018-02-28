@@ -95,6 +95,17 @@
     <string name="receive_amount_prefix">+%1$s %2$s</string>
     <string name="send_amount_prefix">-%1$s %2$s</string>
     <string name="failed_load_transactions">Failed to load transactions</string>
+    <string name="trustee_label">Trustee:</string>
+    <string name="trustor_label">Trustor:</string>
+    <string name="asset_label">Asset:</string>
+    <string name="offer_id_label">Offer Id:</string>
+    <string name="selling_asset_code_label">Sell Asset Code:</string>
+    <string name="buying_asset_code_label">Buy Asset Code:</string>
+    <string name="selling_amount_label">Selling Amount:</string>
+    <string name="buying_price_label">Buying Price:</string>
+    <string name="merged_into_label">Merged Into:</string>
+    <string name="entry_name_label">Entry Name:</string>
+    <string name="entry_value_label">Entry Value:</string>
 
     <!-- Send Fragment -->
     <string name="recipient_hint">Recipient Address</string>

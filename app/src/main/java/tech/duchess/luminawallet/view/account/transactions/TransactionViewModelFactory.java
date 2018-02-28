@@ -12,6 +12,7 @@ import tech.duchess.luminawallet.model.persistence.transaction.Operation;
 import tech.duchess.luminawallet.model.persistence.transaction.Transaction;
 import tech.duchess.luminawallet.model.util.AssetUtil;
 import tech.duchess.luminawallet.view.util.TextUtils;
+import timber.log.Timber;
 
 class TransactionViewModelFactory {
 
@@ -30,6 +31,9 @@ class TransactionViewModelFactory {
         TransactionViewModel.TransactionViewModelBuilder builder =
                 new TransactionViewModel.TransactionViewModelBuilder();
 
+        // Always add date as the first row.
+        builder.withRow(R.string.date_label, date);
+
         switch(operation.getOperationType()) {
             case CREATE_ACCOUNT: {
                 boolean isTransferIn = !viewingAccount.equals(operation.getFunder());
@@ -40,7 +44,6 @@ class TransactionViewModelFactory {
                                 AssetUtil.LUMEN_ASSET_CODE,
                                 context))
                         .withHeadlineColor(getAmountColor(isTransferIn))
-                        .withRow(R.string.date_label, date)
                         .withRow(R.string.operation_type_label, operationName)
                         .withAddress(getAddressLabel(isTransferIn), isTransferIn ?
                                 operation.getFunder()
@@ -53,7 +56,6 @@ class TransactionViewModelFactory {
                         .withHeadline(getAmountText(isTransferIn, operation.getAmount(),
                                 operation.getAsset_code(), context))
                         .withHeadlineColor(getAmountColor(isTransferIn))
-                        .withRow(R.string.date_label, date)
                         .withRow(R.string.operation_type_label, operationName)
                         .withAddress(getAddressLabel(isTransferIn), isTransferIn ?
                                 operation.getFrom()
@@ -61,36 +63,62 @@ class TransactionViewModelFactory {
                 break;
             }
             case PATH_PAYMENT: {
+                boolean isTransferIn = !viewingAccount.equalsIgnoreCase(operation.getFrom());
+                builder
+                        .withHeadline(getAmountText(isTransferIn,
+                                isTransferIn ? operation.getAmount() : operation.getSource_amount(),
+                                isTransferIn ? operation.getAsset_code() : operation.getSource_asset_code(),
+                                context))
+                        .withHeadlineColor(getAmountColor(isTransferIn))
+                        .withRow(R.string.operation_type_label, operationName)
+                        .withAddress(getAddressLabel(isTransferIn), isTransferIn ?
+                                operation.getFrom()
+                                : operation.getTo());
                 break;
             }
-            case MANAGE_OFFER: {
-                break;
-            }
+            case MANAGE_OFFER:
             case CREATE_PASSIVE_OFFER: {
+                builder
+                        .withHeadline(operationName)
+                        .withRow(R.string.offer_id_label, operation.getOffer_id())
+                        .withRow(R.string.selling_asset_code_label, operation.getSelling_asset_code())
+                        .withRow(R.string.buying_asset_code_label, operation.getBuying_asset_code())
+                        .withRow(R.string.selling_amount_label, String.valueOf(operation.getAmount()))
+                        .withRow(R.string.buying_price_label, operation.getPrice());
                 break;
             }
             case SET_OPTIONS: {
+                builder.withHeadline(operationName);
+                break;
+            }
+            case CHANGE_TRUST:
+            case ALLOW_TRUST: {
                 builder
                         .withHeadline(operationName)
-                        .withRow(R.string.date_label, date);
-                break;
-            }
-            case CHANGE_TRUST: {
-                break;
-            }
-            case ALLOW_TRUST: {
+                        .withAddress(R.string.trustee_label, operation.getTrustee())
+                        .withAddress(R.string.trustor_label, operation.getTrustor())
+                        .withRow(R.string.asset_label, operation.getAsset_code());
                 break;
             }
             case ACCOUNT_MERGE: {
+                builder
+                        .withHeadline(operationName)
+                        .withAddress(R.string.merged_into_label, operation.getInto());
                 break;
             }
             case INFLATION: {
+                builder.withHeadline(operationName);
                 break;
             }
             case MANAGE_DATA: {
+                builder
+                        .withHeadline(operationName)
+                        .withRow(R.string.entry_name_label, operation.getName())
+                        .withRow(R.string.entry_value_label, operation.getValue());
                 break;
             }
             case UNKNOWN: {
+                Timber.e("Unhandled operation type, id: %s", operation.getId());
                 break;
             }
         }
