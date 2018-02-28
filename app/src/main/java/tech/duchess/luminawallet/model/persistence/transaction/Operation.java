@@ -13,7 +13,7 @@ public class Operation {
     public enum OperationType {
         /**
          * Creates new account in Stellar Network. Fields to look for:
-         * <p>
+         *
          * "account" - Account that is being created.
          * "funder" - Account that is funding the newly created account.
          * "starting_balance" - The balance that the account is initially being funded with. Will
@@ -22,7 +22,7 @@ public class Operation {
         CREATE_ACCOUNT(0, R.string.operation_account_created),
         /**
          * Sends a simple payment between two accounts in the Stellar Network. Fields to look for:
-         * <p>
+         *
          * "to" - Account receiving funds.
          * "from" - Account sending funds.
          * "amount" - Amount being sent.
@@ -32,59 +32,58 @@ public class Operation {
         PAYMENT(1, R.string.operation_payment),
         /**
          * Sends a path payment between two accounts in the Stellar Network. Fields to look for:
-         * <p>
-         * TODO
+         *
+         *
          */
         PATH_PAYMENT(2, R.string.operation_path_payment),
         /**
          * Creates, updates, or deletes an offer in the Stellar Network. Fields to look for:
-         * <p>
-         * TODO
+         *
+         *
          */
         MANAGE_OFFER(3, R.string.operation_manage_offer),
         /**
          * Creates an offer, that won't consume a counter offer that exactly matches this offer.
          * Fields to look for:
-         * <p>
-         * TODO
+         *
          */
         CREATE_PASSIVE_OFFER(4, R.string.operation_create_passive_offer),
         /**
          * Sets account options (inflation destination, adding signers, etc.). Fields to look for:
-         * <p>
-         * TODO
+         *
+         *
          */
         SET_OPTIONS(5, R.string.operation_set_options),
         /**
          * Creates, updates, or deletes a trust line. Fields to look for:
-         * <p>
-         * TODO
+         *
+         *
          */
         CHANGE_TRUST(6, R.string.operation_change_trust),
         /**
          * Updates the authorized flag of an existing trust line; this is called by the issuer of
          * the related asset. Fields to look for:
-         * <p>
-         * TODO
+         *
+         *
          */
         ALLOW_TRUST(7, R.string.operation_allow_trust),
         /**
          * Deletes account and transfers remaining balance to destination account. Fields to look
          * for:
-         * <p>
-         * TODO
+         *
+         *
          */
         ACCOUNT_MERGE(8, R.string.operation_account_merge),
         /**
          * Runs inflation. Fields to look for:
-         * <p>
-         * TODO
+         *
+         *
          */
         INFLATION(9, R.string.operation_inflation),
         /**
          * Set, modify or delete a Data Entry (name/value pair) for an account. Fields to look for:
-         * <p>
-         * TODO
+         *
+         *
          */
         MANAGE_DATA(10, R.string.operation_manage_data),
         /**

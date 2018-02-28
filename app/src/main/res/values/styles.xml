@@ -88,6 +88,14 @@
         <item name="fontFamily">@font/string_literal</item>
     </style>
 
+    <style name="AddressText" parent="@android:style/TextAppearance">
+        <item name="fontFamily">@font/string_literal</item>
+    </style>
+
+    <style name="TransactionRowDefault" parent="@android:style/TextAppearance">
+        <item name="fontFamily">sans-serif</item>
+    </style>
+
     <style name="DefaultDialogFragment" parent="Theme.AppCompat.Light.Dialog.MinWidth">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
