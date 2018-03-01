@@ -169,8 +169,9 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
     @Override
     public void setAvailableCurrencies(List<String> currencySelection) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(activityContext,
-                android.R.layout.simple_spinner_item,
+                R.layout.spinner_item,
                 currencySelection);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         currencyUnitSpinner.setAdapter(adapter);
     }
 
