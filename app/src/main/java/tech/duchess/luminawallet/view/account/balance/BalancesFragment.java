@@ -21,6 +21,7 @@ import butterknife.Unbinder;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.model.persistence.account.Balance;
+import tech.duchess.luminawallet.model.util.AssetUtil;
 import tech.duchess.luminawallet.view.account.IAccountPerspectiveView;
 import tech.duchess.luminawallet.view.util.ViewUtils;
 
@@ -142,7 +143,7 @@ public class BalancesFragment extends Fragment implements IAccountPerspectiveVie
 
         void bindData(@NonNull Balance balance) {
             assetCode.setText(balance.getAsset_code());
-            assetVolume.setText(String.valueOf(balance.getBalance()));
+            assetVolume.setText(AssetUtil.getAssetAmountString(balance.getBalance()));
         }
     }
 }

@@ -128,7 +128,7 @@ public class ReceiveFragment extends Fragment implements IAccountPerspectiveView
         if (context != null
                 && ViewUtils.copyToClipboard(getContext(),
                 getString(R.string.address_clipboard_label),
-                String.valueOf(address))) {
+                address)) {
             toastMessage = getString(R.string.address_copied_success_toast);
         } else {
             toastMessage = getString(R.string.address_copied_failed_toast);

@@ -17,8 +17,8 @@ import timber.log.Timber;
 class TransactionViewModelFactory {
 
     static TransactionViewModel getViewModel(@NonNull Operation operation,
-                                                    @NonNull String viewingAccount,
-                                                    @NonNull Context context) {
+                                             @NonNull String viewingAccount,
+                                             @NonNull Context context) {
         String memo = null;
         Transaction transaction = operation.getTransaction();
         if (transaction != null) {
@@ -83,7 +83,7 @@ class TransactionViewModelFactory {
                         .withRow(R.string.offer_id_label, operation.getOffer_id())
                         .withRow(R.string.selling_asset_code_label, operation.getSelling_asset_code())
                         .withRow(R.string.buying_asset_code_label, operation.getBuying_asset_code())
-                        .withRow(R.string.selling_amount_label, String.valueOf(operation.getAmount()))
+                        .withRow(R.string.selling_amount_label, AssetUtil.getAssetAmountString(operation.getAmount()))
                         .withRow(R.string.buying_price_label, operation.getPrice());
                 break;
             }
@@ -136,7 +136,7 @@ class TransactionViewModelFactory {
                                         @NonNull Context context) {
         int prefixRes = isTransferIn ? R.string.receive_amount_prefix
                 : R.string.send_amount_prefix;
-        return context.getString(prefixRes, String.valueOf(amount), assetCode);
+        return context.getString(prefixRes, AssetUtil.getAssetAmountString(amount), assetCode);
     }
 
     @ColorRes

@@ -15,6 +15,7 @@ import butterknife.Unbinder;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.api.HelpLinks;
 import tech.duchess.luminawallet.model.persistence.account.Account;
+import tech.duchess.luminawallet.model.util.AssetUtil;
 import tech.duchess.luminawallet.view.util.ViewUtils;
 
 public class AccountHeaderView extends FrameLayout {
@@ -97,6 +98,6 @@ public class AccountHeaderView extends FrameLayout {
         lumenBalance.setVisibility(VISIBLE);
         notOnNetworkContainer.setVisibility(GONE);
 
-        lumenBalance.setText(String.valueOf(account.getLumens().getBalance()));
+        lumenBalance.setText(AssetUtil.getAssetAmountString(account.getLumens().getBalance()));
     }
 }

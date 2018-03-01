@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import tech.duchess.luminawallet.R;
+import tech.duchess.luminawallet.model.util.AssetUtil;
 import tech.duchess.luminawallet.presenter.inflation.InflationOperationSummary;
 import tech.duchess.luminawallet.view.common.BaseFragment;
 import tech.duchess.luminawallet.view.util.ViewUtils;
@@ -78,7 +79,7 @@ public class InflationConfirmationFragment extends BaseFragment {
 
     private void init() {
         inflationDestination.setText(inflationSummary.getInflationAddress());
-        transactionFee.setText(Double.toString(inflationSummary.getFees()));
+        transactionFee.setText(AssetUtil.getAssetAmountString(inflationSummary.getFees()));
     }
 
     @OnTextChanged(R.id.password_field)

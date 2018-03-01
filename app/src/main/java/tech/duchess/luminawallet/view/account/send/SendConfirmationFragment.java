@@ -21,6 +21,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.api.HelpLinks;
+import tech.duchess.luminawallet.model.util.AssetUtil;
 import tech.duchess.luminawallet.presenter.account.send.TransactionSummary;
 import tech.duchess.luminawallet.view.common.BaseFragment;
 import tech.duchess.luminawallet.view.util.TextUtils;
@@ -121,12 +122,12 @@ public class SendConfirmationFragment extends BaseFragment {
                 ? R.string.create_account_title
                 : R.string.send_payment_title);
         sendAmount.setText(getString(R.string.asset_balance,
-                Double.toString(transactionSummary.getSendAmount()),
+                AssetUtil.getAssetAmountString(transactionSummary.getSendAmount()),
                 transactionSummary.getSendingAssetCode()));
         recipientAddress.setText(transactionSummary.getRecipient());
         transactionFee.setText(getResources().getQuantityString(R.plurals.lumens,
                 (int) transactionSummary.getTransactionFees(),
-                transactionSummary.getTransactionFees()));
+                AssetUtil.getAssetAmountString(transactionSummary.getTransactionFees())));
 
         if (!TextUtils.isEmpty(transactionSummary.getMemo())) {
             memoLabel.setVisibility(View.VISIBLE);
@@ -146,7 +147,7 @@ public class SendConfirmationFragment extends BaseFragment {
         for (int i = 0; i < assetsSize; i++) {
             String asset = assets.get(i);
             balances.append(getString(R.string.asset_balance,
-                    Double.toString(balanceMap.get(asset)), asset));
+                    AssetUtil.getAssetAmountString(balanceMap.get(asset)), asset));
 
             if (i != assetsSize - 1) {
                 balances.append("\n");
