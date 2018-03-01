@@ -15,10 +15,5 @@
         android:id="@+id/contacts"
         android:icon="@drawable/ic_contacts"
         android:title="@string/nav_drawer_contacts" />
-    <item
-        android:orderInCategory="10000"
-        android:id="@+id/settings"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/nav_drawer_settings" />
 
 </menu>

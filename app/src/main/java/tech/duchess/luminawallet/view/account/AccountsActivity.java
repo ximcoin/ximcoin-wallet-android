@@ -268,8 +268,6 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
             presenter.onUserNavigatedToAddAccount();
         } else if (item.getItemId() == R.id.contacts) {
             presenter.onUserNavigatedToContacts();
-        } else if (item.getItemId() == R.id.settings) {
-
         } else if (item.getGroupId() == R.id.wallet_menu_group) {
             presenter.onAccountNavigated(accountList.get(item.getOrder()));
         }
