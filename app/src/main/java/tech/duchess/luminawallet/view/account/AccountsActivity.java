@@ -287,7 +287,7 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     @Override
     public void updateForTransaction(@NonNull Account account) {
         accountHeaderView.setAccount(account);
-        adapter.setAccount(account);
+        adapter.transactionPostedForAccount(account);
     }
 
     @Override

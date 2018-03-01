@@ -22,13 +22,13 @@ import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.model.persistence.transaction.Operation;
 import tech.duchess.luminawallet.presenter.account.transactions.TransactionsContract;
 import tech.duchess.luminawallet.presenter.account.transactions.TransactionsContract.NetworkState;
-import tech.duchess.luminawallet.view.account.IAccountPerspectiveView;
+import tech.duchess.luminawallet.view.account.AccountPerspectiveView;
 import tech.duchess.luminawallet.view.common.BaseViewFragment;
 import tech.duchess.luminawallet.view.util.ViewUtils;
 
 // https://github.com/googlesamples/android-architecture-components/tree/master/PagingWithNetworkSample
 public class TransactionsFragment extends BaseViewFragment<TransactionsContract.TransactionsPresenter>
-        implements IAccountPerspectiveView, TransactionsContract.TransactionsView {
+        implements AccountPerspectiveView, TransactionsContract.TransactionsView {
     private static final String ACCOUNT_KEY = "TransactionsFragment.ACCOUNT_KEY";
 
     @BindView(R.id.swipe_refresh)
@@ -89,6 +89,11 @@ public class TransactionsFragment extends BaseViewFragment<TransactionsContract.
     @Override
     public void setAccount(@Nullable Account account) {
         presenter.onAccountSet(account);
+    }
+
+    @Override
+    public void transactionPostedForAccount(@NonNull Account account) {
+        presenter.onTransactionPosted(account);
     }
 
     @Override

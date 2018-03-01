@@ -22,11 +22,11 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.persistence.account.Account;
-import tech.duchess.luminawallet.view.account.IAccountPerspectiveView;
+import tech.duchess.luminawallet.view.account.AccountPerspectiveView;
 import tech.duchess.luminawallet.view.util.TextUtils;
 import tech.duchess.luminawallet.view.util.ViewUtils;
 
-public class ReceiveFragment extends Fragment implements IAccountPerspectiveView {
+public class ReceiveFragment extends Fragment implements AccountPerspectiveView {
     private static final String ACCOUNT_KEY = "ReceiveFragment.ACCOUNT_KEY";
     private static final String ADDRESS_KEY = "ReceiveFragment.ADDRESS_KEY";
 
@@ -80,6 +80,11 @@ public class ReceiveFragment extends Fragment implements IAccountPerspectiveView
     @Override
     public void setAccount(@Nullable Account account) {
         setAddress(account == null ? null : account.getAccount_id());
+    }
+
+    @Override
+    public void transactionPostedForAccount(@NonNull Account account) {
+        // No-op
     }
 
     private void setAddress(@Nullable String address) {

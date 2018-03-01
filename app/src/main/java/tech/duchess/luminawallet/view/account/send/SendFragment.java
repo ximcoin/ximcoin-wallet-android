@@ -28,7 +28,7 @@ import tech.duchess.luminawallet.model.persistence.contacts.Contact;
 import tech.duchess.luminawallet.presenter.account.AccountsContract.AccountsView;
 import tech.duchess.luminawallet.presenter.account.send.SendContract;
 import tech.duchess.luminawallet.presenter.account.send.TransactionSummary;
-import tech.duchess.luminawallet.view.account.IAccountPerspectiveView;
+import tech.duchess.luminawallet.view.account.AccountPerspectiveView;
 import tech.duchess.luminawallet.view.common.BaseViewFragment;
 import tech.duchess.luminawallet.view.contacts.ContactsActivity;
 import tech.duchess.luminawallet.view.contacts.ContactsFlowManager;
@@ -36,7 +36,7 @@ import tech.duchess.luminawallet.view.util.TextUtils;
 import tech.duchess.luminawallet.view.util.ViewUtils;
 
 public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
-        implements IAccountPerspectiveView, SendContract.SendView,
+        implements AccountPerspectiveView, SendContract.SendView,
         SendConfirmationFragment.TransactionConfirmationListener {
     private static final String ACCOUNT_KEY = "SendFragment.ACCOUNT_KEY";
     private static final int SELECT_CONTACT_REQUEST_CODE = 1;
@@ -112,6 +112,11 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
 
     @Override
     public void setAccount(@Nullable Account account) {
+        presenter.onAccountUpdated(account);
+    }
+
+    @Override
+    public void transactionPostedForAccount(@NonNull Account account) {
         presenter.onAccountUpdated(account);
     }
 

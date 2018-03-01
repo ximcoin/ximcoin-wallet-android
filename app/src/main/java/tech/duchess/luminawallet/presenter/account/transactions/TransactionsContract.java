@@ -28,6 +28,8 @@ public interface TransactionsContract {
     interface TransactionsPresenter extends Presenter {
         void onAccountSet(@Nullable Account account);
 
+        void onTransactionPosted(@NonNull Account account);
+
         void onUserRefreshed();
     }
 

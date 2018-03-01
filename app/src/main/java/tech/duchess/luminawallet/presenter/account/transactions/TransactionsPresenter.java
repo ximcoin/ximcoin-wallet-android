@@ -63,13 +63,22 @@ public class TransactionsPresenter extends BasePresenter<TransactionsContract.Tr
         if (account == null || !account.isOnNetwork()) {
             accountId = null;
         } else if (accountId != null && accountId.equals(account.getAccount_id())) {
-            onUserRefreshed();
+            // Do nothing, our view already has transactions loaded. The user can pull-to-refresh as
+            // needed.
             return;
         } else {
             accountId = account.getAccount_id();
         }
 
         bindData();
+    }
+
+    @Override
+    public void onTransactionPosted(@NonNull Account account) {
+        if (account.getAccount_id().equals(accountId)) {
+            // Current account we're showing has had a transaction post. Refresh transactions.
+            onUserRefreshed();
+        }
     }
 
     @Override

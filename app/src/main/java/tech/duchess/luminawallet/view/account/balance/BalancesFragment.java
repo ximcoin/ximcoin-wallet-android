@@ -22,10 +22,10 @@ import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.model.persistence.account.Balance;
 import tech.duchess.luminawallet.model.util.AssetUtil;
-import tech.duchess.luminawallet.view.account.IAccountPerspectiveView;
+import tech.duchess.luminawallet.view.account.AccountPerspectiveView;
 import tech.duchess.luminawallet.view.util.ViewUtils;
 
-public class BalancesFragment extends Fragment implements IAccountPerspectiveView {
+public class BalancesFragment extends Fragment implements AccountPerspectiveView {
     private static final String ACCOUNT_KEY = "BalancesFragment.ACCOUNT_KEY";
     private static final String BALANCES_KEY = "BalancesFragment.BALANCES_KEY";
 
@@ -92,6 +92,15 @@ public class BalancesFragment extends Fragment implements IAccountPerspectiveVie
 
     @Override
     public void setAccount(@Nullable Account account) {
+        updateBalances(account);
+    }
+
+    @Override
+    public void transactionPostedForAccount(@NonNull Account account) {
+        updateBalances(account);
+    }
+
+    private void updateBalances(@Nullable Account account) {
         adapter.setBalances(account == null ? new ArrayList<>() : account.getBalances());
     }
 

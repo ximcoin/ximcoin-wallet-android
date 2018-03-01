@@ -31,8 +31,21 @@ public class AccountFragmentPagerAdapter extends FragmentStatePagerAdapter {
         this.account = account;
         for (int i = 0; i < registeredFragments.size(); i++) {
             Fragment fragment = registeredFragments.valueAt(i);
-            if (fragment instanceof IAccountPerspectiveView) {
-                ((IAccountPerspectiveView) fragment).setAccount(account);
+            if (fragment instanceof AccountPerspectiveView) {
+                ((AccountPerspectiveView) fragment).setAccount(account);
+            }
+        }
+    }
+
+    public void transactionPostedForAccount(@NonNull Account account) {
+        if (this.account == null || !this.account.getAccount_id().equals(account.getAccount_id())) {
+            return;
+        }
+
+        for (int i = 0; i < registeredFragments.size(); i++) {
+            Fragment fragment = registeredFragments.valueAt(i);
+            if (fragment instanceof AccountPerspectiveView) {
+                ((AccountPerspectiveView) fragment).transactionPostedForAccount(account);
             }
         }
     }
