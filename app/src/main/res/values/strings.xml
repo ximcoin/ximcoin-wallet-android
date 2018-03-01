@@ -188,6 +188,7 @@
 
     <!-- Account Header View -->
     <string name="balance_label">Lumen (XLM) Balance:</string>
+    <string name="account_not_on_network_unknown_fee_message">Account not on network. Send the required minimum balance to finish creating this account.</string>
     <string name="account_not_on_network_message">Account not on network. Send at least %1$s to your public address to finish creating this account.</string>
 
     <!-- Operation Friendly Names -->
