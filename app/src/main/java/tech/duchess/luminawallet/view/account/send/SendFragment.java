@@ -3,10 +3,14 @@ package tech.duchess.luminawallet.view.account.send;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
@@ -14,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -22,6 +27,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnItemSelected;
+import butterknife.OnTextChanged;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.model.persistence.contacts.Contact;
@@ -60,8 +67,14 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
         return ret;
     };
 
+    @BindView(R.id.recipient_field_layout)
+    TextInputLayout recipientLayout;
+
     @BindView(R.id.recipient_field)
     TextInputEditText recipient;
+
+    @BindView(R.id.amount_field_layout)
+    TextInputLayout amountLayout;
 
     @BindView(R.id.amount_field)
     TextInputEditText amountField;
@@ -122,6 +135,8 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
 
     @OnClick(R.id.send_payment_button)
     public void onUserSendPayment() {
+        recipientLayout.setError(null);
+        amountLayout.setError(null);
         presenter.onUserSendPayment(recipient.getText().toString(),
                 amountField.getText().toString(),
                 String.valueOf(currencyUnitSpinner.getSelectedItem()),
@@ -156,7 +171,53 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
 
     @Override
     public void showError(@NonNull SendContract.SendPresenter.SendError error) {
+        new Handler(Looper.getMainLooper()).post(() -> {
+            switch (error) {
+                case ADDRESS_INVALID:
+                    recipientLayout.setError(getString(R.string.account_address_format_error));
+                    break;
+                case DEST_SAME_AS_SOURCE:
+                    recipientLayout.setError(getString(R.string.account_address_same_as_self_error));
+                    break;
+                case ADDRESS_DOES_NOT_EXIST:
+                    recipientLayout.setError(getString(R.string.account_address_not_exist_error));
+                    break;
+                case ADDRESS_BAD_LENGTH:
+                    recipientLayout.setError(getString(R.string.account_address_length_error,
+                            getResources().getInteger(R.integer.address_length)));
+                    break;
+                case ADDRESS_BAD_PREFIX:
+                    recipientLayout.setError(getString(R.string.account_address_prefix_error));
+                    break;
+                case ADDRESS_UNSUPPORTED_CURRENCY:
+                    recipientLayout.setError(getString(R.string.account_address_unsupported_asset_error));
+                    break;
+                case INSUFFICIENT_FUNDS:
+                    amountLayout.setError(getString(R.string.insufficient_funds_error));
+                    break;
+                case AMOUNT_GREATER_THAN_ZERO:
+                    amountLayout.setError(getString(R.string.amount_greater_than_zero_error));
+                    break;
+                case PASSWORD_INVALID:
+                    Toast.makeText(activityContext, R.string.invalid_password_error, Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        });
+    }
 
+    @OnTextChanged(R.id.recipient_field)
+    public void onRecipientContentsChanged(Editable editable) {
+        recipientLayout.setError(null);
+    }
+
+    @OnTextChanged(R.id.amount_field)
+    public void onAmountContentsChanged(Editable editable) {
+        amountLayout.setError(null);
+    }
+
+    @OnItemSelected(R.id.unit_spinner)
+    public void onCurrencyUnitChanged(Spinner spinner, int pos) {
+        amountLayout.setError(null);
     }
 
     @Override

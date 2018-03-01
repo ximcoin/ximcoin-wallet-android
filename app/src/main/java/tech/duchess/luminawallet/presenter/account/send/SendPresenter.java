@@ -151,7 +151,6 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
                 .subscribe(() -> view.showBlockedLoading(false, true, true),
                         throwable -> {
                             Timber.e(throwable, "Failed to build transaction");
-                            view.showError(SendError.TRANSACTION_BUILD_FAILED);
                             view.showBlockedLoading(false, true, false);
                         });
     }
@@ -242,7 +241,6 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
 
         if (pendingTransaction == null) {
             Timber.e("Pending transaction was null");
-            view.showError(SendError.TRANSACTION_FAILED);
             view.clearForm();
             isPostingTransaction = false;
             return;
@@ -283,7 +281,6 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
                         },
                         throwable -> {
                             Timber.e(throwable, "Transaction failed");
-                            view.showError(SendError.TRANSACTION_FAILED);
                             view.showBlockedLoading(false, false, false);
                         });
     }

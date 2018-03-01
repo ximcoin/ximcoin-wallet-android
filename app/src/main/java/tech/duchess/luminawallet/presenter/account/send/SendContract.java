@@ -65,14 +65,6 @@ public interface SendContract {
              */
             ADDRESS_DOES_NOT_EXIST,
             /**
-             * Generic transaction failure.
-             */
-            TRANSACTION_FAILED,
-            /**
-             * Generic transaction build failure.
-             */
-            TRANSACTION_BUILD_FAILED,
-            /**
              * Denotes a user providing the incorrect password.
              */
             PASSWORD_INVALID

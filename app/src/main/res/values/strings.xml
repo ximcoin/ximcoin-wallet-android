@@ -117,6 +117,11 @@
     <string name="loading_sending_payment">Posting Transaction&#8230;</string>
     <string name="send_payment_fail">Transaction Failed</string>
     <string name="send_payment_success">Transaction Successful!</string>
+    <string name="account_address_same_as_self_error">This is the same as the sending address</string>
+    <string name="account_address_not_exist_error">Account does not exist, create a new account by sending XLM first</string>
+    <string name="account_address_unsupported_asset_error">Receiving account does not trust this asset</string>
+    <string name="insufficient_funds_error">Insufficient funds</string>
+    <string name="amount_greater_than_zero_error">Amount must be greater than zero</string>
 
     <!-- Send Confirmation Fragment -->
     <string name="send_payment_title">Payment Confirmation</string>
