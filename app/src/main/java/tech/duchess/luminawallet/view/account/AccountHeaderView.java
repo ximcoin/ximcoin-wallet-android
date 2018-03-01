@@ -25,6 +25,7 @@ import tech.duchess.luminawallet.model.api.HorizonApi;
 import tech.duchess.luminawallet.model.fees.Fees;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.model.util.AssetUtil;
+import tech.duchess.luminawallet.model.util.FeesUtil;
 import tech.duchess.luminawallet.view.util.ViewUtils;
 
 public class AccountHeaderView extends FrameLayout {
@@ -96,7 +97,7 @@ public class AccountHeaderView extends FrameLayout {
         if (account == null) {
             showNoAccountsFound();
         } else if (!account.isOnNetwork()) {
-            showAccountNotOnNetwork();
+            showAccountNotOnNetwork(account);
         } else {
             showAccount(account);
         }
@@ -106,7 +107,7 @@ public class AccountHeaderView extends FrameLayout {
         setVisibility(GONE);
     }
 
-    private void showAccountNotOnNetwork() {
+    private void showAccountNotOnNetwork(@NonNull Account account) {
         setVisibility(VISIBLE);
         balanceLabel.setVisibility(GONE);
         lumenBalance.setVisibility(GONE);
@@ -115,26 +116,26 @@ public class AccountHeaderView extends FrameLayout {
         if (fees == null) {
             notOnNetworkMessage.setText(getResources()
                     .getString(R.string.account_not_on_network_unknown_fee_message));
-            loadFees();
+            loadFees(account);
         } else {
-            setNotOnNetworkFee();
+            setNotOnNetworkFee(account);
         }
     }
 
-    private void loadFees() {
+    private void loadFees(@NonNull Account account) {
         horizonApi.getFees()
                 .compose(schedulerProvider.singleScheduler())
                 .doOnSubscribe(disposables::add)
                 .subscribe(feesWrapper -> {
                     fees = feesWrapper.getFees();
-                    setNotOnNetworkFee();
+                    setNotOnNetworkFee(account);
                 });
     }
 
-    private void setNotOnNetworkFee() {
+    private void setNotOnNetworkFee(@NonNull Account account) {
         if (fees != null) {
-            String minBalance =
-                    AssetUtil.getAssetAmountString(Double.parseDouble(fees.getBase_reserve()) * 2);
+            String minBalance = AssetUtil.getAssetAmountString(
+                    FeesUtil.getMinimumAccountBalance(fees, account));
             minBalance = getResources().getQuantityString(R.plurals.lumens, 1, minBalance);
             notOnNetworkMessage.setText(getResources()
                     .getString(R.string.account_not_on_network_message, minBalance));
