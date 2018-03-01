@@ -149,8 +149,7 @@ public final class ViewUtils {
         return bitmap;
     }
 
-    public static void animateView(View view, boolean visibleAtEnd, float endAlpha, int duration,
-                                   @Nullable Action action) {
+    public static void animateView(View view, boolean visibleAtEnd, float endAlpha, int duration) {
         if (visibleAtEnd) {
             view.setAlpha(0);
         } else {
@@ -165,14 +164,6 @@ public final class ViewUtils {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         view.setVisibility(visibleAtEnd ? View.VISIBLE : View.GONE);
-
-                        if (action != null) {
-                            try {
-                                action.run();
-                            } catch (Exception e) {
-                                Timber.e(e, "Failed to invoke end of animation action");
-                            }
-                        }
                     }
                 });
     }

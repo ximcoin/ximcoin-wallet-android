@@ -2,6 +2,8 @@ package tech.duchess.luminawallet.view.common;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -18,10 +20,11 @@ import butterknife.Unbinder;
 import io.reactivex.functions.Action;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.view.util.ViewUtils;
+import timber.log.Timber;
 
 public class ProgressOverlay extends FrameLayout {
     public static final int ANIMATION_DURATION_IN = 200;
-    public static final int ANIMATION_DURATION_OUT = 2200;
+    public static final int ANIMATION_DURATION_OUT = 2000;
 
     @BindView(R.id.determinate_image)
     ImageView determinateImage;
@@ -64,7 +67,7 @@ public class ProgressOverlay extends FrameLayout {
         determinateImage.setVisibility(INVISIBLE);
         progressBar.setVisibility(VISIBLE);
         loadingMessage.setText(message);
-        ViewUtils.animateView(this, true, 1f, ANIMATION_DURATION_IN, null);
+        ViewUtils.animateView(this, true, 1f, ANIMATION_DURATION_IN);
     }
 
     public void hide(@Nullable String message, boolean wasSuccess, boolean immediate) {
@@ -77,12 +80,9 @@ public class ProgressOverlay extends FrameLayout {
                      @Nullable Action action) {
         if (immediate) {
             this.setVisibility(GONE);
+            runEndOfHideAction(action);
             return;
         }
-
-        loadingMessage.setText(message);
-        progressBar.setVisibility(INVISIBLE);
-
 
         Context context = getContext();
         int drawable = wasSuccess ? R.drawable.ic_check_mark : R.drawable.ic_problem;
@@ -91,8 +91,25 @@ public class ProgressOverlay extends FrameLayout {
                 : R.color.warningColor));
         determinateImage.setImageDrawable(ContextCompat.getDrawable(context, drawable));
         ImageViewCompat.setImageTintList(determinateImage, tint);
+        loadingMessage.setText(message);
+        progressBar.setVisibility(INVISIBLE);
+        determinateImage.setVisibility(VISIBLE);
+        this.setAlpha(1f);
+        this.setVisibility(VISIBLE);
 
-        ViewUtils.animateView(determinateImage, true, 1f, ANIMATION_DURATION_IN, null);
-        ViewUtils.animateView(this, false, 1f, ANIMATION_DURATION_OUT, action);
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            ProgressOverlay.this.setVisibility(GONE);
+            runEndOfHideAction(action);
+        }, ANIMATION_DURATION_OUT);
+    }
+
+    private void runEndOfHideAction(@Nullable Action action) {
+        if (action != null) {
+            try {
+                action.run();
+            } catch (Exception e) {
+                Timber.e(e, "Failed to invoke end of animation action");
+            }
+        }
     }
 }
