@@ -20,6 +20,7 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
         implements AccountsContract.AccountsPresenter {
     private static final String HAS_LOADED_ACCOUNTS_KEY =
             "AccountsPresenter.HAS_LOADED_ACCOUNTS_KEY";
+    private static final String CURRENT_ACCOUNT_KEY = "AccountsPresenter.CURRENT_ACCOUNT_KEY";
 
     @NonNull
     private final AccountRepository accountRepository;
@@ -41,9 +42,20 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
     }
 
     @Override
+    public void saveState(@Nullable Bundle bundle) {
+        super.saveState(bundle);
+        ViewUtils.whenNonNull(bundle, b -> {
+            b.putBoolean(HAS_LOADED_ACCOUNTS_KEY, hasLoadedAccounts);
+            b.putString(CURRENT_ACCOUNT_KEY, currentAccountId);
+        });
+    }
+
+    @Override
     public void start(@Nullable Bundle bundle) {
-        ViewUtils.whenNonNull(bundle,
-                b -> b.putBoolean(HAS_LOADED_ACCOUNTS_KEY, hasLoadedAccounts));
+        ViewUtils.whenNonNull(bundle, b -> {
+            hasLoadedAccounts = b.getBoolean(HAS_LOADED_ACCOUNTS_KEY, false);
+            currentAccountId = b.getString(CURRENT_ACCOUNT_KEY, currentAccountId);
+        });
     }
 
     @Override

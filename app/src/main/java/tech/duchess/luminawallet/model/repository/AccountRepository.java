@@ -3,7 +3,7 @@ package tech.duchess.luminawallet.model.repository;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +32,7 @@ public class AccountRepository {
     private final AccountPrivateKeyDao accountPrivateKeyDao;
 
     @NonNull
-    private final Map<String, Account> inMemoryAccountCache = new HashMap<>();
+    private final Map<String, Account> inMemoryAccountCache = new LinkedHashMap<>();
 
     @Inject
     public AccountRepository(@NonNull HorizonApi horizonApi,
