@@ -23,22 +23,22 @@
 
     <!-- Intro Slides -->
     <color name="intro_welcome_background">@color/colorPrimary</color>
-    <color name="intro_welcome_light_dot">@color/colorPrimaryLight</color>
-    <color name="intro_welcome_dark_dot">@color/colorPrimaryDark</color>
+    <color name="intro_welcome_light_dot">@color/colorAccentLight</color>
+    <color name="intro_welcome_dark_dot">@color/colorAccentDark</color>
 
-    <color name="intro_secure_background">#4527a0</color>
-    <color name="intro_secure_light_dot">#7953d2</color>
-    <color name="intro_secure_dark_dot">#000070</color>
+    <color name="intro_secure_background">@color/colorPrimary</color>
+    <color name="intro_secure_light_dot">@color/colorAccentLight</color>
+    <color name="intro_secure_dark_dot">@color/colorAccentDark</color>
 
-    <color name="intro_simple_background">#d84315</color>
-    <color name="intro_simple_light_dot">#ff7543</color>
-    <color name="intro_simple_dark_dot">#9f0000</color>
+    <color name="intro_simple_background">@color/colorPrimary</color>
+    <color name="intro_simple_light_dot">@color/colorAccentLight</color>
+    <color name="intro_simple_dark_dot">@color/colorAccentDark</color>
 
-    <color name="intro_open_source_background">#2e7d32</color>
-    <color name="intro_open_source_light_dot">#60ad5e</color>
-    <color name="intro_open_source_dark_dot">#005005</color>
+    <color name="intro_open_source_background">@color/colorPrimary</color>
+    <color name="intro_open_source_light_dot">@color/colorAccentLight</color>
+    <color name="intro_open_source_dark_dot">@color/colorAccentDark</color>
 
-    <color name="intro_developer_background">@color/colorAccent</color>
+    <color name="intro_developer_background">@color/colorPrimary</color>
     <color name="intro_developer_light_dot">@color/colorAccentLight</color>
     <color name="intro_developer_dark_dot">@color/colorAccentDark</color>
 
