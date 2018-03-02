@@ -64,7 +64,7 @@ public class TransactionsFragment extends BaseViewFragment<TransactionsContract.
                     ViewUtils.whenNonNull(args.getParcelable(ACCOUNT_KEY), account ->
                             presenter.onAccountSet((Account) account)));
         }
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimaryLight,
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorAccentDark,
                 R.color.colorAccentLight);
         swipeRefreshLayout.setOnRefreshListener(() -> presenter.onUserRefreshed());
     }
