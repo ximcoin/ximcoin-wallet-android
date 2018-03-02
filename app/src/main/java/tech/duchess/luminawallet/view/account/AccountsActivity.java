@@ -151,9 +151,11 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
                     .setIcon(accountPerspective.getTabIcon(this));
         }
 
-        selectedTabColor = ContextCompat.getColor(this, R.color.white);
+        selectedTabColor = ContextCompat.getColor(this, R.color.colorAccent);
         normalTabColor = ContextCompat.getColor(this, R.color.white_70);
         disabledTabColor = ContextCompat.getColor(this, R.color.white_20);
+        // Initially make them enabled, for the sake of coloring.
+        setTabsEnabled(true);
     }
 
     @Override
@@ -356,7 +358,7 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
         if (account == null) {
             toolbar.setTitle(R.string.app_name);
         } else {
-            toolbar.setTitle(getString(R.string.address_label_inline, account.getAccount_id()));
+            toolbar.setTitle(account.getAccount_id());
         }
     }
 

@@ -102,7 +102,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorAccentDark">@color/colorAccentDark</item>
         <item name="colorAccentLight">@color/colorAccentLight</item>
-        <item name="android:windowBackground">@color/mainBackground</item>
+        <item name="android:windowBackground">@color/colorPrimaryLight</item>
         <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:textColorPrimary">@color/colorPrimaryText</item>
         <item name="android:textColorSecondary">@color/colorSecondaryText</item>

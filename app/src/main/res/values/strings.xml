@@ -16,7 +16,6 @@
     <string name="seed_copy_failed_toast">Failed to copy seed to clipboard</string>
     <string name="asset_balance">%1$s %2$s</string>
     <string name="account_id_label">Account Address:</string>
-    <string name="address_label_inline">Address: %s</string>
 
     <!-- Accounts Activity -->
     <string name="set_inflation">Set Inflation</string>
