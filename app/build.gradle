@@ -11,14 +11,26 @@ buildscript {
     }
 }
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
+    signingConfigs {
+        LuminaUpload {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "tech.duchess.luminawallet"
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
+        versionName "0.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
 
@@ -34,26 +46,25 @@ android {
         }
         release {
             minifyEnabled false
+            useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             javaCompileOptions.annotationProcessorOptions.arguments['butterknife.debuggable'] = 'false'
+            signingConfig signingConfigs.LuminaUpload
         }
     }
-
     productFlavors {
         flavorDimensions 'environment'
-
         staging {
             dimension 'environment'
             applicationIdSuffix ".staging"
             versionNameSuffix "-staging"
         }
-
         production {
             dimension 'environment'
             versionNameSuffix "-prod"
+            signingConfig signingConfigs.LuminaUpload
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -89,16 +100,13 @@ dependencies {
     implementation "com.journeyapps:zxing-android-embedded:$zxingEmbeddedVersion"
     implementation "com.github.ivbaranov:materiallettericon:$materialLetterIconVersion"
     implementation "petrov.kristiyan:colorpicker-library:$colorPickerVersion"
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     testImplementation "android.arch.persistence.room:testing:$architectureComponentsVersion"
-
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     androidTestImplementation 'com.google.code.findbugs:jsr305:3.0.1'
-
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
     annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
