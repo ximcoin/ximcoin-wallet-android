@@ -5,7 +5,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import io.reactivex.Observable;
 import tech.duchess.luminawallet.dagger.SchedulerProvider;
@@ -21,6 +23,7 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
     private static final String HAS_LOADED_ACCOUNTS_KEY =
             "AccountsPresenter.HAS_LOADED_ACCOUNTS_KEY";
     private static final String CURRENT_ACCOUNT_KEY = "AccountsPresenter.CURRENT_ACCOUNT_KEY";
+    private static final String OFFLINE_ACCOUNTS_KEY = "AccountsPresenter.OFFLINE_ACCOUNTS_KEY";
 
     @NonNull
     private final AccountRepository accountRepository;
@@ -32,6 +35,9 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
 
     @Nullable
     private String currentAccountId;
+
+    @NonNull
+    private final Set<String> offlineAccounts = new HashSet<>();
 
     AccountsPresenter(@NonNull AccountsContract.AccountsView view,
                       @NonNull AccountRepository accountRepository,
@@ -47,6 +53,7 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
         ViewUtils.whenNonNull(bundle, b -> {
             b.putBoolean(HAS_LOADED_ACCOUNTS_KEY, hasLoadedAccounts);
             b.putString(CURRENT_ACCOUNT_KEY, currentAccountId);
+            b.putStringArrayList(OFFLINE_ACCOUNTS_KEY, new ArrayList<>(offlineAccounts));
         });
     }
 
@@ -55,6 +62,10 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
         ViewUtils.whenNonNull(bundle, b -> {
             hasLoadedAccounts = b.getBoolean(HAS_LOADED_ACCOUNTS_KEY, false);
             currentAccountId = b.getString(CURRENT_ACCOUNT_KEY, currentAccountId);
+            List<String> offlineAccountList = b.getStringArrayList(OFFLINE_ACCOUNTS_KEY);
+            if (offlineAccountList != null) {
+                offlineAccounts.addAll(offlineAccountList);
+            }
         });
     }
 
@@ -78,15 +89,31 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
                 .doAfterTerminate(() -> view.showLoading(false))
                 .subscribe(accounts -> {
                     hasLoadedAccounts = true;
+                    populateOfflineAccounts(accounts);
                     view.updateAccountList(accounts);
                     updateViewForSelectedAccount(accounts.isEmpty() ? null
                             : getCurrentAccount(accounts, currentAccountId));
                 }, throwable -> {
                     Timber.e(throwable, "Failed to load accounts");
+                    offlineAccounts.clear();
                     view.updateAccountList(new ArrayList<>());
                     currentAccountId = null;
                     view.showAccountsLoadFailure();
                 });
+    }
+
+    private void populateOfflineAccounts(@NonNull List<Account> accounts) {
+        offlineAccounts.clear();
+
+        if (accounts.isEmpty()) {
+            return;
+        }
+
+        for (Account account : accounts) {
+            if (!account.isOnNetwork()) {
+                offlineAccounts.add(account.getAccount_id());
+            }
+        }
     }
 
     private Account getCurrentAccount(@NonNull List<Account> accounts,
@@ -143,14 +170,22 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
             return;
         }
 
-        accountRepository.getAccountById(accountId, false)
+        // If the account was offline prior, do a deep pull to check if funds have been added.
+        accountRepository.getAccountById(accountId, offlineAccounts.contains(accountId))
                 .compose(schedulerProvider.singleScheduler())
                 .doOnSubscribe(disposable -> {
                     addDisposable(disposable);
                     view.showLoading(true);
                 })
                 .doAfterTerminate(() -> view.showLoading(false))
-                .subscribe(this::updateViewForSelectedAccount,
+                .subscribe(account -> {
+                            if (account.isOnNetwork()
+                                    && offlineAccounts.contains(account.getAccount_id())) {
+                                offlineAccounts.remove(account.getAccount_id());
+                            }
+
+                            updateViewForSelectedAccount(account);
+                        },
                         throwable -> {
                             Timber.e(throwable, "Failed to navigate to account");
                             view.showAccountNavigationFailure();
@@ -165,6 +200,11 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
     @Override
     public void onUserNavigatedToContacts() {
         view.navigateToContacts();
+    }
+
+    @Override
+    public void onUserNavigatedToAbout() {
+        view.navigateToAbout();
     }
 
     @Override

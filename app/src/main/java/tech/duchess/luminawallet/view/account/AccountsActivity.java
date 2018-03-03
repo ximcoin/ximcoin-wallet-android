@@ -31,6 +31,7 @@ import butterknife.ButterKnife;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.presenter.account.AccountsContract;
+import tech.duchess.luminawallet.view.about.AboutActivity;
 import tech.duchess.luminawallet.view.common.BaseActivity;
 import tech.duchess.luminawallet.view.common.ProgressOverlay;
 import tech.duchess.luminawallet.view.contacts.ContactsActivity;
@@ -239,6 +240,11 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     }
 
     @Override
+    public void navigateToAbout() {
+        startActivity(new Intent(this, AboutActivity.class));
+    }
+
+    @Override
     public void navigateToInflation(@NonNull String accountId) {
         startActivity(InflationActivity.createIntent(this, accountId));
     }
@@ -270,6 +276,8 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
             presenter.onUserNavigatedToAddAccount();
         } else if (item.getItemId() == R.id.contacts) {
             presenter.onUserNavigatedToContacts();
+        } else if (item.getItemId() == R.id.about) {
+            presenter.onUserNavigatedToAbout();
         } else if (item.getGroupId() == R.id.wallet_menu_group) {
             presenter.onAccountNavigated(accountList.get(item.getOrder()));
         }

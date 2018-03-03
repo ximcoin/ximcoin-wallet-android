@@ -29,6 +29,8 @@ import tech.duchess.luminawallet.model.persistence.AppFlagDB;
 import tech.duchess.luminawallet.model.persistence.ContactDB;
 import tech.duchess.luminawallet.model.persistence.HorizonDB;
 import tech.duchess.luminawallet.model.persistence.coinmarketcap.ConversionRateAdapter;
+import tech.duchess.luminawallet.view.about.AboutActivity;
+import tech.duchess.luminawallet.view.about.AboutActivityModule;
 import tech.duchess.luminawallet.view.account.AccountsActivity;
 import tech.duchess.luminawallet.view.account.AccountsActivityModule;
 import tech.duchess.luminawallet.view.contacts.ContactsActivity;
@@ -152,4 +154,8 @@ public abstract class AppModule {
     @PerActivity
     @ContributesAndroidInjector(modules = InflationActivityModule.class)
     abstract InflationActivity bindInflationActivity();
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = AboutActivityModule.class)
+    abstract AboutActivity bindAboutActivity();
 }
