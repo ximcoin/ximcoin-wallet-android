@@ -96,9 +96,11 @@ public class InflationFragment extends BaseViewFragment<InflationContract.Inflat
 
     @Override
     public void showTransactionConfirmation(@NonNull InflationOperationSummary inflationOperationSummary) {
-        confirmationFragment = InflationConfirmationFragment.newInstance(inflationOperationSummary);
-        confirmationFragment.show(childFragmentManager,
-                InflationConfirmationFragment.class.getSimpleName());
+        new Handler(Looper.getMainLooper()).post(() -> {
+            confirmationFragment = InflationConfirmationFragment.newInstance(inflationOperationSummary);
+            confirmationFragment.show(childFragmentManager,
+                    InflationConfirmationFragment.class.getSimpleName());
+        });
     }
 
     @Override
@@ -138,10 +140,12 @@ public class InflationFragment extends BaseViewFragment<InflationContract.Inflat
 
     @Override
     public void showInsufficientFundsError(double minimumBalance) {
-        inflationFieldLayout.setError(
-                getString(R.string.self_account_balance_violated,
-                        getResources().getQuantityString(R.plurals.lumens,
-                                (int) minimumBalance, minimumBalance)));
+        new Handler(Looper.getMainLooper()).post(() -> {
+            inflationFieldLayout.setError(
+                    getString(R.string.self_account_balance_violated,
+                            getResources().getQuantityString(R.plurals.lumens,
+                                    (int) minimumBalance, minimumBalance)));
+        });
     }
 
     @Override

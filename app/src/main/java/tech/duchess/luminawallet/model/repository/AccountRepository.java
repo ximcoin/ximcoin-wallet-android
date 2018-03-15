@@ -50,6 +50,10 @@ public class AccountRepository {
         }
     }
 
+    public boolean isCached(@NonNull String accountId) {
+        return inMemoryAccountCache.containsKey(accountId);
+    }
+
     private Single<List<Account>> getAllAccountsCached() {
         return Single.just(new ArrayList<>(inMemoryAccountCache.values()));
     }

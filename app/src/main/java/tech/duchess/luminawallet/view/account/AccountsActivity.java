@@ -288,8 +288,8 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     }
 
     @Override
-    public void onTransactionPosted(@NonNull Account account) {
-        presenter.onTransactionPosted(account);
+    public void onTransactionPosted(@NonNull Account account, @NonNull String destination) {
+        presenter.onTransactionPosted(account, destination);
     }
 
     @Override

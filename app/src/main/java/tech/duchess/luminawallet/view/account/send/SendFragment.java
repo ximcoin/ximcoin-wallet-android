@@ -249,8 +249,8 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
     }
 
     @Override
-    public void showTransactionSuccess(@NonNull Account account) {
-        ((AccountsView) activityContext).onTransactionPosted(account);
+    public void showTransactionSuccess(@NonNull Account account, @NonNull String destination) {
+        ((AccountsView) activityContext).onTransactionPosted(account, destination);
     }
 
     @Override

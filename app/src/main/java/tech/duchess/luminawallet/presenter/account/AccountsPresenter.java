@@ -23,7 +23,7 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
     private static final String HAS_LOADED_ACCOUNTS_KEY =
             "AccountsPresenter.HAS_LOADED_ACCOUNTS_KEY";
     private static final String CURRENT_ACCOUNT_KEY = "AccountsPresenter.CURRENT_ACCOUNT_KEY";
-    private static final String OFFLINE_ACCOUNTS_KEY = "AccountsPresenter.OFFLINE_ACCOUNTS_KEY";
+    private static final String DIRTIED_ACCOUNTS_KEY = "AccountsPresenter.DIRTIED_ACCOUNTS_KEY";
 
     @NonNull
     private final AccountRepository accountRepository;
@@ -37,7 +37,7 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
     private String currentAccountId;
 
     @NonNull
-    private final Set<String> offlineAccounts = new HashSet<>();
+    private final Set<String> dirtiedAccounts = new HashSet<>();
 
     AccountsPresenter(@NonNull AccountsContract.AccountsView view,
                       @NonNull AccountRepository accountRepository,
@@ -53,7 +53,7 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
         ViewUtils.whenNonNull(bundle, b -> {
             b.putBoolean(HAS_LOADED_ACCOUNTS_KEY, hasLoadedAccounts);
             b.putString(CURRENT_ACCOUNT_KEY, currentAccountId);
-            b.putStringArrayList(OFFLINE_ACCOUNTS_KEY, new ArrayList<>(offlineAccounts));
+            b.putStringArrayList(DIRTIED_ACCOUNTS_KEY, new ArrayList<>(dirtiedAccounts));
         });
     }
 
@@ -62,9 +62,9 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
         ViewUtils.whenNonNull(bundle, b -> {
             hasLoadedAccounts = b.getBoolean(HAS_LOADED_ACCOUNTS_KEY, false);
             currentAccountId = b.getString(CURRENT_ACCOUNT_KEY, currentAccountId);
-            List<String> offlineAccountList = b.getStringArrayList(OFFLINE_ACCOUNTS_KEY);
-            if (offlineAccountList != null) {
-                offlineAccounts.addAll(offlineAccountList);
+            List<String> dirtiedAccountList = b.getStringArrayList(DIRTIED_ACCOUNTS_KEY);
+            if (dirtiedAccountList != null) {
+                dirtiedAccounts.addAll(dirtiedAccountList);
             }
         });
     }
@@ -86,34 +86,21 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
                     addDisposable(disposable);
                     view.showLoading(true);
                 })
-                .doAfterTerminate(() -> view.showLoading(false))
+                .doAfterTerminate(() -> {
+                    view.showLoading(false);
+                    dirtiedAccounts.clear();
+                })
                 .subscribe(accounts -> {
                     hasLoadedAccounts = true;
-                    populateOfflineAccounts(accounts);
                     view.updateAccountList(accounts);
                     updateViewForSelectedAccount(accounts.isEmpty() ? null
                             : getCurrentAccount(accounts, currentAccountId));
                 }, throwable -> {
                     Timber.e(throwable, "Failed to load accounts");
-                    offlineAccounts.clear();
                     view.updateAccountList(new ArrayList<>());
                     currentAccountId = null;
                     view.showAccountsLoadFailure();
                 });
-    }
-
-    private void populateOfflineAccounts(@NonNull List<Account> accounts) {
-        offlineAccounts.clear();
-
-        if (accounts.isEmpty()) {
-            return;
-        }
-
-        for (Account account : accounts) {
-            if (!account.isOnNetwork()) {
-                offlineAccounts.add(account.getAccount_id());
-            }
-        }
     }
 
     private Account getCurrentAccount(@NonNull List<Account> accounts,
@@ -154,9 +141,13 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
     }
 
     @Override
-    public void onTransactionPosted(@NonNull Account account) {
+    public void onTransactionPosted(@NonNull Account account, @NonNull String destination) {
         if (currentAccountId == null) {
             return;
+        }
+
+        if (accountRepository.isCached(destination)) {
+            dirtiedAccounts.add(destination);
         }
 
         if (currentAccountId.equals(account.getAccount_id())) {
@@ -171,7 +162,7 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
         }
 
         // If the account was offline prior, do a deep pull to check if funds have been added.
-        accountRepository.getAccountById(accountId, offlineAccounts.contains(accountId))
+        accountRepository.getAccountById(accountId, dirtiedAccounts.contains(accountId))
                 .compose(schedulerProvider.singleScheduler())
                 .doOnSubscribe(disposable -> {
                     addDisposable(disposable);
@@ -179,9 +170,8 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
                 })
                 .doAfterTerminate(() -> view.showLoading(false))
                 .subscribe(account -> {
-                            if (account.isOnNetwork()
-                                    && offlineAccounts.contains(account.getAccount_id())) {
-                                offlineAccounts.remove(account.getAccount_id());
+                            if (dirtiedAccounts.contains(account.getAccount_id())) {
+                                dirtiedAccounts.remove(account.getAccount_id());
                             }
 
                             updateViewForSelectedAccount(account);

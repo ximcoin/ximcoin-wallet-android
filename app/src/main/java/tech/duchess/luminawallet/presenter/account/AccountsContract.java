@@ -23,7 +23,7 @@ public interface AccountsContract {
         void navigateToContacts();
         void navigateToAbout();
         void navigateToInflation(@NonNull String accountId);
-        void onTransactionPosted(@NonNull Account account);
+        void onTransactionPosted(@NonNull Account account, @NonNull String destination);
         void updateForTransaction(@NonNull Account account);
         void updateAccountList(@NonNull List<Account> accounts);
     }
@@ -31,7 +31,7 @@ public interface AccountsContract {
     interface AccountsPresenter extends Presenter {
         void onAccountCreationReturned(boolean didCreateNewAccount);
         void onUserRequestAccountCreation(boolean isImportingSeed);
-        void onTransactionPosted(@NonNull Account account);
+        void onTransactionPosted(@NonNull Account account, @NonNull String destination);
         void onAccountNavigated(@NonNull String accountId);
         void onUserNavigatedToAddAccount();
         void onUserNavigatedToContacts();

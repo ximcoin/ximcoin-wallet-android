@@ -25,6 +25,7 @@ import tech.duchess.luminawallet.model.persistence.account.Account;
 import tech.duchess.luminawallet.view.account.AccountPerspectiveView;
 import tech.duchess.luminawallet.view.util.TextUtils;
 import tech.duchess.luminawallet.view.util.ViewUtils;
+import timber.log.Timber;
 
 public class ReceiveFragment extends Fragment implements AccountPerspectiveView {
     private static final String ACCOUNT_KEY = "ReceiveFragment.ACCOUNT_KEY";
@@ -97,7 +98,7 @@ public class ReceiveFragment extends Fragment implements AccountPerspectiveView 
         this.address = address;
         if (TextUtils.isEmpty(address)) {
             qrCode.setImageDrawable(null);
-            qrCode.setVisibility(View.GONE);
+            qrCode.setVisibility(View.INVISIBLE);
             viewFullAddressButton.setEnabled(false);
         } else {
             qrCode.setVisibility(View.VISIBLE);

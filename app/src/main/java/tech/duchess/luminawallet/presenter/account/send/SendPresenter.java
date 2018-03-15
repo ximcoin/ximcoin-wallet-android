@@ -58,6 +58,9 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
     @Nullable
     private Transaction pendingTransaction;
 
+    @Nullable
+    private String pendingRecipient;
+
     private final Map<String, String> assetCodeToIssuerMap = new HashMap<>();
     private boolean isBuildingTransaction = false;
     private boolean isPostingTransaction = false;
@@ -214,13 +217,16 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
 
         if (!transactionSummary.selfMinimumBalanceViolated && transactionSummary.createdAccountMinimumBalanceMet) {
             Operation operation;
+            pendingRecipient = recipient.getAccount_id();
+
             if (isCreatingAccount) {
-                operation = getAccountCreationOperation(sourceAccount, recipient.getAccount_id(),
+                operation = getAccountCreationOperation(sourceAccount, pendingRecipient,
                         String.valueOf(sendAmount));
             } else {
-                operation = getPaymentOperation(sourceAccount, recipient.getAccount_id(),
+                operation = getPaymentOperation(sourceAccount, pendingRecipient,
                         assetCode, assetIssuer, String.valueOf(sendAmount));
             }
+
 
             pendingTransaction = new Transaction.Builder(sourceAccount)
                     .addOperation(operation)
@@ -239,8 +245,8 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
 
         isPostingTransaction = true;
 
-        if (pendingTransaction == null) {
-            Timber.e("Pending transaction was null");
+        if (pendingTransaction == null || pendingRecipient == null) {
+            Timber.e("Pending transaction or recipient was null");
             view.clearForm();
             isPostingTransaction = false;
             return;
@@ -277,7 +283,7 @@ public class SendPresenter extends BasePresenter<SendContract.SendView>
                 .subscribe(account -> {
                             view.showBlockedLoading(false, false, true);
                             awaitingAccountPropogation = true;
-                            view.showTransactionSuccess(account);
+                            view.showTransactionSuccess(account, pendingRecipient);
                         },
                         throwable -> {
                             Timber.e(throwable, "Transaction failed");
