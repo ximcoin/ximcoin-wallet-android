@@ -23,15 +23,30 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_margin"
+        android:layout_marginStart="@dimen/activity_margin"
         android:layout_marginTop="@dimen/margin_large"
         android:text="@string/welcome"
+        android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="@dimen/slide_title"
-        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_margin"
+        android:layout_marginStart="@dimen/activity_margin"
+        android:layout_marginTop="@dimen/margin_large"
+        android:text="@string/disclaimer"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 </android.support.constraint.ConstraintLayout>

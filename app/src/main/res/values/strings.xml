@@ -38,6 +38,7 @@
 
     <!-- Intro Slides -->
     <string name="welcome">Welcome to Lumina</string>
+    <string name="disclaimer">By using Lumina you agree to our \"Terms and Condition of Use\" and \"Privacy Policy\" found under the \"About\" section</string>
     <string name="secure_title">Secure</string>
     <string name="secure_description">Locally encrypted account seeds. Authorize transactions before they happen.</string>
     <string name="simple_title">Simple</string>
@@ -192,6 +193,7 @@
 
     <!-- About Fragment -->
     <string name="about_fragment_title">About</string>
+    <string name="terms_and_conditions_link">Terms and Conditions of Use</string>
     <string name="privacy_policy_link">Privacy Policy</string>
     <string name="source_code_link">Source Code</string>
 
