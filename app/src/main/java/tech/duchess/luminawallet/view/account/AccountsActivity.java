@@ -87,7 +87,8 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     private int normalTabColor;
     private int disabledTabColor;
     private AccountFragmentPagerAdapter adapter;
-    private boolean isMenuVisible = false;
+    private boolean isInflationOptionVisible = false;
+    private boolean isRefreshOptionVisible = false;
 
     /**
      * Enumeration to represent the tabbed views. Note that the ordering here defines the
@@ -253,7 +254,8 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.accounts_menu, menu);
-        menu.getItem(0).setVisible(isMenuVisible);
+        menu.getItem(0).setVisible(isRefreshOptionVisible);
+        menu.getItem(1).setVisible(isInflationOptionVisible);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -264,6 +266,9 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
             return true;
         } else if (item.getItemId() == R.id.set_inflation) {
             presenter.onUserNavigatedToInflation();
+            return true;
+        } else if (item.getItemId() == R.id.refresh) {
+            presenter.onUserRefresh();
             return true;
         }
 
@@ -335,7 +340,8 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
         ViewUtils.whenNonNull(account, acc -> updateSelectedAccount(acc.getAccount_id()));
         accountHeaderView.setAccount(account);
         adapter.setAccount(account);
-        isMenuVisible = account != null && account.isOnNetwork();
+        isInflationOptionVisible = account != null && account.isOnNetwork();
+        isRefreshOptionVisible = account != null;
         invalidateOptionsMenu();
     }
 

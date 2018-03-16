@@ -161,8 +161,16 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
             return;
         }
 
-        // If the account was offline prior, do a deep pull to check if funds have been added.
-        accountRepository.getAccountById(accountId, dirtiedAccounts.contains(accountId))
+        loadAccount(accountId, dirtiedAccounts.contains(accountId));
+    }
+
+    @Override
+    public void onUserRefresh() {
+        ViewUtils.whenNonNull(currentAccountId, accountId -> loadAccount(accountId, true));
+    }
+
+    private void loadAccount(@NonNull String accountId, boolean forceRefresh) {
+        accountRepository.getAccountById(accountId, forceRefresh)
                 .compose(schedulerProvider.singleScheduler())
                 .doOnSubscribe(disposable -> {
                     addDisposable(disposable);

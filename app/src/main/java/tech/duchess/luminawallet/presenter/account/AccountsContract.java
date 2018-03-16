@@ -33,6 +33,7 @@ public interface AccountsContract {
         void onUserRequestAccountCreation(boolean isImportingSeed);
         void onTransactionPosted(@NonNull Account account, @NonNull String destination);
         void onAccountNavigated(@NonNull String accountId);
+        void onUserRefresh();
         void onUserNavigatedToAddAccount();
         void onUserNavigatedToContacts();
         void onUserNavigatedToAbout();

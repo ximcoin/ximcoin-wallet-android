@@ -19,6 +19,7 @@
 
     <!-- Accounts Activity -->
     <string name="set_inflation">Set Inflation</string>
+    <string name="refresh">Refresh</string>
 
     <!-- Address Field Errors -->
     <string name="account_address_prefix_error">Account address must start with "G"</string>
