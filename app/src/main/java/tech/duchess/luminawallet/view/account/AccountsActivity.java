@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,8 +90,8 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     private int normalTabColor;
     private int disabledTabColor;
     private AccountFragmentPagerAdapter adapter;
-    private boolean isInflationOptionVisible = false;
-    private boolean isRefreshOptionVisible = false;
+    private boolean isAccountOnline = false;
+    private boolean isAccountPresent = false;
 
     /**
      * Enumeration to represent the tabbed views. Note that the ordering here defines the
@@ -198,12 +201,21 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
 
     @Override
     public void showAccountsLoadFailure() {
-
+        showFailureToast(R.string.load_accounts_failure);
     }
 
     @Override
     public void showAccountNavigationFailure() {
+        showFailureToast(R.string.navigate_account_failure);
+    }
 
+    @Override
+    public void showRemoveAccountFailure() {
+        showFailureToast(R.string.remove_account_failure);
+    }
+
+    private void showFailureToast(@StringRes int message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -254,25 +266,29 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.accounts_menu, menu);
-        menu.getItem(0).setVisible(isRefreshOptionVisible);
-        menu.getItem(1).setVisible(isInflationOptionVisible);
+        menu.getItem(0).setVisible(isAccountPresent);
+        menu.getItem(1).setVisible(isAccountOnline);
+        menu.getItem(2).setVisible(isAccountPresent);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        boolean wasOptionHandled = true;
+
         if (item.getItemId() == android.R.id.home) {
             drawerLayout.openDrawer(GravityCompat.START);
-            return true;
         } else if (item.getItemId() == R.id.set_inflation) {
             presenter.onUserNavigatedToInflation();
-            return true;
         } else if (item.getItemId() == R.id.refresh) {
-            presenter.onUserRefresh();
-            return true;
+            presenter.onUserRequestRefresh();
+        } else if (item.getItemId() == R.id.remove_account) {
+            presenter.onUserRequestRemoveAccount();
+        } else {
+            wasOptionHandled = false;
         }
 
-        return super.onOptionsItemSelected(item);
+        return wasOptionHandled || super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -318,6 +334,19 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
         menu.setGroupCheckable(R.id.wallet_menu_group, true, true);
     }
 
+    @Override
+    public void displayRemoveAccountConfirmation() {
+        new AlertDialog.Builder(this, R.style.WarningAlertDialog)
+                .setTitle(R.string.remove_account_confirmation_title)
+                .setMessage(R.string.remove_account_confirmation_message)
+                .setNegativeButton(R.string.yes, (dialog, which) ->
+                        presenter.onUserConfirmRemoveAccount())
+                .setPositiveButton(R.string.cancel, null)
+                .setCancelable(true)
+                .create()
+                .show();
+    }
+
     private void updateSelectedAccount(@NonNull String selectedAccountId) {
         navigationView.getMenu().getItem(accountList.indexOf(selectedAccountId)).setChecked(true);
     }
@@ -340,8 +369,8 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
         ViewUtils.whenNonNull(account, acc -> updateSelectedAccount(acc.getAccount_id()));
         accountHeaderView.setAccount(account);
         adapter.setAccount(account);
-        isInflationOptionVisible = account != null && account.isOnNetwork();
-        isRefreshOptionVisible = account != null;
+        isAccountOnline = account != null && account.isOnNetwork();
+        isAccountPresent = account != null;
         invalidateOptionsMenu();
     }
 

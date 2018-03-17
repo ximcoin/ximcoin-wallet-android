@@ -81,6 +81,13 @@
         <item name="android:background">@color/mainBackground</item>
     </style>
 
+    <style name="WarningAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
+        <item name="android:textColor">@color/warningColor</item>
+        <item name="colorAccent">@color/warningColor</item>
+        <item name="android:background">@color/mainBackground</item>
+    </style>
+
     <style name="AddressEditText" parent="Base.Widget.AppCompat.EditText">
         <item name="android:maxLength">@integer/address_length</item>
         <item name="android:inputType">textFilter|textNoSuggestions|textCapCharacters|textMultiLine</item>

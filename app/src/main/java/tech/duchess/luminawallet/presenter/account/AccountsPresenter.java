@@ -165,8 +165,40 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
     }
 
     @Override
-    public void onUserRefresh() {
+    public void onUserRequestRefresh() {
         ViewUtils.whenNonNull(currentAccountId, accountId -> loadAccount(accountId, true));
+    }
+
+    @Override
+    public void onUserRequestRemoveAccount() {
+        if (currentAccountId != null) {
+            view.displayRemoveAccountConfirmation();
+        }
+    }
+
+    @Override
+    public void onUserConfirmRemoveAccount() {
+        if (currentAccountId == null) {
+            return;
+        }
+
+        accountRepository.removeAccount(currentAccountId)
+                .compose(schedulerProvider.completableScheduler())
+                .doOnSubscribe(disposable -> {
+                    addDisposable(disposable);
+                    view.showLoading(true);
+                })
+                .doAfterTerminate(() -> {
+                    view.showLoading(false);
+                    refreshAccounts();
+                })
+                .subscribe(
+                        () -> {
+                        },
+                        throwable -> {
+                            Timber.e(throwable, "Failed to remove account");
+                            view.showRemoveAccountFailure();
+                        });
     }
 
     private void loadAccount(@NonNull String accountId, boolean forceRefresh) {

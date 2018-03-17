@@ -121,9 +121,8 @@ public class ReceiveFragment extends Fragment implements AccountPerspectiveView 
             dialog.show();
             // You must show the dialog prior to retrieving the message text view.
             TextView message = dialog.findViewById(android.R.id.message);
-            ViewUtils.whenNonNull(message, m -> {
-                m.setTypeface(ResourcesCompat.getFont(context, R.font.string_literal));
-            });
+            ViewUtils.whenNonNull(message, m ->
+                    m.setTypeface(ResourcesCompat.getFont(context, R.font.string_literal)));
         });
     }
 

@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import retrofit2.HttpException;
 import tech.duchess.luminawallet.model.api.HorizonApi;
@@ -48,6 +49,14 @@ public class AccountRepository {
         } else {
             return getAllAccountsCached();
         }
+    }
+
+    public Completable removeAccount(@NonNull String accountId) {
+        return Completable.fromAction(() -> {
+           accountDao.deleteAccountById(accountId);
+           accountPrivateKeyDao.deleteByAccountId(accountId);
+           inMemoryAccountCache.remove(accountId);
+        });
     }
 
     public boolean isCached(@NonNull String accountId) {

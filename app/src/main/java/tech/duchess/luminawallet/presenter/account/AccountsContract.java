@@ -16,6 +16,7 @@ public interface AccountsContract {
         void showNoAccountFound();
         void showAccountsLoadFailure();
         void showAccountNavigationFailure();
+        void showRemoveAccountFailure();
         void showAccount(@NonNull Account account);
         void showAccountNotOnNetwork(@NonNull Account account);
         void startCreateAccountFlow(boolean isImportingSeed);
@@ -26,6 +27,7 @@ public interface AccountsContract {
         void onTransactionPosted(@NonNull Account account, @NonNull String destination);
         void updateForTransaction(@NonNull Account account);
         void updateAccountList(@NonNull List<Account> accounts);
+        void displayRemoveAccountConfirmation();
     }
 
     interface AccountsPresenter extends Presenter {
@@ -33,7 +35,9 @@ public interface AccountsContract {
         void onUserRequestAccountCreation(boolean isImportingSeed);
         void onTransactionPosted(@NonNull Account account, @NonNull String destination);
         void onAccountNavigated(@NonNull String accountId);
-        void onUserRefresh();
+        void onUserRequestRefresh();
+        void onUserRequestRemoveAccount();
+        void onUserConfirmRemoveAccount();
         void onUserNavigatedToAddAccount();
         void onUserNavigatedToContacts();
         void onUserNavigatedToAbout();

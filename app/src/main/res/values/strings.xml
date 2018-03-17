@@ -20,6 +20,12 @@
     <!-- Accounts Activity -->
     <string name="set_inflation">Set Inflation</string>
     <string name="refresh">Refresh</string>
+    <string name="remove_account">Remove Account</string>
+    <string name="remove_account_confirmation_title">Remove Account?</string>
+    <string name="remove_account_confirmation_message">Are you sure you want to remove this account from Lumina? This action cannot be undone.\n\nNote that your account and respective funds will remain intact. This merely removes the account from the application. Please ensure that you have your account seed safely copied elsewhere.</string>
+    <string name="navigate_account_failure">Failed to open account</string>
+    <string name="load_accounts_failure">Failed to load accounts</string>
+    <string name="remove_account_failure">Failed to remove account</string>
 
     <!-- Address Field Errors -->
     <string name="account_address_prefix_error">Account address must start with "G"</string>

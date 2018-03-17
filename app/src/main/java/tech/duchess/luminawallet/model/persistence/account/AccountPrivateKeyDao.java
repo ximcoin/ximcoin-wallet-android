@@ -20,4 +20,7 @@ public interface AccountPrivateKeyDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(@NonNull AccountPrivateKey accountPrivateKey);
+
+    @Query("DELETE FROM accountprivatekey WHERE accountId = :accountId")
+    void deleteByAccountId(@NonNull String accountId);
 }
