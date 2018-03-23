@@ -43,9 +43,12 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix '.debug'
+            minifyEnabled true
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
             useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             javaCompileOptions.annotationProcessorOptions.arguments['butterknife.debuggable'] = 'false'

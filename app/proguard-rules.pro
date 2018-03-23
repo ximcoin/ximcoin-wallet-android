@@ -25,3 +25,23 @@
 #-renamesourcefileattribute SourceFile
 
 -dontobfuscate
+-dontwarn com.google.**
+-dontwarn com.moandjiezana.**
+-dontwarn com.sun.**
+-dontwarn javassist.**
+-dontwarn javax.**
+-dontwarn jersey.repackaged.**
+-dontwarn net.bytebuddy.**
+-dontwarn net.i2p.crypto.eddsa.**
+-dontwarn org.aopalliance.**
+-dontwarn org.apache.**
+-dontwarn org.glassfish.**
+-dontwarn org.jvnet.**
+-dontwarn org.mockito.**
+-dontwarn org.objenesis.**
+-dontwarn org.stellar.sdk.**
+-keepclasseswithmembers class * {
+    @com.squareup.moshi.* <methods>;
+}
+-keep @com.squareup.moshi.JsonQualifier interface *
+
