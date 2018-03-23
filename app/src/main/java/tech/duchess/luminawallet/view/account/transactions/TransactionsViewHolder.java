@@ -15,23 +15,30 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import tech.duchess.luminawallet.EnvironmentConstants;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.persistence.transaction.Operation;
+import tech.duchess.luminawallet.view.util.ViewUtils;
 import timber.log.Timber;
 
-class TransactionsViewHolder extends RecyclerView.ViewHolder {
+class TransactionsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     @BindView(R.id.headline)
     TextView headline;
 
     @BindView(R.id.row_container)
     LinearLayout rowContainer;
 
+    @Nullable
+    private Operation operation;
+
     TransactionsViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        itemView.setOnClickListener(this);
     }
 
     void bindData(@Nullable Operation operation, @Nullable String viewingAccount) {
+        this.operation = operation;
         if (operation == null) {
             Timber.e("Operation was null");
             setInvisible();
@@ -98,5 +105,13 @@ class TransactionsViewHolder extends RecyclerView.ViewHolder {
                 inflater.inflate(R.layout.transaction_row, rowContainer);
             }
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        ViewUtils.whenNonNull(operation, op ->
+                ViewUtils.openUrl(EnvironmentConstants.STELLAR_EXPLORER_URL_PREFIX
+                        + op.getTransaction_hash(),
+                        v.getContext()));
     }
 }
