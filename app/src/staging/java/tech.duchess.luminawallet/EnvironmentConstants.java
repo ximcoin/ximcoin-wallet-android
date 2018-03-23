@@ -10,4 +10,5 @@ public class EnvironmentConstants {
     public static final double BASE_FEE_PRECISION = 0.0000001f; // 1 Stroop
     public static final String LUMENAUT_INFLATION_ADDRESS = "GCCD6AJOYZCUAQLX32ZJF2MKFFAUJ53PVCFQI3RHWKL3V47QYE2BNAUT";
     public static final String STELLAR_EXPLORER_URL_PREFIX = "https://testnet.steexp.com/tx/";
+    public static final String CONTACT_EMAIL = "lumina+debug@duchess.tech";
 }

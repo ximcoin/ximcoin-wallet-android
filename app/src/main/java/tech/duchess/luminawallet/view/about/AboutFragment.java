@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.OnClick;
+import tech.duchess.luminawallet.EnvironmentConstants;
 import tech.duchess.luminawallet.R;
 import tech.duchess.luminawallet.model.api.HelpLinks;
 import tech.duchess.luminawallet.view.common.BaseFragment;
@@ -15,6 +16,7 @@ import tech.duchess.luminawallet.view.util.ViewUtils;
 
 
 public class AboutFragment extends BaseFragment {
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -36,5 +38,14 @@ public class AboutFragment extends BaseFragment {
     @OnClick(R.id.source_code_link)
     public void onUserRequestSourceCode() {
         ViewUtils.openUrl(HelpLinks.SOURCE_CODE, activityContext);
+    }
+
+    @OnClick(R.id.contact_link)
+    public void onUserRequestContact() {
+        ViewUtils.sendEmail(activityContext,
+                EnvironmentConstants.CONTACT_EMAIL,
+                getString(R.string.contact_subject),
+                getString(R.string.contact_body),
+                getString(R.string.contact_chooser_title));
     }
 }

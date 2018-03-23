@@ -22,7 +22,6 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 
-import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import tech.duchess.luminawallet.R;
 import timber.log.Timber;
@@ -31,6 +30,7 @@ import timber.log.Timber;
  * Helper methods for view bindings.
  */
 public final class ViewUtils {
+    private static final String EMAIL_URI = "mailto:";
 
     private ViewUtils() {
     }
@@ -91,6 +91,19 @@ public final class ViewUtils {
         } catch (Throwable t) {
             Timber.e(t, "Failed to open url: %s", url);
         }
+    }
+
+    public static void sendEmail(@NonNull Context context,
+                                 @NonNull String destinationEmail,
+                                 @Nullable String subject,
+                                 @Nullable String body,
+                                 @Nullable String chooserTitle) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse(EMAIL_URI));
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{destinationEmail});
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, body);
+        context.startActivity(Intent.createChooser(intent, chooserTitle));
     }
 
     /**
