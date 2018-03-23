@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.jakewharton.threetenabp.AndroidThreeTen;
@@ -22,7 +21,7 @@ import timber.log.Timber;
 /**
  * Base class for maintaining global application state.
  */
-public class LuminaWalletApp extends MultiDexApplication implements HasActivityInjector {
+public class LuminaWalletApp extends Application implements HasActivityInjector {
 
     @Inject
     DispatchingAndroidInjector<Activity> activityInjector;

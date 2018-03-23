@@ -32,7 +32,6 @@ android {
         versionCode 3
         versionName "0.1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        multiDexEnabled = true
 
         javaCompileOptions {
             annotationProcessorOptions {
