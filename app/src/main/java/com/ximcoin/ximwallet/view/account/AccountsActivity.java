@@ -143,6 +143,7 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         });
+        toolbar.setTitle(R.string.app_name);
     }
 
     private void initTabs() {
@@ -389,11 +390,7 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     }
 
     private void updateTitle(@Nullable Account account) {
-        if (account == null) {
-            toolbar.setTitle(R.string.app_name);
-        } else {
-            toolbar.setTitle(account.getAccount_id());
-        }
+        // No-op for Xim wallet.
     }
 
     public void onUserRequestedAccountCreation(boolean isImportingSeed) {
