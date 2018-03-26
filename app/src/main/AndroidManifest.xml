@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.ximcoin.ximwallet.view.intro.IntroActivity"
+            android:name="com.ximcoin.ximwallet.view.intro.SplashActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>

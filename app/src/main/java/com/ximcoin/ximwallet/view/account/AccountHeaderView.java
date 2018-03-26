@@ -134,21 +134,23 @@ public class AccountHeaderView extends FrameLayout {
 
     private void setNotOnNetworkFee(@NonNull Account account) {
         if (fees != null) {
+            // Show minimum balance to send as typical account minimum balance (times 2, to account
+            // for trustline for XIM and some remaining balance for transactions).
             String minBalance = AssetUtil.getAssetAmountString(
-                    FeesUtil.getMinimumAccountBalance(fees, account));
-            minBalance = getResources().getQuantityString(R.plurals.lumens, 1, minBalance);
+                    FeesUtil.getMinimumAccountBalance(fees, account) * 2);
+            minBalance = getResources().getQuantityString(R.plurals.lumens, 2, minBalance);
             notOnNetworkMessage.setText(getResources()
                     .getString(R.string.account_not_on_network_message, minBalance));
         }
     }
 
     private void showAccount(@NonNull Account account) {
-        setVisibility(VISIBLE);
-        balanceLabel.setVisibility(VISIBLE);
+        setVisibility(GONE);
+        /*balanceLabel.setVisibility(VISIBLE);
         lumenBalance.setVisibility(VISIBLE);
         notOnNetworkContainer.setVisibility(GONE);
 
-        lumenBalance.setText(AssetUtil.getAssetAmountString(account.getLumens().getBalance()));
+        lumenBalance.setText(AssetUtil.getAssetAmountString(account.getLumens().getBalance()));*/
     }
 
     @Nullable

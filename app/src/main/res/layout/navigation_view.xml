@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:layout_width="wrap_content"
         android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header_wrapper"
+        app:headerLayout="@layout/xim_nav_header"
         app:menu="@menu/drawer_menu"
         app:itemTextColor="@color/nav_text_color"/>
 
