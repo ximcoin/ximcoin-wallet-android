@@ -31,7 +31,7 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 app:titleEnabled="false">
 
-                <tech.duchess.luminawallet.view.account.AccountHeaderView
+                <com.ximcoin.ximwallet.view.account.AccountHeaderView
                     android:id="@+id/account_header_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -71,7 +71,7 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <tech.duchess.luminawallet.view.account.LockableViewPager
+        <com.ximcoin.ximwallet.view.account.LockableViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -81,7 +81,7 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
-    <tech.duchess.luminawallet.view.common.ProgressOverlay
+    <com.ximcoin.ximwallet.view.common.ProgressOverlay
         android:id="@+id/progress_overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

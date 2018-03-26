@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- NOTE!: android:id is needed on the NavHeaderView to be able to save state -->
-<tech.duchess.luminawallet.view.nav.NavHeaderView
+<com.ximcoin.ximwallet.view.nav.NavHeaderView
     android:id="@+id/nav_header_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"

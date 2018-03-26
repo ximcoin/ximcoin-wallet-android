@@ -8,15 +8,4 @@
         android:title="@string/refresh"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/set_inflation"
-        android:title="@string/set_inflation"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/remove_account"
-        android:title="@string/remove_account"
-        app:showAsAction="never"/>
-
-
 </menu>

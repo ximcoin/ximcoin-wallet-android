@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group
+    <!--<group
         android:id="@+id/wallet_menu_group"
         android:checkableBehavior="single" />
 
@@ -9,7 +9,8 @@
         android:orderInCategory="9997"
         android:id="@+id/add_wallet"
         android:icon="@drawable/ic_add"
-        android:title="@string/nav_drawer_add_account" />
+        android:title="@string/nav_drawer_add_account" />-->
+
     <item
         android:orderInCategory="9998"
         android:id="@+id/contacts"

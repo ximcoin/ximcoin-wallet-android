@@ -17,7 +17,7 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
     signingConfigs {
-        LuminaUpload {
+        XimUpload {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
             storeFile file(keystoreProperties['storeFile'])
@@ -26,7 +26,7 @@ android {
     }
     compileSdkVersion 27
     defaultConfig {
-        applicationId "tech.duchess.luminawallet"
+        applicationId "com.ximcoin.ximwallet"
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 4
@@ -51,7 +51,7 @@ android {
             useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             javaCompileOptions.annotationProcessorOptions.arguments['butterknife.debuggable'] = 'false'
-            signingConfig signingConfigs.LuminaUpload
+            signingConfig signingConfigs.XimUpload
         }
     }
     productFlavors {
@@ -64,7 +64,7 @@ android {
         production {
             dimension 'environment'
             versionNameSuffix "-prod"
-            signingConfig signingConfigs.LuminaUpload
+            signingConfig signingConfigs.XimUpload
         }
     }
     compileOptions {

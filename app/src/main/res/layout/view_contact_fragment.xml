@@ -21,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:background="@color/contact_orange">
 
-            <tech.duchess.luminawallet.view.account.receive.SquareImageView
+            <com.ximcoin.ximwallet.view.account.receive.SquareImageView
                 android:id="@+id/qr_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="tech.duchess.luminawallet">
+    package="com.ximcoin.ximwallet">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".LuminaWalletApp"
+        android:name="com.ximcoin.ximwallet.XimWalletApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".view.intro.IntroActivity"
+            android:name="com.ximcoin.ximwallet.view.intro.IntroActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
@@ -26,31 +26,31 @@
         </activity>
 
         <activity
-            android:name=".view.account.AccountsActivity"
+            android:name="com.ximcoin.ximwallet.view.account.AccountsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".view.createaccount.CreateAccountActivity"
+            android:name="com.ximcoin.ximwallet.view.createaccount.CreateAccountActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".view.contacts.ContactsActivity"
+            android:name="com.ximcoin.ximwallet.view.contacts.ContactsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".view.inflation.InflationActivity"
+            android:name="com.ximcoin.ximwallet.view.inflation.InflationActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".view.about.AboutActivity"
+            android:name="com.ximcoin.ximwallet.view.about.AboutActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
