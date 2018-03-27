@@ -3,6 +3,7 @@ package com.ximcoin.ximwallet.model.persistence.account;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.ximcoin.ximwallet.EnvironmentConstants;
 import com.ximcoin.ximwallet.model.util.AssetUtil;
 
 public class Balance implements Parcelable {
@@ -11,6 +12,14 @@ public class Balance implements Parcelable {
     private String asset_issuer;
     private double balance;
     private double limit;
+
+    public static Balance getDefaultXimBalance() {
+        Balance balance = new Balance();
+        balance.asset_code = AssetUtil.XIM_ASSET_CODE;
+        balance.asset_issuer = EnvironmentConstants.XIM_ISSUER;
+        balance.balance = 0.0;
+        return balance;
+    }
 
     public Balance() {}
 

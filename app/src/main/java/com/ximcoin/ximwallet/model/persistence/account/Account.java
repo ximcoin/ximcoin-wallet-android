@@ -137,6 +137,15 @@ public class Account implements Parcelable, TransactionBuilderAccount {
         this.data = data;
     }
 
+    public double getXimBalance() {
+        return Observable.fromIterable(balances)
+                .filter(AssetUtil::isXimBalance)
+                .firstElement()
+                .defaultIfEmpty(Balance.getDefaultXimBalance())
+                .blockingGet()
+                .getBalance();
+    }
+
     public Balance getLumens() {
         return Observable.fromIterable(balances)
                 .filter(AssetUtil::isLumenBalance)

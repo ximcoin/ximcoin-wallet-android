@@ -340,7 +340,7 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     }
 
     private void updateSelectedAccount(@NonNull String selectedAccountId) {
-        navigationView.getMenu().getItem(accountList.indexOf(selectedAccountId)).setChecked(true);
+        // navigationView.getMenu().getItem(accountList.indexOf(selectedAccountId)).setChecked(true);
     }
 
     @Override

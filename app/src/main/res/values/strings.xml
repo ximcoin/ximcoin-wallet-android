@@ -16,6 +16,7 @@
     <string name="seed_copy_failed_toast">Failed to copy seed to clipboard</string>
     <string name="asset_balance">%1$s %2$s</string>
     <string name="account_id_label">Account Address:</string>
+    <string name="xim_asset_code">XIM</string>
 
     <!-- Accounts Activity -->
     <string name="set_inflation">Set Inflation</string>
@@ -208,6 +209,13 @@
     <string name="contact_body">Please let us know how we\'re doing!</string>
     <string name="contact_chooser_title">Email Xim Wallet</string>
 
+    <!-- Balances Fragment-->
+    <string name="xim_balance_label">XIM Balance:</string>
+    <string name="remaining_transactions_label">Remaining Transactions:</string>
+    <string name="remaining_transactions_help_message">Transactions are powered by Lumens. Add Lumens to your account to get more transactions.</string>
+    <string name="remaining_transactions_loading_message">Loading&#8230;</string>
+    <string name="failed_remaining_transactions_load">Failed to load remaining transactions</string>
+
     <!-- Account Header View -->
     <string name="balance_label">Lumen (XLM) Balance:</string>
     <string name="account_not_on_network_unknown_fee_message">Account not on network. Send the required minimum balance to finish creating this account.</string>
@@ -244,6 +252,8 @@
         <item quantity="one">%s Lumen</item>
         <item quantity="other">%s Lumens</item>
     </plurals>
+
+    <string name="lumens_plural">Lumens</string>
 
     <string name="address_validation">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
 </resources>

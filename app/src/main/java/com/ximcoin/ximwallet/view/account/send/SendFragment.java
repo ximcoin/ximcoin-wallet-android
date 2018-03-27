@@ -23,6 +23,8 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,6 +34,7 @@ import butterknife.OnTextChanged;
 import com.ximcoin.ximwallet.R;
 import com.ximcoin.ximwallet.model.persistence.account.Account;
 import com.ximcoin.ximwallet.model.persistence.contacts.Contact;
+import com.ximcoin.ximwallet.model.util.AssetUtil;
 import com.ximcoin.ximwallet.presenter.account.AccountsContract.AccountsView;
 import com.ximcoin.ximwallet.presenter.account.send.SendContract;
 import com.ximcoin.ximwallet.presenter.account.send.TransactionSummary;
@@ -47,6 +50,8 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
         SendConfirmationFragment.TransactionConfirmationListener {
     private static final String ACCOUNT_KEY = "SendFragment.ACCOUNT_KEY";
     private static final int SELECT_CONTACT_REQUEST_CODE = 1;
+    private static final List<String> AVAILABLE_CURRENCIES =
+            Arrays.asList(AssetUtil.XIM_ASSET_CODE, AssetUtil.LUMENS_FULL_NAME);
 
     private static final InputFilter ASCII_FILTER = (source, start, end, dest, dstart, dend) -> {
         SpannableStringBuilder ret;
@@ -139,8 +144,13 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
         amountLayout.setError(null);
         presenter.onUserSendPayment(recipient.getText().toString(),
                 amountField.getText().toString(),
-                String.valueOf(currencyUnitSpinner.getSelectedItem()),
+                getSelectedAssetCode(),
                 memoField.getText().toString());
+    }
+
+    private String getSelectedAssetCode() {
+        String asset = String.valueOf(currencyUnitSpinner.getSelectedItem());
+        return AssetUtil.LUMENS_FULL_NAME.equals(asset) ? AssetUtil.LUMEN_ASSET_CODE : asset;
     }
 
     @Override
@@ -234,9 +244,10 @@ public class SendFragment extends BaseViewFragment<SendContract.SendPresenter>
 
     @Override
     public void setAvailableCurrencies(List<String> currencySelection) {
+        // Override the available currencies for XIM
         ArrayAdapter<String> adapter = new ArrayAdapter<>(activityContext,
                 R.layout.spinner_item,
-                currencySelection);
+                AVAILABLE_CURRENCIES);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         currencyUnitSpinner.setAdapter(adapter);
     }

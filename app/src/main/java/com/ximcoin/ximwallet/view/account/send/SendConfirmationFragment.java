@@ -123,7 +123,7 @@ public class SendConfirmationFragment extends BaseFragment {
                 : R.string.send_payment_title);
         sendAmount.setText(getString(R.string.asset_balance,
                 AssetUtil.getAssetAmountString(transactionSummary.getSendAmount()),
-                transactionSummary.getSendingAssetCode()));
+                getAssetString(transactionSummary.getSendingAssetCode())));
         recipientAddress.setText(transactionSummary.getRecipient());
         transactionFee.setText(getResources().getQuantityString(R.plurals.lumens,
                 (int) transactionSummary.getTransactionFees(),
@@ -146,8 +146,11 @@ public class SendConfirmationFragment extends BaseFragment {
         int assetsSize = assets.size();
         for (int i = 0; i < assetsSize; i++) {
             String asset = assets.get(i);
+            // Convert XLM to "Lumens" for Xim Wallet
+            double amount = balanceMap.get(asset);
+            asset = getAssetString(asset);
             balances.append(getString(R.string.asset_balance,
-                    AssetUtil.getAssetAmountString(balanceMap.get(asset)), asset));
+                    AssetUtil.getAssetAmountString(amount), asset));
 
             if (i != assetsSize - 1) {
                 balances.append("\n");
@@ -155,6 +158,10 @@ public class SendConfirmationFragment extends BaseFragment {
         }
 
         remainingBalances.setText(balances.toString());
+    }
+
+    private String getAssetString(@NonNull String assetCode) {
+        return AssetUtil.LUMEN_ASSET_CODE.equals(assetCode) ? AssetUtil.LUMENS_FULL_NAME : assetCode;
     }
 
     private void checkViolations() {

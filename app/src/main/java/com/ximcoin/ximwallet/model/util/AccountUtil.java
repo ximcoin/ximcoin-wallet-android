@@ -8,6 +8,9 @@ import org.stellar.sdk.KeyPair;
 import java.util.List;
 
 import io.reactivex.Observable;
+
+import com.ximcoin.ximwallet.EnvironmentConstants;
+import com.ximcoin.ximwallet.model.fees.Fees;
 import com.ximcoin.ximwallet.model.persistence.account.Account;
 import com.ximcoin.ximwallet.model.persistence.account.Balance;
 import com.ximcoin.ximwallet.view.util.TextUtils;
@@ -59,6 +62,21 @@ public class AccountUtil {
         }
 
         return true;
+    }
+
+    public static double getTransactionsRemaining(@NonNull Account account, @NonNull Fees fees) {
+        double lumenBalance = account.getLumens().getBalance();
+        double minAccountBalance = FeesUtil.getMinimumAccountBalance(fees, account);
+
+        if (lumenBalance - minAccountBalance <= 0) {
+            return 0;
+        } else {
+            return Math.round((lumenBalance - minAccountBalance)/FeesUtil.getTransactionFee(fees, 1));
+        }
+    }
+
+    public static boolean trustsXim(@NonNull Account account) {
+        return trustsAsset(account, AssetUtil.XIM_ASSET_CODE, EnvironmentConstants.XIM_ISSUER);
     }
 
     // TODO: Verify the presence of a balance infers a trustline having been set.

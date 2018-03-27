@@ -12,4 +12,5 @@ public class EnvironmentConstants {
     public static final String STELLAR_EXPLORER_URL_PREFIX = "https://steexp.com/tx/";
     // TODO: Xim Wallet Support Email
     public static final String CONTACT_EMAIL = "support@ximcoin.com";
+    public static final String XIM_ISSUER = "GBZ35ZJRIKJGYH5PBKLKOZ5L6EXCNTO7BKIL7DAVVDFQ2ODJEEHHJXIM";
 }
