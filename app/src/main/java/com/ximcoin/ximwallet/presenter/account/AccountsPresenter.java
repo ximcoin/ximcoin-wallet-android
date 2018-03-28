@@ -13,6 +13,7 @@ import io.reactivex.Observable;
 import com.ximcoin.ximwallet.dagger.SchedulerProvider;
 import com.ximcoin.ximwallet.model.persistence.account.Account;
 import com.ximcoin.ximwallet.model.repository.AccountRepository;
+import com.ximcoin.ximwallet.model.util.AccountUtil;
 import com.ximcoin.ximwallet.presenter.common.BasePresenter;
 import com.ximcoin.ximwallet.view.util.TextUtils;
 import com.ximcoin.ximwallet.view.util.ViewUtils;
@@ -125,6 +126,8 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
         currentAccountId = account.getAccount_id();
         if (!account.isOnNetwork()) {
             view.showAccountNotOnNetwork(account);
+        } else if (!AccountUtil.trustsXim(account)) {
+            view.showAccountLacksXimTrust(account);
         } else {
             view.showAccount(account);
         }

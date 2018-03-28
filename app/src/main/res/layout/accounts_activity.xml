@@ -31,15 +31,6 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 app:titleEnabled="false">
 
-                <com.ximcoin.ximwallet.view.account.AccountHeaderView
-                    android:id="@+id/account_header_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/tab_layout_height"
-                    android:background="?attr/colorPrimary"
-                    android:paddingTop="?attr/actionBarSize"
-                    app:layout_collapseMode="parallax" />
-
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"

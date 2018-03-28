@@ -71,9 +71,6 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     @BindView(R.id.view_pager)
     LockableViewPager viewPager;
 
-    @BindView(R.id.account_header_view)
-    AccountHeaderView accountHeaderView;
-
     @BindView(R.id.navigation_view)
     NavigationView navigationView;
 
@@ -201,6 +198,14 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     }
 
     @Override
+    public void showAccountLacksXimTrust(@NonNull Account account) {
+        updateUI(false, true, account);
+        replaceFragment(R.id.solo_fragment_container,
+                AddAccountSourceFragment.getInstance(account),
+                true);
+    }
+
+    @Override
     public void showAccountsLoadFailure() {
         showFailureToast(R.string.load_accounts_failure);
     }
@@ -227,13 +232,7 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
 
     @Override
     public void showAccountNotOnNetwork(@NonNull Account account) {
-        updateUI(false, false, account);
-        int receiveFragmentPosition = AccountPerspective.RECEIVE.ordinal();
-        ViewUtils.setTabEnabled(tabLayout, true, receiveFragmentPosition);
-        ViewUtils.whenNonNull(tabLayout.getTabAt(receiveFragmentPosition),
-                TabLayout.Tab::select);
-        tabLayout.setSelectedTabIndicatorColor(selectedTabColor);
-        Timber.d("Account not on network: %s", account.getAccount_id());
+        showAccountLacksXimTrust(account);
     }
 
     @Override
@@ -306,7 +305,6 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
 
     @Override
     public void updateForTransaction(@NonNull Account account) {
-        accountHeaderView.setAccount(account);
         adapter.transactionPostedForAccount(account);
     }
 
@@ -359,7 +357,6 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
         setTabsEnabled(tabsEnabled);
         setSoloFragmentVisibility(isSoloFragmentVisible);
         ViewUtils.whenNonNull(account, acc -> updateSelectedAccount(acc.getAccount_id()));
-        accountHeaderView.setAccount(account);
         adapter.setAccount(account);
         isAccountOnline = account != null && account.isOnNetwork();
         isAccountPresent = account != null;

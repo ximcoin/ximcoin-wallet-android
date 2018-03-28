@@ -14,6 +14,7 @@ public interface AccountsContract {
         void showBlockedLoading(@Nullable String message);
         void hideBlockedLoading(@Nullable String message, boolean wasSuccess, boolean immediate);
         void showNoAccountFound();
+        void showAccountLacksXimTrust(@NonNull Account account);
         void showAccountsLoadFailure();
         void showAccountNavigationFailure();
         void showRemoveAccountFailure();

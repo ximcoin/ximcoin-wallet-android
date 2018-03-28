@@ -138,6 +138,9 @@ public class Account implements Parcelable, TransactionBuilderAccount {
     }
 
     public double getXimBalance() {
+        if (balances == null) {
+            return 0;
+        }
         return Observable.fromIterable(balances)
                 .filter(AssetUtil::isXimBalance)
                 .firstElement()
@@ -147,6 +150,9 @@ public class Account implements Parcelable, TransactionBuilderAccount {
     }
 
     public Balance getLumens() {
+        if (balances == null) {
+            return new Balance();
+        }
         return Observable.fromIterable(balances)
                 .filter(AssetUtil::isLumenBalance)
                 .firstElement()

@@ -134,10 +134,10 @@ public class AccountHeaderView extends FrameLayout {
 
     private void setNotOnNetworkFee(@NonNull Account account) {
         if (fees != null) {
-            // Show minimum balance to send as typical account minimum balance (times 2, to account
+            // Show minimum balance to send as typical account minimum balance (plus 1, to account
             // for trustline for XIM and some remaining balance for transactions).
             String minBalance = AssetUtil.getAssetAmountString(
-                    FeesUtil.getMinimumAccountBalance(fees, account) * 2);
+                    FeesUtil.getMinimumAccountBalance(fees, account) + 1);
             minBalance = getResources().getQuantityString(R.plurals.lumens, 2, minBalance);
             notOnNetworkMessage.setText(getResources()
                     .getString(R.string.account_not_on_network_message, minBalance));

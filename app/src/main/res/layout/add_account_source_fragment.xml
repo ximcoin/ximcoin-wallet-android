@@ -1,58 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="@dimen/activity_margin">
+    android:padding="@dimen/activity_margin">
 
-    <ImageView
-        android:id="@+id/wallet_image"
-        android:layout_width="@dimen/intro_image_width_height"
-        android:layout_height="@dimen/intro_image_width_height"
-        android:src="@drawable/ic_wallet"
-        android:tint="@color/white"
-        android:layout_marginTop="@dimen/margin_large"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_normal"
-        style="@style/Title"
-        app:layout_constraintTop_toBottomOf="@+id/wallet_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="@string/account_source_message"
-        />
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_normal"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/message">
+        android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/create_account_button"
+        <include layout="@layout/progress_bar" />
+
+        <LinearLayout
+            android:id="@+id/no_account_container"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/btn_min_height"
-            android:layout_marginTop="@dimen/margin_large"
-            android:text="@string/create_new_account" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        <Button
-            android:id="@+id/import_account_button"
+            <ImageView
+                android:id="@+id/wallet_image"
+                android:layout_width="@dimen/intro_image_width_height"
+                android:layout_height="@dimen/intro_image_width_height"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_large"
+                android:src="@drawable/ic_wallet"
+                android:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/message"
+                style="@style/Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:text="@string/new_to_xim_wallet_message" />
+
+            <Button
+                android:id="@+id/create_account_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/btn_min_height"
+                android:layout_marginTop="@dimen/margin_large"
+                android:text="@string/create_new_account" />
+
+            <Button
+                android:id="@+id/import_account_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/btn_min_height"
+                android:layout_marginTop="@dimen/margin_large"
+                android:text="@string/import_account" />
+
+            <Button
+                android:id="@+id/export_id_login_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large"
+                android:text="@string/login_with_export_id" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/xim_trust_container"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/btn_min_height"
-            android:layout_marginTop="@dimen/margin_large"
-            android:text="@string/import_account" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <Button
+                android:id="@+id/fund_xim_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large"
+                android:text="@string/fund_xim" />
+
+            <TextView
+                android:id="@+id/fund_xim_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large"
+                android:gravity="center_horizontal"
+                tools:text="@string/fund_xim_message"/>
 
 
-    </LinearLayout>
+        </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+    </RelativeLayout>
+
+</android.support.v4.widget.NestedScrollView>

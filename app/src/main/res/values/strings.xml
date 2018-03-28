@@ -43,6 +43,9 @@
     <!-- Create Account Fragment -->
     <string name="create_new_account">Create a New Account</string>
     <string name="import_account">Import Existing Account</string>
+    <string name="login_with_export_id">Login with ExportID</string>
+    <string name="fund_xim">Login with ExportId to fund Xim</string>
+    <string name="fund_xim_message">You need at least %s Lumens (XLM) to activate this account.</string>
 
     <!-- Intro Slides -->
     <string name="welcome">Welcome to Xim Wallet</string>
