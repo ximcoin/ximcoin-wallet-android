@@ -25,11 +25,6 @@ public class AboutFragment extends BaseFragment {
         return inflater.inflate(R.layout.about_fragment, container, false);
     }
 
-    @OnClick(R.id.terms_and_conditions_link)
-    public void onUserRequestTermsAndConditions() {
-        ViewUtils.openUrl(HelpLinks.TERMS_AND_CONDITIONS, activityContext);
-    }
-
     @OnClick(R.id.privacy_policy_link)
     public void onUserRequestPrivacyPolicy() {
         ViewUtils.openUrl(HelpLinks.PRIVACY_POLICY, activityContext);

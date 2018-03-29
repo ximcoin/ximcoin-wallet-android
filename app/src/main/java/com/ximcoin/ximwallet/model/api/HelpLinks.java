@@ -9,11 +9,8 @@ public class HelpLinks {
             "https://www.stellar.org/developers/guides/concepts/inflation.html";
     public static final String LUMENAUT =
             "https://lumenaut.net";
-    // TODO: Terms and Conditions/Privacy Policy for Xim wallet
-    public static final String TERMS_AND_CONDITIONS =
-            "www.ximcoin.com/ximwallet/TermsAndConditions";
     public static final String PRIVACY_POLICY =
-            "www.ximcoin.com/ximwallet/PrivacyPolicy";
+            "http://ximcoin.com/privacy_policy.html";
     public static final String SOURCE_CODE =
             "https://github.com/ximcoin/ximcoin-wallet-android";
 }
