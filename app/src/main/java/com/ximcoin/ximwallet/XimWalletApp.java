@@ -15,7 +15,6 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 
-import com.ximcoin.ximwallet.EnvironmentConstants;
 import com.ximcoin.ximwallet.dagger.component.AppComponent;
 import com.ximcoin.ximwallet.dagger.component.DaggerAppComponent;
 import timber.log.Timber;

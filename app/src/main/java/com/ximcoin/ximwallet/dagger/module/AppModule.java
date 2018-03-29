@@ -39,6 +39,8 @@ import com.ximcoin.ximwallet.view.createaccount.CreateAccountActivity;
 import com.ximcoin.ximwallet.view.createaccount.CreateAccountActivityModule;
 import com.ximcoin.ximwallet.view.inflation.InflationActivity;
 import com.ximcoin.ximwallet.view.inflation.InflationActivityModule;
+import com.ximcoin.ximwallet.view.exportidweb.ExportIdWebviewActivity;
+import com.ximcoin.ximwallet.view.exportidweb.ExportIdWebviewActivityModule;
 
 /**
  * Provides application-wide dependencies.
@@ -158,4 +160,8 @@ public abstract class AppModule {
     @PerActivity
     @ContributesAndroidInjector(modules = AboutActivityModule.class)
     abstract AboutActivity bindAboutActivity();
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = ExportIdWebviewActivityModule.class)
+    abstract ExportIdWebviewActivity bindExportIdWebviewActivity();
 }

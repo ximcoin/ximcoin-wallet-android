@@ -15,6 +15,7 @@ import com.ximcoin.ximwallet.model.fees.Fees;
 import com.ximcoin.ximwallet.model.persistence.account.Account;
 import com.ximcoin.ximwallet.model.util.AssetUtil;
 import com.ximcoin.ximwallet.model.util.FeesUtil;
+import com.ximcoin.ximwallet.presenter.account.AccountsContract;
 import com.ximcoin.ximwallet.presenter.createaccount.AddAccountSourceContract;
 import com.ximcoin.ximwallet.view.common.BaseViewFragment;
 import com.ximcoin.ximwallet.view.util.ViewUtils;
@@ -118,6 +119,11 @@ public class AddAccountSourceFragment extends BaseViewFragment<AddAccountSourceC
     public void startCreateAccountFlow(boolean isImportingSeed) {
         ViewUtils.whenNonNull(getActivity(), activity ->
                 ((AccountSourceReceiver) activity).onUserRequestedAccountCreation(isImportingSeed));
+    }
+
+    @Override
+    public void navigateToExportIDLogin() {
+        ((AccountsContract.AccountsView) activityContext).navigateToExportIdLogin();
     }
 
     @Nullable

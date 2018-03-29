@@ -29,6 +29,7 @@ public interface AccountsContract {
         void updateForTransaction(@NonNull Account account);
         void updateAccountList(@NonNull List<Account> accounts);
         void displayRemoveAccountConfirmation();
+        void navigateToExportIdLogin();
     }
 
     interface AccountsPresenter extends Presenter {

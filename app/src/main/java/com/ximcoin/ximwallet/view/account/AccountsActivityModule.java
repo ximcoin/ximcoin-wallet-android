@@ -20,6 +20,7 @@ import com.ximcoin.ximwallet.view.account.transactions.TransactionsFragment;
 import com.ximcoin.ximwallet.view.account.transactions.TransactionsFragmentModule;
 import com.ximcoin.ximwallet.view.createaccount.AddAccountSourceFragment;
 import com.ximcoin.ximwallet.view.createaccount.AddAccountSourceFragmentModule;
+import com.ximcoin.ximwallet.view.exportidweb.ExportIdWebviewActivity;
 
 @Module(includes = {BaseActivityModule.class, AccountsPresenterModule.class})
 public abstract class AccountsActivityModule {

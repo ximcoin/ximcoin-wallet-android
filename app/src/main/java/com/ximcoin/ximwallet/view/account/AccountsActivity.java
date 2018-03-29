@@ -41,6 +41,7 @@ import com.ximcoin.ximwallet.view.contacts.ContactsActivity;
 import com.ximcoin.ximwallet.view.createaccount.AccountSourceReceiver;
 import com.ximcoin.ximwallet.view.createaccount.AddAccountSourceFragment;
 import com.ximcoin.ximwallet.view.createaccount.CreateAccountActivity;
+import com.ximcoin.ximwallet.view.exportidweb.ExportIdWebviewActivity;
 import com.ximcoin.ximwallet.view.inflation.InflationActivity;
 import com.ximcoin.ximwallet.view.util.ViewUtils;
 import timber.log.Timber;
@@ -52,6 +53,7 @@ import timber.log.Timber;
 public class AccountsActivity extends BaseActivity implements AccountsContract.AccountsView,
         NavigationView.OnNavigationItemSelectedListener, AccountSourceReceiver {
     private static int CREATE_ACCOUNT_REQUEST_CODE = 1;
+    private static int EXPORT_ID_LOGIN_REQUEST_CODE = 2;
 
     @BindView(R.id.progress_overlay)
     ProgressOverlay progressOverlay;
@@ -337,6 +339,12 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
                 .show();
     }
 
+    @Override
+    public void navigateToExportIdLogin() {
+        startActivityForResult(new Intent(this, ExportIdWebviewActivity.class),
+                EXPORT_ID_LOGIN_REQUEST_CODE);
+    }
+
     private void updateSelectedAccount(@NonNull String selectedAccountId) {
         // navigationView.getMenu().getItem(accountList.indexOf(selectedAccountId)).setChecked(true);
     }
@@ -345,6 +353,8 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CREATE_ACCOUNT_REQUEST_CODE) {
             presenter.onAccountCreationReturned(resultCode == Activity.RESULT_OK);
+        } else if (requestCode == EXPORT_ID_LOGIN_REQUEST_CODE) {
+            presenter.onUserRequestRefresh();
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }

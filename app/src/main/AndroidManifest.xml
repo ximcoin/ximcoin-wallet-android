@@ -26,6 +26,12 @@
         </activity>
 
         <activity
+            android:name="com.ximcoin.ximwallet.view.exportidweb.ExportIdWebviewActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
             android:name="com.ximcoin.ximwallet.view.account.AccountsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"

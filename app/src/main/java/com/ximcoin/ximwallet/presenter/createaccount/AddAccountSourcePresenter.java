@@ -64,11 +64,11 @@ public class AddAccountSourcePresenter extends BasePresenter<AddAccountSourceCon
 
     @Override
     public void onUserRequestExportIdLogin() {
-
+        view.navigateToExportIDLogin();
     }
 
     @Override
     public void onUserRequestFundXim() {
-
+        view.navigateToExportIDLogin();
     }
 }

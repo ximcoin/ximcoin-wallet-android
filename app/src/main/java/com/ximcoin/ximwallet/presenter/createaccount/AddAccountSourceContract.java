@@ -14,6 +14,7 @@ public interface AddAccountSourceContract {
         void showNoAccount();
         void showAccountLacksXimTrust(@NonNull Fees fees, @NonNull Account account);
         void startCreateAccountFlow(boolean isImportingSeed);
+        void navigateToExportIDLogin();
 
         @Nullable
         Account getAccount();
