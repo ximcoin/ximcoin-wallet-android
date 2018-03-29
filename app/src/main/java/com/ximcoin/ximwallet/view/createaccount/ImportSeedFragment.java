@@ -61,7 +61,8 @@ public class ImportSeedFragment extends BaseViewFragment<ImportSeedContract.Impo
                         R.string.seed_warning_bullet1,
                         R.string.seed_warning_bullet2_import,
                         R.string.seed_warning_bullet3,
-                        R.string.seed_warning_bullet4)));
+                        R.string.seed_warning_bullet4,
+                        R.string.auto_trust_xim_bullet)));
     }
 
     @Override
@@ -109,6 +110,16 @@ public class ImportSeedFragment extends BaseViewFragment<ImportSeedContract.Impo
     public void onSeedValidated(@NonNull String seed) {
         ViewUtils.whenNonNull(getActivity(), activity ->
                 ((CreateAccountActivity) activity).onSeedCreated(seed));
+    }
+
+    @Override
+    public void showXimSetupLoading(boolean isLoading) {
+        if (isLoading) {
+            ((CreateAccountFlowManager) activityContext)
+                    .showBlockedLoading(getString(R.string.xim_trust_loading_message));
+        } else {
+            ((CreateAccountFlowManager) activityContext).hideBlockedLoading();
+        }
     }
 
     @OnClick(R.id.btn_next)

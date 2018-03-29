@@ -70,6 +70,7 @@
     <string name="import_seed_fragment_title">Import Seed</string>
     <string name="seed_warning_bullet2_import">Copy this seed somewhere very safe.</string>
     <string name="seed_hint">Account Seed</string>
+    <string name="xim_trust_loading_message">Checking XIM Trust</string>
 
     <!-- Generate Seed Fragment -->
     <string name="generate_seed_fragment_title">Generate Seed</string>
@@ -79,6 +80,7 @@
     <string name="seed_warning_bullet2_generate">View and copy this seed somewhere very safe.</string>
     <string name="seed_warning_bullet3">Xim Wallet makes no guarantee of keeping this for you under any circumstances. If you do not retain your seed, you risk losing access to your account and funds.</string>
     <string name="seed_warning_bullet4">We will encrypt this seed using a passphrase you provide in the next step.</string>
+    <string name="auto_trust_xim_bullet">We will automatically set your account up for XIM.</string>
     <string name="show_seed">SHOW SEED</string>
     <string name="copy_seed">COPY SEED</string>
     <string name="generate_different_seed">GENERATE DIFFERENT SEED</string>

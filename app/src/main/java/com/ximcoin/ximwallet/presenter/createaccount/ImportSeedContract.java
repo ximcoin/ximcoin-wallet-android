@@ -10,6 +10,7 @@ public interface ImportSeedContract {
         void showError(@NonNull ImportSeedPresenter.ImportError error);
         void clearError();
         void onSeedValidated(@NonNull String seed);
+        void showXimSetupLoading(boolean isLoading);
     }
 
     interface ImportSeedPresenter extends Presenter {

@@ -9,6 +9,9 @@ import java.text.NumberFormat;
 import com.ximcoin.ximwallet.EnvironmentConstants;
 import com.ximcoin.ximwallet.model.persistence.account.Balance;
 
+import org.stellar.sdk.Asset;
+import org.stellar.sdk.KeyPair;
+
 public class AssetUtil {
     public static NumberFormat XIM_FORMAT = DecimalFormat.getInstance();
     public static DecimalFormat ASSET_FORMAT = new DecimalFormat("#,##0.#");
@@ -16,6 +19,10 @@ public class AssetUtil {
     public static final String LUMEN_ASSET_CODE = "XLM";
     public static final String LUMENS_FULL_NAME = "Lumens";
     public static final String XIM_ASSET_CODE = "XIM";
+    public static final Asset XIM_ASSET = Asset.createNonNativeAsset(XIM_ASSET_CODE,
+            KeyPair.fromAccountId(EnvironmentConstants.XIM_ISSUER));
+    // 10 Billion
+    public static final String XIM_ASSET_LIMIT = "10000000000";
 
     static {
         ASSET_FORMAT.setMaximumFractionDigits(7);

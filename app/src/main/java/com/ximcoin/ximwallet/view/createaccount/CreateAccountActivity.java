@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.ximcoin.ximwallet.R;
 import com.ximcoin.ximwallet.view.common.BaseActivity;
+import com.ximcoin.ximwallet.view.common.ProgressOverlay;
 import com.ximcoin.ximwallet.view.util.ViewUtils;
 
 public class CreateAccountActivity extends BaseActivity implements CreateAccountFlowManager,
@@ -27,6 +28,9 @@ public class CreateAccountActivity extends BaseActivity implements CreateAccount
 
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
+
+    @BindView(R.id.progress_overlay)
+    ProgressOverlay progressOverlay;
 
     /**
      * Intent for when a user has already chosen if they want to create a new wallet or import a
@@ -149,5 +153,15 @@ public class CreateAccountActivity extends BaseActivity implements CreateAccount
     @Override
     public void onUserRequestedAccountCreation(boolean isImportingSeed) {
         startSeedCreationFragment(isImportingSeed);
+    }
+
+    @Override
+    public void showBlockedLoading(@Nullable String message) {
+        progressOverlay.show(message);
+    }
+
+    @Override
+    public void hideBlockedLoading() {
+        progressOverlay.hide(null, true, true);
     }
 }
