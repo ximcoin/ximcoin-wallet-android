@@ -13,4 +13,5 @@ public class EnvironmentConstants {
     // TODO: Xim Wallet Support Email
     public static final String CONTACT_EMAIL = "support@ximcoin.com";
     public static final String XIM_ISSUER = "GBZ35ZJRIKJGYH5PBKLKOZ5L6EXCNTO7BKIL7DAVVDFQ2ODJEEHHJXIM";
+    public static final String EXPORT_ID_LOGIN_URL = "https://exportid.com/xim/add_account.html?pk=";
 }

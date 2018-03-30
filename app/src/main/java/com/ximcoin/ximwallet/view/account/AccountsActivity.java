@@ -43,6 +43,7 @@ import com.ximcoin.ximwallet.view.createaccount.AddAccountSourceFragment;
 import com.ximcoin.ximwallet.view.createaccount.CreateAccountActivity;
 import com.ximcoin.ximwallet.view.exportidweb.ExportIdWebviewActivity;
 import com.ximcoin.ximwallet.view.inflation.InflationActivity;
+import com.ximcoin.ximwallet.view.util.TextUtils;
 import com.ximcoin.ximwallet.view.util.ViewUtils;
 import timber.log.Timber;
 
@@ -341,7 +342,8 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
 
     @Override
     public void navigateToExportIdLogin() {
-        startActivityForResult(new Intent(this, ExportIdWebviewActivity.class),
+        startActivityForResult(
+                ExportIdWebviewActivity.getIntent(presenter.getCurrentAccountId(), this),
                 EXPORT_ID_LOGIN_REQUEST_CODE);
     }
 
@@ -354,7 +356,16 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
         if (requestCode == CREATE_ACCOUNT_REQUEST_CODE) {
             presenter.onAccountCreationReturned(resultCode == Activity.RESULT_OK);
         } else if (requestCode == EXPORT_ID_LOGIN_REQUEST_CODE) {
-            presenter.onUserRequestRefresh();
+            if (Activity.RESULT_OK == resultCode) {
+                String seed = data.getStringExtra(ExportIdWebviewActivity.ACCOUNT_SEED_KEY);
+                if (!TextUtils.isEmpty(seed)) {
+                    // Start import seed flow for new Stellar account
+                    startActivityForResult(CreateAccountActivity.createIntentForImportedSeed(this, seed), CREATE_ACCOUNT_REQUEST_CODE);
+                } else {
+                    // We filled our current account with XIM, simply refresh.
+                    presenter.onUserRequestRefresh();
+                }
+            }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }

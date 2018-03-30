@@ -27,6 +27,7 @@ import com.ximcoin.ximwallet.view.util.TextUtils;
 import com.ximcoin.ximwallet.view.util.ViewUtils;
 
 public class GenerateSeedFragment extends Fragment {
+    private static final String PRE_SEED_KEY = "GenerateSeedFragment.PRE_SEED_KEY";
     private static final String SEED_KEY = "GenerateSeedFragment.SEED_KEY";
     private static final String SEED_SHOWN_KEY = "GeneratedSeedFragment.SEED_SHOWN_KEY";
 
@@ -45,6 +46,9 @@ public class GenerateSeedFragment extends Fragment {
     @BindView(R.id.btn_next)
     Button nextButton;
 
+    @BindView(R.id.btn_generate_new_seed)
+    Button generateNewSeedButton;
+
     @BindView(R.id.scroll_container)
     ScrollView scrollView;
 
@@ -54,6 +58,15 @@ public class GenerateSeedFragment extends Fragment {
     private Unbinder unbinder;
 
     private boolean didShowSeed = false;
+    private boolean shouldHideGenerateNew = false;
+
+    public static GenerateSeedFragment getFragmentForPreSeed(@NonNull String importedSeed) {
+        GenerateSeedFragment fragment = new GenerateSeedFragment();
+        Bundle args = new Bundle();
+        args.putString(PRE_SEED_KEY, importedSeed);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -63,7 +76,13 @@ public class GenerateSeedFragment extends Fragment {
         View view = inflater.inflate(R.layout.generate_seed_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        if (savedInstanceState != null) {
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(PRE_SEED_KEY)) {
+            String preSeed = args.getString(PRE_SEED_KEY);
+            keyPair = KeyPair.fromSecretSeed(preSeed);
+            didShowSeed = true;
+            shouldHideGenerateNew = true;
+        } else if (savedInstanceState != null) {
             String seed = savedInstanceState.getString(SEED_KEY);
             if (!TextUtils.isEmpty(seed)) {
                 keyPair = KeyPair.fromSecretSeed(seed);
@@ -71,6 +90,7 @@ public class GenerateSeedFragment extends Fragment {
 
             didShowSeed = savedInstanceState.getBoolean(SEED_SHOWN_KEY, false);
         }
+
 
         if (didShowSeed) {
             // We've already displayed the seed before. Keep it visible as to not make the user
@@ -158,6 +178,9 @@ public class GenerateSeedFragment extends Fragment {
         showSeedButton.setVisibility(View.GONE);
         ButterKnife.apply(postViewSeedViews, (ButterKnife.Action<? super View>)
                 (view, index) -> view.setVisibility(View.VISIBLE));
+        if (shouldHideGenerateNew) {
+            generateNewSeedButton.setVisibility(View.GONE);
+        }
         scrollToBottom();
     }
 

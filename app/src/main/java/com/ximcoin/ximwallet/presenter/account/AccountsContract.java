@@ -44,5 +44,7 @@ public interface AccountsContract {
         void onUserNavigatedToContacts();
         void onUserNavigatedToAbout();
         void onUserNavigatedToInflation();
+        @Nullable
+        String getCurrentAccountId();
     }
 }

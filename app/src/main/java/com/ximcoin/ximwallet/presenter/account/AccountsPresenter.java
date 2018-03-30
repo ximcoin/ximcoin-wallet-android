@@ -246,4 +246,10 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
             view.navigateToInflation(currentAccountId);
         }
     }
+
+    @Nullable
+    @Override
+    public String getCurrentAccountId() {
+        return currentAccountId;
+    }
 }
