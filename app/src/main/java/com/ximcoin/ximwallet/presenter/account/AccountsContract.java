@@ -14,7 +14,7 @@ public interface AccountsContract {
         void showBlockedLoading(@Nullable String message);
         void hideBlockedLoading(@Nullable String message, boolean wasSuccess, boolean immediate);
         void showNoAccountFound();
-        void showAccountLacksXimTrust(@NonNull Account account);
+        void showAccountLacksXimTrust(@NonNull Account account, boolean hasFundsForTrust);
         void showAccountsLoadFailure();
         void showAccountNavigationFailure();
         void showRemoveAccountFailure();
@@ -30,6 +30,7 @@ public interface AccountsContract {
         void updateAccountList(@NonNull List<Account> accounts);
         void displayRemoveAccountConfirmation();
         void navigateToExportIdLogin();
+        void refresh();
     }
 
     interface AccountsPresenter extends Presenter {

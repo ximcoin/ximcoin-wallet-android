@@ -201,10 +201,11 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
     }
 
     @Override
-    public void showAccountLacksXimTrust(@NonNull Account account) {
+    public void showAccountLacksXimTrust(@NonNull Account account, boolean hasFundsForTrust) {
         updateUI(false, true, account);
         replaceFragment(R.id.solo_fragment_container,
-                AddAccountSourceFragment.getInstance(account),
+                hasFundsForTrust ? TrustXimFragment.getInstance(account)
+                        : AddAccountSourceFragment.getInstance(account),
                 true);
     }
 
@@ -235,7 +236,7 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
 
     @Override
     public void showAccountNotOnNetwork(@NonNull Account account) {
-        showAccountLacksXimTrust(account);
+        showAccountLacksXimTrust(account, false);
     }
 
     @Override
@@ -345,6 +346,11 @@ public class AccountsActivity extends BaseActivity implements AccountsContract.A
         startActivityForResult(
                 ExportIdWebviewActivity.getIntent(presenter.getCurrentAccountId(), this),
                 EXPORT_ID_LOGIN_REQUEST_CODE);
+    }
+
+    @Override
+    public void refresh() {
+        presenter.onUserRequestRefresh();
     }
 
     private void updateSelectedAccount(@NonNull String selectedAccountId) {

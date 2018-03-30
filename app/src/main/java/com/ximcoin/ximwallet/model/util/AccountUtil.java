@@ -75,6 +75,13 @@ public class AccountUtil {
         }
     }
 
+    public static boolean hasFundsToAddATrustline(@NonNull Fees fees, @NonNull Account account) {
+        double curMinBalance = FeesUtil.getMinimumAccountBalance(fees, account);
+        double curLumens = account.getLumens().getBalance();
+        return curLumens - curMinBalance - Double.parseDouble(fees.getBase_reserve())
+                - FeesUtil.getTransactionFee(fees, 1) >= 0;
+    }
+
     public static boolean trustsXim(@NonNull Account account) {
         return trustsAsset(account, AssetUtil.XIM_ASSET_CODE, EnvironmentConstants.XIM_ISSUER);
     }

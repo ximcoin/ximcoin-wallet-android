@@ -8,6 +8,7 @@
     <string name="ok">OK</string>
     <string name="copy">COPY</string>
     <string name="yes">YES</string>
+    <string name="cont">CONTINUE</string>
     <string name="address_clipboard_label">Stellar Account Address</string>
     <string name="address_copied_success_toast">Address copied to clipboard!</string>
     <string name="address_copied_failed_toast">Failed to copy address to clipboard</string>
@@ -220,6 +221,12 @@
     <string name="remaining_transactions_help_message">Transactions are powered by Lumens. Add Lumens to your account to get more transactions.</string>
     <string name="remaining_transactions_loading_message">Loading&#8230;</string>
     <string name="failed_remaining_transactions_load">Failed to load remaining transactions</string>
+
+    <!-- Trust Xim Fragment-->
+    <string name="trust_xim_message">Enter your account password to finish setting up your account.</string>
+    <string name="trust_transaction_progress">In Progress&#8230;</string>
+    <string name="trust_transaction_success">Complete</string>
+    <string name="trust_transaction_failure">Failed</string>
 
     <!-- Account Header View -->
     <string name="balance_label">Lumen (XLM) Balance:</string>

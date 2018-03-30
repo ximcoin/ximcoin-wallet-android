@@ -51,4 +51,8 @@ public abstract class AccountsActivityModule {
     @PerFragment
     @ContributesAndroidInjector(modules = TransactionsFragmentModule.class)
     abstract TransactionsFragment transactionsFragmentInjector();
+
+    @PerFragment
+    @ContributesAndroidInjector(modules = TrustXimFragmentModule.class)
+    abstract TrustXimFragment trustXimFragmentInjector();
 }

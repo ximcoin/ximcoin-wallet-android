@@ -88,12 +88,7 @@ public class ImportSeedPresenter extends BasePresenter<ImportSeedContract.Import
         feesRepository.getFees()
                 .compose(schedulerProvider.singleScheduler())
                 .flatMapCompletable(fees -> {
-                    double curMinBalance = FeesUtil.getMinimumAccountBalance(fees, account);
-                    double curLumens = account.getLumens().getBalance();
-                    // If there are enough lumens greater than the current minimum balance to cover
-                    // the new minimum balance and transaction fee, execute the trust transaction.
-                    if (curLumens - curMinBalance - Double.parseDouble(fees.getBase_reserve())
-                            - FeesUtil.getTransactionFee(fees, 1) >= 0) {
+                    if (AccountUtil.hasFundsToAddATrustline(fees, account)) {
                         Transaction trustTransaction =
                                 new Transaction.Builder(account)
                                         .addOperation(getTrustOperation(account))

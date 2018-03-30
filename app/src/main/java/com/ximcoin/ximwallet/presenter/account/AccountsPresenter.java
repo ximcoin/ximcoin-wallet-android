@@ -3,6 +3,7 @@ package com.ximcoin.ximwallet.presenter.account;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.util.Pair;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,13 +11,19 @@ import java.util.List;
 import java.util.Set;
 
 import io.reactivex.Observable;
+
 import com.ximcoin.ximwallet.dagger.SchedulerProvider;
+import com.ximcoin.ximwallet.model.fees.Fees;
 import com.ximcoin.ximwallet.model.persistence.account.Account;
 import com.ximcoin.ximwallet.model.repository.AccountRepository;
+import com.ximcoin.ximwallet.model.repository.FeesRepository;
 import com.ximcoin.ximwallet.model.util.AccountUtil;
 import com.ximcoin.ximwallet.presenter.common.BasePresenter;
 import com.ximcoin.ximwallet.view.util.TextUtils;
 import com.ximcoin.ximwallet.view.util.ViewUtils;
+
+import io.reactivex.Single;
+import io.reactivex.functions.BiFunction;
 import timber.log.Timber;
 
 public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsView>
@@ -28,6 +35,9 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
 
     @NonNull
     private final AccountRepository accountRepository;
+
+    @NonNull
+    private final FeesRepository feesRepository;
 
     @NonNull
     private final SchedulerProvider schedulerProvider;
@@ -42,10 +52,12 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
 
     AccountsPresenter(@NonNull AccountsContract.AccountsView view,
                       @NonNull AccountRepository accountRepository,
+                      @NonNull FeesRepository feesRepository,
                       @NonNull SchedulerProvider schedulerProvider) {
         super(view);
         this.accountRepository = accountRepository;
         this.schedulerProvider = schedulerProvider;
+        this.feesRepository = feesRepository;
     }
 
     @Override
@@ -81,7 +93,8 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
     }
 
     private void loadAccounts(boolean deepPoll) {
-        accountRepository.getAllAccounts(deepPoll)
+        Single.zip(accountRepository.getAllAccounts(deepPoll), feesRepository.getFees(),
+                ((BiFunction<List<Account>, Fees, Pair<List<Account>, Fees>>) Pair::new))
                 .compose(schedulerProvider.singleScheduler())
                 .doOnSubscribe(disposable -> {
                     addDisposable(disposable);
@@ -91,11 +104,11 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
                     view.showLoading(false);
                     dirtiedAccounts.clear();
                 })
-                .subscribe(accounts -> {
+                .subscribe(pair -> {
                     hasLoadedAccounts = true;
-                    view.updateAccountList(accounts);
-                    updateViewForSelectedAccount(accounts.isEmpty() ? null
-                            : getCurrentAccount(accounts, currentAccountId));
+                    view.updateAccountList(pair.first);
+                    updateViewForSelectedAccount(pair.first.isEmpty() ? null
+                            : getCurrentAccount(pair.first, currentAccountId), pair.second);
                 }, throwable -> {
                     Timber.e(throwable, "Failed to load accounts");
                     view.updateAccountList(new ArrayList<>());
@@ -116,7 +129,7 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
                 .blockingFirst();
     }
 
-    private void updateViewForSelectedAccount(@Nullable Account account) {
+    private void updateViewForSelectedAccount(@Nullable Account account, @NonNull Fees fees) {
         if (account == null) {
             currentAccountId = null;
             view.showNoAccountFound();
@@ -127,7 +140,7 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
         if (!account.isOnNetwork()) {
             view.showAccountNotOnNetwork(account);
         } else if (!AccountUtil.trustsXim(account)) {
-            view.showAccountLacksXimTrust(account);
+            view.showAccountLacksXimTrust(account, AccountUtil.hasFundsToAddATrustline(fees, account));
         } else {
             view.showAccount(account);
         }
@@ -205,19 +218,23 @@ public class AccountsPresenter extends BasePresenter<AccountsContract.AccountsVi
     }
 
     private void loadAccount(@NonNull String accountId, boolean forceRefresh) {
-        accountRepository.getAccountById(accountId, forceRefresh)
+        Single.zip(accountRepository.getAccountById(accountId, forceRefresh),
+                feesRepository.getFees(), ((BiFunction<Account, Fees, Pair<Account, Fees>>) Pair::new))
                 .compose(schedulerProvider.singleScheduler())
                 .doOnSubscribe(disposable -> {
                     addDisposable(disposable);
                     view.showLoading(true);
                 })
                 .doAfterTerminate(() -> view.showLoading(false))
-                .subscribe(account -> {
-                            if (dirtiedAccounts.contains(account.getAccount_id())) {
-                                dirtiedAccounts.remove(account.getAccount_id());
+                .subscribe(pair -> {
+                            Account account = pair.first;
+                            if (account != null) {
+                                if (dirtiedAccounts.contains(account.getAccount_id())) {
+                                    dirtiedAccounts.remove(account.getAccount_id());
+                                }
                             }
 
-                            updateViewForSelectedAccount(account);
+                            updateViewForSelectedAccount(account, pair.second);
                         },
                         throwable -> {
                             Timber.e(throwable, "Failed to navigate to account");

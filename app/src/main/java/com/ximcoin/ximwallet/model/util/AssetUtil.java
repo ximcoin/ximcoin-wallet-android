@@ -21,8 +21,8 @@ public class AssetUtil {
     public static final String XIM_ASSET_CODE = "XIM";
     public static final Asset XIM_ASSET = Asset.createNonNativeAsset(XIM_ASSET_CODE,
             KeyPair.fromAccountId(EnvironmentConstants.XIM_ISSUER));
-    // 10 Trillion
-    public static final String XIM_ASSET_LIMIT = "10000000000000";
+    // 10 Billion
+    public static final String XIM_ASSET_LIMIT = "10000000000";
 
     static {
         ASSET_FORMAT.setMaximumFractionDigits(7);
