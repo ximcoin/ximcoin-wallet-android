@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -80,6 +81,9 @@ public class ExportIdWebviewActivity extends AppCompatActivity {
                 publicKey = keyPair.getAccountId();
             }
         }
+
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
 
         webView.setWebViewClient(new CustomClient());
         webView.loadUrl(EnvironmentConstants.EXPORT_ID_LOGIN_URL + publicKey);
