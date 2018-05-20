@@ -7,7 +7,6 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -83,11 +82,6 @@ public class NavHeaderView extends FrameLayout implements NavHeaderContract.NavH
         presenter.onViewDetached();
     }
 
-    @OnClick(R.id.info)
-    public void onUserRequestConversionInfo() {
-        presenter.onUserRequestInfo();
-    }
-
     @OnClick(R.id.refresh_conversion)
     public void onUserRefreshConversionRate() {
         presenter.onUserRefreshConversion();
@@ -112,14 +106,6 @@ public class NavHeaderView extends FrameLayout implements NavHeaderContract.NavH
         String lastUpdatedValue = getContext().getString(R.string.fiat_conversion_last_updated,
                 TextUtils.parseDateTimeEpochSeconds(epochSeconds, FormatStyle.SHORT));
         lastUpdated.setText(lastUpdatedValue);
-    }
-
-    @Override
-    public void showInfo() {
-        new AlertDialog.Builder(getContext(), R.style.DefaultAlertDialog)
-                .setMessage(R.string.fiat_conversion_info)
-                .setPositiveButton(R.string.ok, null)
-                .show();
     }
 
     @Override

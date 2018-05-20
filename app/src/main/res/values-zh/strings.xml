@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">XIM 皮包</string>
+    <string name="next">下一个</string>
+    <string name="previous">上一个</string>
+    <string name="start">开始</string>
+    <string name="cancel">取消</string>
+    <string name="finish">结束</string>
+    <string name="ok">OK</string>
+    <string name="copy">复制</string>
+    <string name="yes">是</string>
+    <string name="cont">继续</string>
+    <string name="address_clipboard_label">Stellar帐户地址</string>
+    <string name="address_copied_success_toast">地址已经被复制到剪贴板！</string>
+    <string name="address_copied_failed_toast">无法将地址复制到剪贴板！</string>
+    <string name="seed_clipboard_label">Stellar帐户种子</string>
+    <string name="seed_copied_success_toast">种子已经被复制到剪贴板！</string>
+    <string name="seed_copy_failed_toast">无法将种子复制到剪贴板</string>
+    <string name="asset_balance">%1$s %2$s</string>
+    <string name="account_id_label">帐户地址:</string>
+    <string name="xim_asset_code">XIM</string>
+
+    <!-- Accounts Activity -->
+    <string name="set_inflation">设定通货膨胀</string>
+    <string name="refresh">刷新</string>
+    <string name="remove_account">移除帐户</string>
+    <string name="remove_account_confirmation_title">移除帐户?</string>
+    <string name="remove_account_confirmation_message">你确定要从Xim皮包移除这帐户？这行动不能被撤消。\n\n请注意你的帐户和余款将会保持不变。这只是从程序中移除帐户。请确保将帐户种子安全复制到其他地方。</string>
+    <string name="navigate_account_failure">无法打开帐户</string>
+    <string name="load_accounts_failure">无法加载帐户</string>
+    <string name="remove_account_failure">无法移除帐户</string>
+
+    <!-- Address Field Errors -->
+    <string name="account_address_prefix_error">帐户地址必须以“G”开头</string>
+    <string name="account_address_length_error">帐户地址必须拥有%d的字数</string>
+    <string name="account_address_format_error">错误帐户地址格式</string>
+    <string name="seed_prefix_error">帐户种子必须以“S”开头</string>
+    <string name="seed_length_error">帐户种子必须拥有%d的字数</string>
+    <string name="seed_format_error">错误帐户种子格式</string>
+
+    <!-- Receive Fragment -->
+    <string name="copy_address">复制地址</string>
+    <string name="view_full_address">查看完整地址</string>
+
+    <!-- Create Account Fragment -->
+    <string name="create_new_account">创立新帐户</string>
+    <string name="import_account">引进已有帐户</string>
+    <string name="login_with_export_id">使用ExportID来创立新帐户</string>
+    <string name="fund_xim">使用ExportId登入来为XIM注入资金</string>
+    <string name="fund_xim_message">你必须拥有至少%s的流明 (XLM)来启用这帐户。</string>
+
+    <!-- Intro Slides -->
+    <string name="welcome">欢迎来到XIM皮包</string>
+    <string name="disclaimer">使用XIM皮包代表你同意我们的 \”使用条款\” and \”隐私政策\” 有关资料能在关于部分找到。</string>
+    <string name="secure_title">安全</string>
+    <string name="secure_description">本地加密的帐户种子。在交易之前进行授权。</string>
+    <string name="simple_title">简单</string>
+    <string name="simple_description">为优雅和易用性而打造。</string>
+    <string name="open_source_title">打开源代码</string>
+    <string name="open_source_description">以完整透明度打开源代码。完全免费。</string>
+    <string name="developer_title">来自我们谦逊的开发人的一句话</string>
+    <string name="developer_description">感谢你装载我们的应用程序！你若享受使用，请考虑在Play商店给予评价或捐赠！</string>
+
+    <!-- Add Account Source Fragment -->
+    <string name="add_account_source_fragment_title">增加帐户</string>
+    <string name="new_to_xim_wallet_message">XIM皮包新用户？</string>
+    <string name="account_source_message">想增加一个帐户？</string>
+    <string name="create_account_button">创立新帐户</string>
+    <string name="import_account_button">引入帐户</string>
+
+    <!-- Import Seed Fragment -->
+    <string name="import_seed_fragment_title">引入种子</string>
+    <string name="seed_warning_bullet2_import">把这种子复制到某个安全的地方。</string>
+    <string name="seed_hint">帐户种子</string>
+    <string name="xim_trust_loading_message">检查XIM信任</string>
+
+    <!-- Generate Seed Fragment -->
+    <string name="generate_seed_fragment_title">生产种子</string>
+    <string name="seed_message">这是你的帐户\”种子\”。对于所有意图和目的，你的种子完整代表了你的Stellar帐户。</string>
+    <string name="seed_warning_header">警告:</string>
+    <string name="seed_warning_bullet1">请别将种子与其他人分享。</string>
+    <string name="seed_warning_bullet2_generate">查看和把这种子拷贝到某个安全的地方。</string>
+    <string name="seed_warning_bullet3">Xim不保证为您保留此资料。你若不保存种子，将会有失去进入帐户和基金的危险。</string>
+    <string name="seed_warning_bullet4">我们将会使用你在下一步所提供的密码来加密次种子。</string>
+    <string name="auto_trust_xim_bullet">我们将会自动为你设置XIM帐户</string>
+    <string name="show_seed">显示种子</string>
+    <string name="copy_seed">拷贝种子</string>
+    <string name="generate_different_seed">生产不同种子</string>
+
+    <!-- Encrypt Seed Fragment -->
+    <string name="encrypt_seed_fragment_title">设定密码</string>
+    <string name="encryption_message">你现在将会输入一个密码来为你的帐户种子加密。</string>
+    <string name="encryption_message_bullet1">这允许我们安全地将种子储存在你的设备。</string>
+    <string name="encryption_message_bullet2">你将会需要在完成任何交易前输入此密码。</string>
+    <string name="encryption_message_bullet3">把密码忘了不是个大问题！你能使用帐户种子来恢复帐户。</string>
+    <string name="encryption_message_bullet4">我们绝不会将你的密码储存在设备中。</string>
+    <string name="encryption_message_bullet5">你所输入的特定密码将会连接到被引入的帐户种子或在之前一步骤生产的帐户种子。</string>
+    <string name="encryption_message_bullet6">你的密码必须拥有8到20个字数。密码区分大小写。</string>
+    <string name="initial_password_field_hint">密码</string>
+    <string name="verify_password_field_hint">确认密码</string>
+    <string name="password_length_error">密码必须至少拥有8个字数</string>
+    <string name="passwords_match_error">密码不匹配</string>
+
+    <!-- Operations Fragment -->
+    <string name="date_label">日期:</string>
+    <string name="operation_type_label">行动已操作:</string>
+    <string name="memo_label">备忘录:</string>
+    <string name="recipient_label">收件人:</string>
+    <string name="sender_label">发送人:</string>
+    <string name="receive_amount_prefix">+%1$s %2$s</string>
+    <string name="send_amount_prefix">-%1$s %2$s</string>
+    <string name="failed_load_transactions">交易加载失败</string>
+    <string name="trustee_label">受托人:</string>
+    <string name="trustor_label">委托人:</string>
+    <string name="asset_label">资产:</string>
+    <string name="offer_id_label">议案ID:</string>
+    <string name="selling_asset_code_label">售卖资产密码:</string>
+    <string name="buying_asset_code_label">购买资产密码:</string>
+    <string name="selling_amount_label">售卖数量:</string>
+    <string name="buying_price_label">购买价格:</string>
+    <string name="merged_into_label">融入:</string>
+    <string name="entry_name_label">输入名称:</string>
+    <string name="entry_value_label">输入价值:</string>
+
+    <!-- Send Fragment -->
+    <string name="recipient_hint">收件人地址</string>
+    <string name="amount_hint">数量</string>
+    <string name="memo_hint">备忘录（选择性）</string>
+    <string name="invalid_ascii">无法使用ASCII</string>
+    <string name="loading_building_transaction">创立交易&#8230;</string>
+    <string name="build_transaction_fail">交易建立失败</string>
+    <string name="loading_sending_payment">发布交易&#8230;</string>
+    <string name="send_payment_fail">交易失败</string>
+    <string name="send_payment_success">交易成功！</string>
+    <string name="account_address_same_as_self_error">这和发送地址相同</string>
+    <string name="account_address_not_exist_error">帐户并不存在，先发送XLM来创立新帐户</string>
+    <string name="account_address_unsupported_asset_error">所接收到的帐户不信任这资产</string>
+    <string name="insufficient_funds_error">基金不足</string>
+    <string name="amount_greater_than_zero_error">数目必须多过零</string>
+
+    <!-- Send Confirmation Fragment -->
+    <string name="send_payment_title">付款确认</string>
+    <string name="create_account_title">创立户口确认</string>
+    <string name="confirm_transaction">交易确认</string>
+    <string name="sending_label">正发送:</string>
+    <string name="to_label">给:</string>
+    <string name="transaction_fees">交易费用:</string>
+    <string name="remaining_balances">余款:</string>
+    <string name="self_account_balance_violated">你的帐户必须最少拥有%1$s的余款。</string>
+    <string name="new_account_balance_violated">这新帐户必须最少拥有%1$s的余款。</string>
+
+    <!-- Contact List Fragment -->
+    <string name="contact_list_fragment_title">联络簿</string>
+    <string name="contacts_load_error_message">无法加载联络簿</string>
+    <string name="contacts_empty_message">无法搜寻联络簿</string>
+    <string name="contact_address_empty">（无地址）</string>
+    <string name="contact_notes_empty">（无笔记）</string>
+
+    <!-- View Contact Fragment -->
+    <string name="view_contact_fragment_title">查看联络人</string>
+    <string name="delete_contact_confirmation_title">删除？</string>
+    <string name="delete_contact_message">你确定要删除这联络人？</string>
+    <string name="contact_load_error_message">无法加载联络人</string>
+    <string name="contact_delete_error_message">无法删除联络人</string>
+    <string name="contact_notes_label">笔记</string>
+    <string name="contact_menu_edit">更改</string>
+    <string name="contact_menu_delete">删除</string>
+
+    <!-- Edit Contact Fragment -->
+    <string name="edit_contact_fragment_title">更改联络人</string>
+    <string name="add_contact_fragment_title">增加联络人</string>
+    <string name="discard_changes_title">取消更改？</string>
+    <string name="discard_changes_message">你所做的更改还未储存Y</string>
+    <string name="save_contact">储存联络人</string>
+    <string name="contact_name_hint">名字</string>
+    <string name="contact_address_hint">帐户地址</string>
+    <string name="contact_notes_hint">笔记（选择性）</string>
+    <string name="contact_color_label">颜色:</string>
+    <string name="saving_contact_progress_message">正在储存联络人&#8230;</string>
+    <string name="saving_contact_progress_success">联络人已储存</string>
+    <string name="saving_contact_progress_fail">储存失败</string>
+    <string name="contact_name_empty_error">联络人名字不能放空</string>
+    <string name="contact_color_dialog_title">选择颜色</string>
+
+    <!-- Inflation Fragment -->
+    <string name="inflation_fragment_title">通货膨胀地点</string>
+    <string name="inflation_hint">通货膨胀地点</string>
+    <string name="set_inflation_destination">设置通货膨胀地点</string>
+    <string name="populate_lumenaut_inflation">拷贝Lumenaut通货膨胀地址</string>
+    <string name="clear_inflation_dialog_title">清除通货膨胀地点</string>
+    <string name="clear_inflation_dialog_message">你确定要清除你的通货膨胀地点？</string>
+    <string name="inflation_description_title">什么是通货膨胀？</string>
+    <string name="inflation_description">一个分配新流明的机制，每周向现有持有者发放1％的新流明。如果不设定地点，您将会遗失免费流明。</string>
+    <string name="lumenaut_description_title">Lumenaut社区池？ </string>
+    <string name="lumenaut_description">通货膨胀通过一个投票系统分配，只有那些拥有总投票数量的0.5%的人才能接收新流明。为了附和条件，你能加入一个池，像是Lumenaut，来参加。Lumenaut是Xim皮包的首选，因为它们是零收费、100%支付和被社区团体支持使用的。</string>
+    <string name="inflation_operation_loading">设置通货膨胀&#8230;</string>
+    <string name="inflation_operation_success">通货膨胀设置成功</string>
+    <string name="inflation_operation_fail">无法设置通货膨胀</string>
+    <string name="inflation_address_prefix_error">通货膨胀地址必须以“G”开头</string>
+    <string name="inflation_address_length_error">通货膨胀地址必须拥有 %d的字数</string>
+    <string name="inflation_address_format_error">通货膨胀地址格式不可用</string>
+    <string name="inflation_address_already_set_error">通货膨胀已在这地址设定</string>
+    <string name="invalid_password_error">密码不可用</string>
+
+    <!-- Inflation Confirmation Fragment -->
+    <string name="inflation_confirmation_title">设定通货膨胀确定</string>
+    <string name="inflation_destination_label">通货膨胀地点:</string>
+
+    <!-- About Fragment -->
+    <string name="about_fragment_title">关于</string>
+    <string name="terms_and_conditions_link">使用条款</string>
+    <string name="privacy_policy_link">隐私政策</string>
+    <string name="source_code_link">来源码</string>
+    <string name="contact_link">联络支持团队</string>
+    <string name="contact_subject">XIM皮包支持团队</string>
+    <string name="contact_body">请让我们知道我们做得如何！</string>
+    <string name="contact_chooser_title">请发送电邮到XIM皮包</string>
+
+    <!-- Balances Fragment-->
+    <string name="xim_balance_label">XIM余款:</string>
+    <string name="remaining_transactions_label">剩下的交易:</string>
+    <string name="remaining_transactions_help_message">交易以流明来驱使。把流明加到帐户中来得到更多交易。</string>
+    <string name="remaining_transactions_loading_message">加载&#8230;</string>
+    <string name="failed_remaining_transactions_load">无法加载剩下的交易</string>
+
+    <!-- Trust Xim Fragment-->
+    <string name="trust_xim_message">输入你的帐户密码来完成设置你的帐户。</string>
+    <string name="trust_transaction_progress">进行中&#8230;</string>
+    <string name="trust_transaction_success">完成</string>
+    <string name="trust_transaction_failure">失败</string>
+
+    <!-- Account Header View -->
+    <string name="balance_label">流明（XLM）余款:</string>
+    <string name="account_not_on_network_unknown_fee_message">帐户不存在在网络上。发送最少余款来完成创立这帐户。</string>
+    <string name="account_not_on_network_message">帐户不存在在网络上。发送至少%1$s到你的大众地址来完成创立这帐户。</string>
+
+    <!-- Xim Webview -->
+    <string name="xim_webview_title">XIM帐户设置</string>
+
+    <!-- Operation Friendly Names -->
+    <string name="operation_account_created">帐户已创立</string>
+    <string name="operation_payment">付款</string>
+    <string name="operation_path_payment">付款管道</string>
+    <string name="operation_manage_offer">议案已处理</string>
+    <string name="operation_create_passive_offer">被动议案已创立</string>
+    <string name="operation_set_options">选项套组</string>
+    <string name="operation_change_trust">信任已更改</string>
+    <string name="operation_allow_trust">信任已批准</string>
+    <string name="operation_account_merge">帐户已融合</string>
+    <string name="operation_inflation">通货膨胀运行</string>
+    <string name="operation_manage_data">数据输入已更改</string>
+    <string name="operation_unknown">未知</string>
+
+    <!-- Navigation Drawer -->
+    <string name="nav_drawer_add_account">增加帐户</string>
+    <string name="nav_drawer_contacts">联络簿</string>
+    <string name="nav_drawer_settings">设置</string>
+    <string name="nav_drawer_about">关于</string>
+    <string name="fiat_conversion_label">法令货币兑换:</string>
+    <string name="fiat_conversion_prefix">1 XLM = %s</string>
+    <string name="fiat_conversion_suffix">%1$s %2$s</string>
+    <string name="fiat_conversion_last_updated">最后一次更新： %s</string>
+    <string name="fiat_conversion_unknown">无数据</string>
+    <string name="fiat_conversion_load_failure">无法加载兑换率</string>
+
+    <plurals name="lumens">
+        <item quantity="one">%s Lumen流明</item>
+        <item quantity="other">%s Lumens流明</item>
+    </plurals>
+
+    <string name="lumens_plural">Lumens流明</string>
+
+    <string name="address_validation" translatable="false">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
+</resources>

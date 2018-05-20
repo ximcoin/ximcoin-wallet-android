@@ -261,7 +261,6 @@
     <string name="fiat_conversion_last_updated">Last updated: %s</string>
     <string name="fiat_conversion_unknown">No Data</string>
     <string name="fiat_conversion_load_failure">Failed to load conversion rate</string>
-    <string name="fiat_conversion_info">Conversion rates are provided by www.coinmarketcap.com</string>
 
     <plurals name="lumens">
         <item quantity="one">%s Lumen</item>
@@ -270,5 +269,5 @@
 
     <string name="lumens_plural">Lumens</string>
 
-    <string name="address_validation">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
+    <string name="address_validation" translatable="false">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
 </resources>

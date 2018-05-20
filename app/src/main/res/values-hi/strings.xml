@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">एक्सिम वॉलेट</string>
+    <string name="next">आगे</string>
+    <string name="previous">पिछे</string>
+    <string name="start">शुरु करे</string>
+    <string name="cancel">रद्द करे</string>
+    <string name="finish">समाप्त</string>
+    <string name="ok">ठीक</string>
+    <string name="copy">कॉपी</string>
+    <string name="yes">हाँ</string>
+    <string name="cont">जारी रखे</string>
+    <string name="address_clipboard_label">स्टेलर अकाउंट एड्रेस</string>
+    <string name="address_copied_success_toast">एड्रेस क्लिपबोर्ड पर कॉपी किया गया!</string>
+    <string name="address_copied_failed_toast">क्लिपबोर्ड पर एड्रेस कॉपी करने में विफल रहे</string>
+    <string name="seed_clipboard_label">स्टेलर अकाउंट सीड</string>
+    <string name="seed_copied_success_toast">सीड क्लिपबोर्ड पर कॉपी किया गया!</string>
+    <string name="seed_copy_failed_toast">क्लिपबोर्ड पर सीड कॉपी करने में विफल रहे</string>
+    <string name="asset_balance">%1$s %2$s</string>
+    <string name="account_id_label">अकाउंट एड्रेस</string>
+    <string name="xim_asset_code">एक्सिम</string>
+
+    <string name="set_inflation">महंगाई सेट करे</string>
+    <string name="refresh">रीफ़्रेश</string>
+    <string name="remove_account">अकाउंट हटाएं</string>
+    <string name="remove_account_confirmation_title">अकाउंट हटाएं?</string>
+    <string name="remove_account_confirmation_message">क्या वाकई आप इस अकाउंट को एक्सिम वॉलेट से हटाना चाहते है? इसे पुन्हः पूर्ववत नहीं किया जा सकता। .\n\n ध्यान दें कि आपका अकाउंट और संबंधित रकम बरकरार रहेगी। इससे केवल एप्लिकेशन से अकाउंट की पहोच को हटा दीया जाएगा। कृपया सुनिश्चित करें कि आपके अकाउंट का सीड सुरक्षित रूप से कहीं और कॉपी किया गया है।</string>
+    <string name="navigate_account_failure">अकाउंट खोलने में विफल रहे</string>
+    <string name="load_accounts_failure">अकाउंट लोड करने में विफल रहे</string>
+    <string name="remove_account_failure">अकाउंट हटाने में विफल रहे</string>
+
+    <string name="account_address_prefix_error">अकाउंट एड्रेस "G" (“जी”) से शुरु होना चाहिए</string>
+    <string name="account_address_length_error">अकाउंट एड्रेस %d अक्षर लंबा होना चाहिए</string>
+    <string name="account_address_format_error">अवैध अकाउंट एड्रेस फार्मेट</string>
+    <string name="seed_prefix_error">अकाउंट सीड "S" (“एस”) से शुरू होना चाहिए</string>
+    <string name="seed_length_error">अकाउंट सीड %d अक्षर लंबा होना चाहिए</string>
+    <string name="seed_format_error">अवैध अकाउंट सीड फार्मेट</string>
+
+    <string name="copy_address">कॉपी एड्रेस</string>
+    <string name="view_full_address">पूरा एड्रेस देखें</string>
+
+    <string name="create_new_account">नया अकाउंट बनाएँ</string>
+    <string name="import_account">मौजूदा अकाउंट इंम्पोर्ट करें</string>
+    <string name="login_with_export_id">एक्सपोर्टआईडी के साथ मुफ्त खाता बनाएँ</string>
+    <string name="fund_xim">एक्सिम फंड के लिए एक्सपोर्टआईडी के साथ लॉगिन करें</string>
+    <string name="fund_xim_message">इस खाते को सक्रिय करने के लिए आपको कम से कम %s लुमेन  (XLM) (एक्सएलएम) की आवश्यकता है।</string>
+
+    <string name="welcome">एक्सिम वॉलेट में आपका स्वागत है</string>
+    <string name="disclaimer">एक्सिम वॉलेट का उपयोग करके आप हमारे \ "उपयोग की नियम और शर्तों \" और \ "गोपनीयता नीति \" मान्य करते है जो अबाउट भाग में दीए गए है।</string>
+    <string name="secure_title">सुरक्षित</string>
+    <string name="secure_description">स्थानीय रूप से एन्क्रिप्टेड अकाउंट सीड। लेनदेन पुरा करने से पहले उसे अधिकृत करे।</string>
+    <string name="simple_title">सरल है</string>
+    <string name="simple_description">सुरेखता और उपयोग में आसानी के लिए बनाया गया है।</string>
+    <string name="open_source_title">ओपन सोर्स</string>
+    <string name="open_source_description">पूर्ण पारदर्शिता के लिए ओपन सोर्स कोड। पूरी तरह से मुफ्त में प्रदान किया गया।</string>
+    <string name="developer_title">हमारे विनम्र डेवलपर से कुछ शब्द</string>
+    <string name="developer_description">मेरे ऐप को ईन्टॉल करने के लिए धन्यवाद! यदि आपको यह उपयुक्त लगता है, तो कृपया इसे ल्पे स्टोअर या डोनेटींग पर रेटिंग देने के बारे विचार करें!</string>
+
+    <string name="add_account_source_fragment_title">अकाउंट जोड़ें</string>
+    <string name="new_to_xim_wallet_message">एक्सिम वॉलेट में नए हो?</string>
+    <string name="account_source_message">अकाउंट जोडना?</string>
+    <string name="create_account_button">नया अकाउंट बनाएँ</string>
+    <string name="import_account_button">अकाउंट इंम्पोर्ट करे</string>
+
+    <string name="import_seed_fragment_title">सीड इंम्पोर्ट करे</string>
+    <string name="seed_warning_bullet2_import">इस सीड को कहीं बहुत सुरक्षित जगह कॉपी करें।</string>
+    <string name="seed_hint">अकाउंट सीड</string>
+    <string name="xim_trust_loading_message">एक्सिम विश्वासनियता की जांच करें</string>
+
+    <string name="generate_seed_fragment_title">सीड बनाए</string>
+    <string name="seed_message">यह आपका अकाउंट \ "सीड \" है। सभी इरादों और उद्देश्यों के लिए, आपका सीड आपके स्टेलर अकाउंट की संपूर्णता का प्रतिनिधित्व करता है।</string>
+    <string name="seed_warning_header">चेतावनी:</string>
+    <string name="seed_warning_bullet1">अपना सीड किसी को न बताए।</string>
+    <string name="seed_warning_bullet2_generate">इस सीड को जांचे और कहीं बहुत सुरक्षित जगह पर कॉपी करें।</string>
+    <string name="seed_warning_bullet3">एक्सिम वॉलेट किसी भी परिस्थिति में आपके लिए इसे सुरक्षित रखने की कोई गारंटी नहीं देता है। यदि आप अपना सीड सुरक्षित नहीं रखते हो, तो आप अपने खाते और निधि खोने का जोखिम उठाते हो।</string>
+    <string name="seed_warning_bullet4">हम अगले चरण में आपके द्वारा प्रदान किए गए पासफ्रेज़ का उपयोग करके इस सीड को एन्क्रिप्ट करेंगे।</string>
+    <string name="auto_trust_xim_bullet">हम खुद ब खुद एक्सिम के लिए अपका खाता सेट कर देंगे।</string>
+    <string name="show_seed">सीड देखे</string>
+    <string name="copy_seed">कॉपी सीड</string>
+    <string name="generate_different_seed">भिन्न सीड बनाए</string>
+
+    <string name="encrypt_seed_fragment_title">पासफ्रेज़ सेट करें s</string>
+    <string name="encryption_message">अब आप अपने अकाउंट सीड को एन्क्रिप्ट करने के लिए पासफ्रेज प्रविष्ट करें।</string>
+    <string name="encryption_message_bullet1">यह हमें आपके डिवाइस पर सुरक्षित रूप से आपके सीड को जतन करने की अनुमति देता है।</string>
+    <string name="encryption_message_bullet2">किसी लेनदेन को पूरा करने से पहले आपको इस पासफ्रेज को प्रविष्ट करना होगा।</string>
+    <string name="encryption_message_bullet3">इसे भूल जाना कोई चिंता की बात नहीं है! आप अकाउंट सीड के साथ हमेशा अपना अकाउंट पुनर्प्राप्त कर सकते हैं।</string>
+    <string name="encryption_message_bullet4">हम डिवाइस पर कभी भी आपका पासफ्रेज स्टोर नहीं करते।</string>
+    <string name="encryption_message_bullet5">आपके द्वारा दर्ज यह विशेष पासफ्रेज विशेष रूप से पिछले चरण में इंम्पोर्ट  कीए या बनाए गए अकाउंट सीड से जुडा होगा।</string>
+    <string name="encryption_message_bullet6">आपका पासफ्रेज 8 से 20 अक्षर लंबा होना चाहिए। यह केस सेंसिटीव्ह है।</string>
+    <string name="initial_password_field_hint">पासवर्ड</string>
+    <string name="verify_password_field_hint">पासवर्ड जांचें</string>
+    <string name="password_length_error">पासफ्रेज़ कम से कम 8 अक्षर लंबा होना चाहिए</string>
+    <string name="passwords_match_error">पासवर्ड मेल नहीं खा रहे</string>
+
+    <string name="date_label">तारीख:</string>
+    <string name="operation_type_label">कार्य पूरा हुआ:</string>
+    <string name="memo_label">मेमो:</string>
+    <string name="recipient_label">प्राप्तकर्ता:</string>
+    <string name="sender_label">प्रेषक:</string>
+    <string name="receive_amount_prefix">+%1$s %2$s</string>
+    <string name="send_amount_prefix">-%1$s %2$s</string>
+    <string name="failed_load_transactions">लेनदेन लोड करने में विफल रहे</string>
+    <string name="trustee_label">ट्रस्टी:</string>
+    <string name="trustor_label">ट्रस्टर:</string>
+    <string name="asset_label">एसेट:</string>
+    <string name="offer_id_label">ऑफ़र आईडी:</string>
+    <string name="selling_asset_code_label">बिक्री एसेट कोड:</string>
+    <string name="buying_asset_code_label">खरीद एसेट कोड:</string>
+    <string name="selling_amount_label">बिक्री मूल्य:</string>
+    <string name="buying_price_label">खरीदी मूल्य:</string>
+    <string name="merged_into_label">इसमें मिलाए:</string>
+    <string name="entry_name_label">प्रवेश नाम:</string>
+    <string name="entry_value_label">प्रवेश मूल्य:</string>
+
+    <string name="recipient_hint">प्राप्तकर्ता का एड्रेस</string>
+    <string name="amount_hint">मूल्य</string>
+    <string name="memo_hint">मेमो (वैकल्पिक))</string>
+    <string name="invalid_ascii">अवैध ASCII अक्षर</string>
+    <string name="loading_building_transaction">लेनदेन तयार किया जा रहा है&#8230;</string>
+    <string name="build_transaction_fail">लेनदेन तयार करने में विफल रहे</string>
+    <string name="loading_sending_payment">लेनदेन पोस्ट किया जा रहा है&#8230;</string>
+    <string name="send_payment_fail">लेन देन असफल रहा</string>
+    <string name="send_payment_success">लेनदेन सफल रहा!</string>
+    <string name="account_address_same_as_self_error">यह भेजा जाने वाला एड्रेस ही है</string>
+    <string name="account_address_not_exist_error">अकाउंट मौजूद नहीं है, पहले एक्सएलएम भेजकर एक नया अकाउंट बनाएं</string>
+    <string name="account_address_unsupported_asset_error">प्राप्तकर्ता अकाउंट इस एसेट पर विश्वास नहीं करता</string>
+    <string name="insufficient_funds_error">अपर्याप्त निधि</string>
+    <string name="amount_greater_than_zero_error">राशि शून्य से ज्यादा होनी चाहिए</string>
+
+    <string name="send_payment_title">भुगतान की पुष्टि</string>
+    <string name="create_account_title">पुष्टिकरण अकाउंट बनाएं</string>
+    <string name="confirm_transaction">लेन-देन की पुष्टि करे</string>
+    <string name="sending_label">भेजा जा रहा है:</string>
+    <string name="to_label">के पास:</string>
+    <string name="transaction_fees">लेनदेन शुल्क:</string>
+    <string name="remaining_balances">शेष राशि:</string>
+    <string name="self_account_balance_violated">आपके अकाउंट मे न्यूनतम %1$ राशि शेष बरकरार रहनी चाहिए.</string>
+    <string name="new_account_balance_violated">नए अकाउंट से न्यूनतम %1$ राशि भेजी जानी चाहिए।</string>
+
+    <string name="contact_list_fragment_title">संपर्क</string>
+    <string name="contacts_load_error_message">संपर्क लोड करने में विफल</string>
+    <string name="contacts_empty_message">कोई संपर्क नहीं मिला</string>
+    <string name="contact_address_empty">(कोई एड्रेस नहीं)</string>
+    <string name="contact_notes_empty">(कोई नोट्स नहीं)</string>
+
+    <string name="view_contact_fragment_title">संपर्क देखें</string>
+    <string name="delete_contact_confirmation_title">मिटाए?</string>
+    <string name="delete_contact_message">क्या वाकई आप इस संपर्क को मिटाना चाहते हैं?</string>
+    <string name="contact_load_error_message">संपर्क लोड करने में विफल</string>
+    <string name="contact_delete_error_message">संपर्क मिटाने में विफल</string>
+    <string name="contact_notes_label">नोट्स:</string>
+    <string name="contact_menu_edit">संपादित करें</string>
+    <string name="contact_menu_delete">मिटाए</string>
+
+    <string name="edit_contact_fragment_title">संपर्क संपादित करें</string>
+    <string name="add_contact_fragment_title">संपर्क जोड़ें</string>
+    <string name="discard_changes_title">परिवर्तन हटाए?</string>
+    <string name="discard_changes_message">आपके परिवर्तन सहेजे नहीं गए हैं</string>
+    <string name="save_contact">संपर्क सहेजे</string>
+    <string name="contact_name_hint">नाम</string>
+    <string name="contact_address_hint">अकाउंट एड्रेस</string>
+    <string name="contact_notes_hint">नोट्स (वैकल्पिक)</string>
+    <string name="contact_color_label">रंग:</string>
+    <string name="saving_contact_progress_message">संपर्क सहेजा जा रहा है &#8230;</string>
+    <string name="saving_contact_progress_success">संपर्क सहेजा गया</string>
+    <string name="saving_contact_progress_fail">सहेजना असफल रहा</string>
+    <string name="contact_name_empty_error">संपर्क नाम खाली नहीं हो सकता</string>
+    <string name="contact_color_dialog_title">रंग चुनें</string>
+
+    <string name="inflation_fragment_title">महंगाई का ठीकाना</string>
+    <string name="inflation_hint">महंगाई का ठीकाना</string>
+    <string name="set_inflation_destination">महंगाई का ठीकाना सेट करें</string>
+    <string name="populate_lumenaut_inflation">लुमेनॉट महंगाई एड्रेस कॉपी करें</string>
+    <string name="clear_inflation_dialog_title">महंगाई का ठीकाना हटाए</string>
+    <string name="clear_inflation_dialog_message">क्या आप वाकई अपने महंगाई का ठीकाना हटाना चाहते हैं?</string>
+    <string name="inflation_description_title">महंगाई क्या है?</string>
+    <string name="inflation_description">मौजूदा धारकों को प्रति वर्ष 1% की दर से, साप्ताहिक आधार पर, नए लुमेन वितरित करने का एक तंत्र। ठीकाना सेट ना करने पर संक्षेप में आप मुफ्त लुमेन नही पा सकते।</string>
+    <string name="lumenaut_description_title">लुमेनॉट सामुदायिक दल?</string>
+    <string name="lumenaut_description">महंगाई एक मतदान प्रणाली के माध्यम से वितरित की जाती है, जहां कुल वोटों में से केवल 0.5% वाले लोग नए लुमेन प्राप्त कर सकते है। इसके पात्र होने के लिए, आप दल जैसे लुमेनॉट में, अभी भी, शामिल हो सकते है। लुमेनॉट एक्सिम वॉलेट की मुख्य पसंद है, क्योंकि उनके लिए शून्य शुल्क अदा करना पडता है, 100% भुगतान होता है, और इसका समर्थन उसी समुदाय द्वारा किया जाता है जो इसका उपयोग करते है।</string>
+    <string name="inflation_operation_loading">महंगाई सेटींग्स&#8230;</string>
+    <string name="inflation_operation_success">महंगाई सफलतापूर्वक सेट की गई</string>
+    <string name="inflation_operation_fail">महंगाई सेट करने में असफल रहे</string>
+    <string name="inflation_address_prefix_error">महंगाई एड्रेस "जी" से शुरू होना चाहिए</string>
+    <string name="inflation_address_length_error">महंगाई एड्रेस %d अक्षर लंबा होना चाहिए</string>
+    <string name="inflation_address_format_error">अवैध महंगाई एड्रेस फार्मेट</string>
+    <string name="inflation_address_already_set_error">महंगाई पहले से ही इस एड्रेस पर सेट है</string>
+    <string name="invalid_password_error">अवैध पासवर्ड</string>
+
+    <string name="inflation_confirmation_title">महंगाई की पुष्टि सेट करे</string>
+    <string name="inflation_destination_label">महंगाई का ठीकाना</string>
+
+    <string name="about_fragment_title">अबाउट</string>
+    <string name="terms_and_conditions_link">उपयोग के नियम व शर्तें</string>
+    <string name="privacy_policy_link">गोपनीयता नीति</string>
+    <string name="source_code_link">सोर्स कोड</string>
+    <string name="contact_link">सहयोग टीम से संपर्क करें</string>
+    <string name="contact_subject">एक्सिम वॉलेट सहयोग टीम</string>
+    <string name="contact_body">कृपया हमें बताएं कि हम कैसा कर रहे है!</string>
+    <string name="contact_chooser_title">ईमेल एक्सिम वॉलेट</string>
+
+    <string name="xim_balance_label">एक्सिम शेष राशी:</string>
+    <string name="remaining_transactions_label">शेष लेनदेन:</string>
+    <string name="remaining_transactions_help_message">लेनदेन लुमेन द्वारा संचालित हैं। और अधिक लेनदेन पाने के लिए आपके खाते में लुमेन जमा करें।</string>
+    <string name="remaining_transactions_loading_message">लोड हो रहा है&#8230;</string>
+    <string name="failed_remaining_transactions_load">शेष लेनदेन लोड करने में विफल रहे</string>
+
+    <string name="trust_xim_message">अपना अकाउंट सेट अप करने के लिए अपना अकाउंट पासवर्ड प्रविष्ट करें।</string>
+    <string name="trust_transaction_progress">कार्य प्रगती पथ पर है&#8230;</string>
+    <string name="trust_transaction_success">सफल</string>
+    <string name="trust_transaction_failure">असफल</string>
+
+    <string name="balance_label">लुमेन (एक्सएलएम) शेष राशी:</string>
+    <string name="account_not_on_network_unknown_fee_message">अकाउंट नेटवर्क पर नहीं है। इस खाते को बनाने के लिए आवश्यक न्यूनतम शेष राशि भेजे।</string>
+    <string name="account_not_on_network_message">खाता नेटवर्क पर नहीं है। इस खाते को बनाने के लिए न्यूनतम %1$ राशी अपने सार्वजनिक एड्रेस पर भेजे।</string>
+
+    <string name="xim_webview_title">एक्सिम अकाउंट सेटअप</string>
+
+    <string name="operation_account_created">अकाउंट बन गया</string>
+    <string name="operation_payment">भुगतान</string>
+    <string name="operation_path_payment">भुगतान पथ</string>
+    <string name="operation_manage_offer">प्रस्ताव की व्यवस्था की गई</string>
+    <string name="operation_create_passive_offer">निष्क्रिय प्रस्ताव बनाया गया</string>
+    <string name="operation_set_options">विकल्प सेट करें</string>
+    <string name="operation_change_trust">ट्रस्ट बदले</string>
+    <string name="operation_allow_trust">ट्रस्ट अनुमानित कीया गया</string>
+    <string name="operation_account_merge">अकाउंट जोडे गए</string>
+    <string name="operation_inflation">महंगाई बदल</string>
+    <string name="operation_manage_data">डेटा एन्ट्री बदली गई</string>
+    <string name="operation_unknown">अपरिचित</string>
+
+    <string name="nav_drawer_add_account">अकाउंट बनाए</string>
+    <string name="nav_drawer_contacts">संपर्क</string>
+    <string name="nav_drawer_settings">सेटिंग्स</string>
+    <string name="nav_drawer_about">अबाउट</string>
+    <string name="fiat_conversion_label">फिएट परिवर्तन:</string>
+    <string name="fiat_conversion_prefix">1 एक्सएलएम= %s</string>
+    <string name="fiat_conversion_suffix">%1$s %2$s</string>
+    <string name="fiat_conversion_last_updated">आखरी अपडेट: %s</string>
+    <string name="fiat_conversion_unknown">कोई डेटा उपलब्ध नहीं</string>
+    <string name="fiat_conversion_load_failure">परिवर्तन दर लोड करने में विफल</string>
+
+    <plurals name="lumens">
+        <item quantity="one">%s लुमेन</item>
+        <item quantity="other">%s लुमेन्स</item>
+    </plurals>
+
+    <string name="lumens_plural">लुमेन्स</string>
+
+    <string name="address_validation" translatable="false">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
+</resources>

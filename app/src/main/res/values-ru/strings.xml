@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Кошелек XIM</string>
+    <string name="next">ДАЛЕЕ</string>
+    <string name="previous">НАЗАД</string>
+    <string name="start">НАЧАТЬ</string>
+    <string name="cancel">ОТМЕНА</string>
+    <string name="finish">ЗАВЕРШИТЬ</string>
+    <string name="ok">ОК</string>
+    <string name="copy">КОПИРОВАТЬ</string>
+    <string name="yes">ДА</string>
+    <string name="cont">ПРОДОЛЖИТЬ</string>
+    <string name="address_clipboard_label">Адрес счета в Stellar</string>
+    <string name="address_copied_success_toast">Адрес скопирован в буфер обмена!</string>
+    <string name="address_copied_failed_toast">Не удалось скопировать адрес в буфер обмена</string>
+    <string name="seed_clipboard_label">Ключ счета в Stellar</string>
+    <string name="seed_copied_success_toast">Ключ скопирован в буфер обмена!</string>
+    <string name="seed_copy_failed_toast">Не удалось скопировать ключ в буфер обмена</string>
+    <string name="asset_balance">%1$s %2$s</string>
+    <string name="account_id_label">Адрес счета:</string>
+    <string name="xim_asset_code">XIM</string>
+
+    <!-- Accounts Activity -->
+    <string name="set_inflation">Установить уровень инфляции</string>
+    <string name="refresh">Обновить</string>
+    <string name="remove_account">Удалить счет</string>
+    <string name="remove_account_confirmation_title">Удалить счет?</string>
+    <string name="remove_account_confirmation_message">Вы уверены, что хотите удалить данный счет из кошелька Xim? Данное действие невозможно отменить. Обратите внимание, что ваш счет и остаток на нем останутся прежними. Вы отключите доступ приложения к вашему счету. Убедитесь, что вы сохранили ключ для доступа к вашему счету.</string>
+    <string name="navigate_account_failure">Не удалось открыть счет</string>
+    <string name="load_accounts_failure">Не удалось загрузить счета</string>
+    <string name="remove_account_failure">Не удалось удалить счет</string>
+
+    <!-- Address Field Errors -->
+    <string name="account_address_prefix_error">Адрес счета должен начинаться с G</string>
+    <string name="account_address_length_error">Адрес счета должен содержать %d символов</string>
+    <string name="account_address_format_error">Неправильный формат адреса счета</string>
+    <string name="seed_prefix_error">Ключ счета должно начинаться с S</string>
+    <string name="seed_length_error">Ключ должен содержать %d символов</string>
+    <string name="seed_format_error">Неправильный формат ключа</string>
+
+    <!-- Receive Fragment -->
+    <string name="copy_address">Копировать адрес</string>
+    <string name="view_full_address">Показать полный адрес</string>
+
+    <!-- Create Account Fragment -->
+    <string name="create_new_account">Создать новый счет</string>
+    <string name="import_account">Загрузить существующий счет</string>
+    <string name="login_with_export_id">Создать новый счет, используя ExportID</string>
+    <string name="fund_xim">Войти в ExportID, чтобы пополнить XIM</string>
+    <string name="fund_xim_message">Для активации счета требуется не менее %s Lumen (XLM).</string>
+
+    <!-- Intro Slides -->
+    <string name="welcome">Добро пожаловать в кошелек XIM</string>
+    <string name="disclaimer">Используя кошелек XIM, вы принимаете наши \"Условия использования\", а также \"Политику конфиденциальности\", представленные в разделе \"О приложении\".</string>
+    <string name="secure_title">Безопасно</string>
+    <string name="secure_description">Ключи с локальным шифрованием. Вы авторизуете каждую транзакцию.</string>
+    <string name="simple_title">Просто</string>
+    <string name="simple_description">Простота и изящность использования.</string>
+    <string name="open_source_title">Открытый код</string>
+    <string name="open_source_description">Открытый код обеспечивает полную прозрачность. Приложение доступно совершенно бесплатно.</string>
+    <string name="developer_title">Слово нашему скромному разработчику</string>
+    <string name="developer_description">Благодарю за установку моего приложения! Если оно понравится вам, пожалуйста, поставьте оценку в Play Store, или пожертвуйте любую сумму!</string>
+
+    <!-- Add Account Source Fragment -->
+    <string name="add_account_source_fragment_title">Добавить счет</string>
+    <string name="new_to_xim_wallet_message">Вы новичок в кошельке XIM?</string>
+    <string name="account_source_message">Добавляете счет?</string>
+    <string name="create_account_button">СОЗДАТЬ НОВЫЙ СЧЕТ</string>
+    <string name="import_account_button">ИМПОРТИРОВАТЬ СЧЕТ</string>
+
+    <!-- Import Seed Fragment -->
+    <string name="import_seed_fragment_title">Импортировать ключ</string>
+    <string name="seed_warning_bullet2_import">Сохраните ключ в надежном месте.</string>
+    <string name="seed_hint">Ключ счета</string>
+    <string name="xim_trust_loading_message">Проверка фонда XIM</string>
+
+    <!-- Generate Seed Fragment -->
+    <string name="generate_seed_fragment_title">Создать ключ</string>
+    <string name="seed_message">Здесь находится ключ от вашего счета. Во всех случаях этот ключ используется только для счета в Stellar.</string>
+    <string name="seed_warning_header">ВНИМАНИЕ:</string>
+    <string name="seed_warning_bullet1">Никогда не передавайте ваш ключ посторонним:</string>
+    <string name="seed_warning_bullet2_generate">Сохраните этот ключ в самом безопасном месте.</string>
+    <string name="seed_warning_bullet3">Кошелек XIM не гарантирует сохранность данной информации. Если вы лишитесь своего ключа, вы можете потерять доступ к вашему счету и средствам на нем.</string>
+    <string name="seed_warning_bullet4">Далее мы зашифруем ваш ключ, используя предоставленный вами пароль.</string>
+    <string name="auto_trust_xim_bullet">Сейчас мы автоматически настроим ваш счет в XIM.</string>
+    <string name="show_seed">ПОКАЗАТЬ КЛЮЧ</string>
+    <string name="copy_seed">КОПИРОВАТЬ КЛЮЧ</string>
+    <string name="generate_different_seed">СОЗДАТЬ НОВЫЙ КЛЮЧ</string>
+
+    <!-- Encrypt Seed Fragment -->
+    <string name="encrypt_seed_fragment_title">Задать пароль</string>
+    <string name="encryption_message">Сейчас вы укажете пароль для шифрования вашего ключа.</string>
+    <string name="encryption_message_bullet1">Таким образом вы сможете хранить ключ на вашем устройстве.</string>
+    <string name="encryption_message_bullet2">Перед проведением любой операции вам придется вводить этот пароль.</string>
+    <string name="encryption_message_bullet3">Не стоит переживать, если вы забудете его! Вы всегда сможете восстановить доступ, используя ключ.</string>
+    <string name="encryption_message_bullet4">Мы никогда не храним ваш пароль на устройстве.</string>
+    <string name="encryption_message_bullet5">Указанный вами пароль будет использован для шифрования ключа, созданного на предыдущем этапе.</string>
+    <string name="encryption_message_bullet6">Ваш пароль должен содержать от 8 до 20 символов, чувствительных к регистру.</string>
+    <string name="initial_password_field_hint">Пароль</string>
+    <string name="verify_password_field_hint">Подтверждение пароля</string>
+    <string name="password_length_error">Ваш пароль должен содержать не менее 8 символов</string>
+    <string name="passwords_match_error">Пароли не совпадают</string>
+
+    <!-- Operations Fragment -->
+    <string name="date_label">Дата:</string>
+    <string name="operation_type_label">Выполненное действие:</string>
+    <string name="memo_label">Заметка:</string>
+    <string name="recipient_label">Получатель:</string>
+    <string name="sender_label">Отправитель:</string>
+    <string name="receive_amount_prefix">+%1$s %2$s</string>
+    <string name="send_amount_prefix">-%1$s %2$s</string>
+    <string name="failed_load_transactions">Не удалось загрузить транзакции</string>
+    <string name="trustee_label">Поручитель:</string>
+    <string name="trustor_label">Доверитель:</string>
+    <string name="asset_label">Актив:</string>
+    <string name="offer_id_label">ID предложения:</string>
+    <string name="selling_asset_code_label">Код продажи актива:</string>
+    <string name="buying_asset_code_label">Код покупки актива:</string>
+    <string name="selling_amount_label">Сумма продажи:</string>
+    <string name="buying_price_label">Цена покупки:</string>
+    <string name="merged_into_label">Переведено в:</string>
+    <string name="entry_name_label">Наименование:</string>
+    <string name="entry_value_label">Значение:</string>
+
+    <!-- Send Fragment -->
+    <string name="recipient_hint">Адрес получателя</string>
+    <string name="amount_hint">Сумма</string>
+    <string name="memo_hint">Заметка (опционально)</string>
+    <string name="invalid_ascii">Неправильный символ ASCII</string>
+    <string name="loading_building_transaction">Создание транзакции...</string>
+    <string name="build_transaction_fail">Ошибка создания транзакции</string>
+    <string name="loading_sending_payment">Размещение транзакции</string>
+    <string name="send_payment_fail">Ошибка транзакции</string>
+    <string name="send_payment_success">Успешная транзакция!</string>
+    <string name="account_address_same_as_self_error">Совпадает с адресом отправителя</string>
+    <string name="account_address_not_exist_error">Счет не создан! Для начала создайте счет, используя XLM</string>
+    <string name="account_address_unsupported_asset_error">Счет получателя не принимает данный актив</string>
+    <string name="insufficient_funds_error">Недостаточно средств</string>
+    <string name="amount_greater_than_zero_error">Сумма должна быть больше нуля</string>
+
+    <!-- Send Confirmation Fragment -->
+    <string name="send_payment_title">Подтверждение оплаты</string>
+    <string name="create_account_title">Создать подтверждение счета</string>
+    <string name="confirm_transaction">ПОДТВЕРДИТЬ ТРАНЗАКЦИЮ</string>
+    <string name="sending_label">Отправляете:</string>
+    <string name="to_label">Кому:</string>
+    <string name="transaction_fees">Сбор за проведение:</string>
+    <string name="remaining_balances">Остаток на счете:</string>
+    <string name="self_account_balance_violated">На вашем счете должно быть не менее %1$s.</string>
+    <string name="new_account_balance_violated">Ваш новый счет нужно пополнить минимум на %1$s.</string>
+
+    <!-- Contact List Fragment -->
+    <string name="contact_list_fragment_title">Контакты</string>
+    <string name="contacts_load_error_message">Не удалось загрузить контакты</string>
+    <string name="contacts_empty_message">Контакты не найдены</string>
+    <string name="contact_address_empty">(без адреса)</string>
+    <string name="contact_notes_empty">(без заметок)</string>
+
+    <!-- View Contact Fragment -->
+    <string name="view_contact_fragment_title">Показать контакт</string>
+    <string name="delete_contact_confirmation_title">Удалить?</string>
+    <string name="delete_contact_message">Вы уверены, что хотите удалить данный контакт?</string>
+    <string name="contact_load_error_message">Не удалось загрузить контакт</string>
+    <string name="contact_delete_error_message">Ну удалось удалить контакт</string>
+    <string name="contact_notes_label">Примечания:</string>
+    <string name="contact_menu_edit">Изменить</string>
+    <string name="contact_menu_delete">Удалить</string>
+
+    <!-- Edit Contact Fragment -->
+    <string name="edit_contact_fragment_title">Изменить контакт</string>
+    <string name="add_contact_fragment_title">Добавить контакт</string>
+    <string name="discard_changes_title">Отказаться от изменений?</string>
+    <string name="discard_changes_message">У вас есть несохраненные изменения</string>
+    <string name="save_contact">Сохранить контакт</string>
+    <string name="contact_name_hint">Имя</string>
+    <string name="contact_address_hint">Адрес счета</string>
+    <string name="contact_notes_hint">Примечания (опционально)</string>
+    <string name="contact_color_label">Цвет:</string>
+    <string name="saving_contact_progress_message">Сохранение контакт...</string>
+    <string name="saving_contact_progress_success">Контакт сохранен</string>
+    <string name="saving_contact_progress_fail">Ошибка сохранения</string>
+    <string name="contact_name_empty_error">Контактное лицо не может быть пустым</string>
+    <string name="contact_color_dialog_title">Выберите цвет</string>
+
+    <!-- Inflation Fragment -->
+    <string name="inflation_fragment_title">Целевая инфляция</string>
+    <string name="inflation_hint">Целевая инфляция</string>
+    <string name="set_inflation_destination">Задать уровень инфляции</string>
+    <string name="populate_lumenaut_inflation">Скопировать адрес инфляции Lumenaut</string>
+    <string name="clear_inflation_dialog_title">Копировать целевую инфляцию</string>
+    <string name="clear_inflation_dialog_message">Вы уверены, что хотите удалить целевую инфляцию?</string>
+    <string name="inflation_description_title">Что такое инфляция?</string>
+    <string name="inflation_description">Механизм распределения токенов Lumen, работающий на еженедельной основе. Владельцы токенов получают 1% в год. Не указав адрес, вы отказываетесь от бесплатных токенов Lumen.</string>
+    <string name="lumenaut_description_title">Что такое общий пул Lumenaut?</string>
+    <string name="lumenaut_description">Распределение токенов происходит в рамках голосования. Пользователи получившие не менее 0.5% голосов, могут получить токены Lumen. Для того чтобы выполнить данное требование, вы можете присоединиться к одному из пулов, например, к Lumenaut. Пул Lumenaut - избранный пул кошелька Xim. Данный пул предлагает нулевые комиссии, обеспечивает 100% выплаты, и поддерживается сообществом пользователей. </string>
+    <string name="inflation_operation_loading">Установка уровня инфляции...</string>
+    <string name="inflation_operation_success">Инфляция успешно установлена</string>
+    <string name="inflation_operation_fail">Не удалось установить уровень инфляции</string>
+    <string name="inflation_address_prefix_error">Адрес для установки уровня инфляции должен начинаться с G</string>
+    <string name="inflation_address_length_error">Адрес для установки уровня инфляции должен содержать не менее %d символов</string>
+    <string name="inflation_address_format_error">Неправильный формат адреса для установки уровня инфляции</string>
+    <string name="inflation_address_already_set_error">Данный адрес уже выбран</string>
+    <string name="invalid_password_error">Неправильный пароль</string>
+
+    <!-- Inflation Confirmation Fragment -->
+    <string name="inflation_confirmation_title">Задать подтверждение уровня инфляции</string>
+    <string name="inflation_destination_label">Целевой уровень инфляции:</string>
+
+    <!-- About Fragment -->
+    <string name="about_fragment_title">О приложении</string>
+    <string name="terms_and_conditions_link">Условия использования</string>
+    <string name="privacy_policy_link">Политика конфиденциальности</string>
+    <string name="source_code_link">Исходный код</string>
+    <string name="contact_link">Служба поддержки</string>
+    <string name="contact_subject">Поддержка кошелька XIM </string>
+    <string name="contact_body">Пожалуйста, расскажите о ваших впечатлениях!</string>
+    <string name="contact_chooser_title">Отправить письмо в XIM</string>
+
+    <!-- Balances Fragment -->
+    <string name="xim_balance_label">Баланс XIM:</string>
+    <string name="remaining_transactions_label">Оставшиеся транзакции:</string>
+    <string name="remaining_transactions_help_message">Транзакции осуществляются в токенах Lumen. Добавьте токены Lumen, чтобы провести дополнительные транзакции. </string>
+    <string name="remaining_transactions_loading_message">Идет загрузка...</string>
+    <string name="failed_remaining_transactions_load">Не удалось загрузить оставшиеся транзакции</string>
+
+    <!-- Trust Xim Fragment -->
+    <string name="trust_xim_message">Введите пароль от вашего счета для завершения настройки.</string>
+    <string name="trust_transaction_progress">В обработке...</string>
+    <string name="trust_transaction_success">Завершено</string>
+    <string name="trust_transaction_failure">Ошибка</string>
+
+    <!-- Account Header View -->
+    <string name="balance_label">Баланс Lumen (XLM):</string>
+    <string name="account_not_on_network_unknown_fee_message">Счет не подключен к сети. Пополните счет на минимальную сумму, чтобы завершить его создание.</string>
+    <string name="account_not_on_network_message">Счет не подключен к сети. Пополните счет минимум на %1$s, чтобы завершить его создание.</string>
+
+    <!-- Xim Webview -->
+    <string name="xim_webview_title">Настройка счета в XIM</string>
+
+    <!-- Operation Friendly Names -->
+    <string name="operation_account_created">Счет создан</string>
+    <string name="operation_payment">Оплата</string>
+    <string name="operation_path_payment">Путь оплаты</string>
+    <string name="operation_manage_offer">Управление предложениями</string>
+    <string name="operation_create_passive_offer">Создано неактивное предложение</string>
+    <string name="operation_set_options">Настройки</string>
+    <string name="operation_change_trust">Доверитель изменен</string>
+    <string name="operation_allow_trust">Доверитель разрешен</string>
+    <string name="operation_account_merge">Счета объединены</string>
+    <string name="operation_inflation">Инфляция запущена</string>
+    <string name="operation_manage_data">Изменены данные</string>
+    <string name="operation_unknown">НЕИЗВЕСТНО</string>
+
+    <!-- Navigation Drawer -->
+    <string name="nav_drawer_add_account">Добавить счет</string>
+    <string name="nav_drawer_contacts">Контакты</string>
+    <string name="nav_drawer_settings">Настройки</string>
+    <string name="nav_drawer_about">О приложении</string>
+    <string name="fiat_conversion_label">Обмен фиатных денег:</string>
+    <string name="fiat_conversion_prefix">1 XLM = %s</string>
+    <string name="fiat_conversion_suffix">%1$s %2$s</string>
+    <string name="fiat_conversion_last_updated">Последнее обновление: %s</string>
+    <string name="fiat_conversion_unknown">Нет данных</string>
+    <string name="fiat_conversion_load_failure">Не удалось загрузить обменный курс</string>
+
+    <plurals name="lumens">
+        <item quantity="one">%s Lumen</item>
+        <item quantity="few">%s Lumen-ов</item>
+        <item quantity="many">%s Lumen-ов</item>
+        <item quantity="other">%s Lumen-ов</item>
+    </plurals>
+    <string name="lumens_plural">Lumens</string>
+    <string name="address_validation" translatable="false">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
+</resources>

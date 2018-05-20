@@ -7,8 +7,16 @@
     android:paddingBottom="@dimen/activity_margin"
     android:paddingEnd="@dimen/activity_margin"
     android:paddingStart="@dimen/activity_margin"
-    android:paddingTop="48dp"
     android:background="@color/colorPrimary">
+
+    <ImageView
+        android:id="@+id/xim_logo"
+        android:layout_width="256dp"
+        android:layout_height="256dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_logo" />
 
     <TextView
         android:id="@+id/fiat_conversion_label"
@@ -16,7 +24,7 @@
         android:layout_height="wrap_content"
         android:text="@string/fiat_conversion_label"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/xim_logo" />
 
     <TextView
         android:id="@+id/fiat_conversion_value"
@@ -37,17 +45,6 @@
         tools:text="Last Updated March 1st 12:24PM" />
 
     <ImageButton
-        android:id="@+id/info"
-        android:layout_width="@dimen/image_button_width_height"
-        android:layout_height="@dimen/image_button_width_height"
-        android:layout_gravity="center_vertical"
-        android:background="?selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_info"
-        android:tint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/last_updated" />
-
-    <ImageButton
         android:id="@+id/refresh_conversion"
         android:layout_width="@dimen/image_button_width_height"
         android:layout_height="@dimen/image_button_width_height"
@@ -55,7 +52,7 @@
         android:background="?selectableItemBackgroundBorderless"
         android:src="@drawable/ic_refresh"
         android:tint="@color/white"
-        app:layout_constraintEnd_toStartOf="@id/info"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/last_updated" />
 
     <ProgressBar

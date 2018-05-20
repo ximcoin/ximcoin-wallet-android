@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">XIM ایپ کا نام</string>
+    <string name="next">اگلا</string>
+    <string name="previous">پچھلا</string>
+    <string name="start">شروع کریں</string>
+    <string name="cancel">رد کریں</string>
+    <string name="finish">ختم</string>
+    <string name="ok">ٹھیک</string>
+    <string name="copy">کاپی کریں</string>
+    <string name="yes">جی ہاں</string>
+    <string name="cont">جاری</string>
+    <string name="address_clipboard_label">Stellar کے اکاؤنٹ کا پتہ</string>
+    <string name="address_copied_success_toast">پتے کو کلپ بورڈ پر کاپی کرلیاگیا ہے!</string>
+    <string name="address_copied_failed_toast">پتہ کلپ بورڈ پر کاپی نہیں ہوا ہے!</string>
+    <string name="seed_clipboard_label">Stellarاکاؤنٹ سیڈ</string>
+    <string name="seed_copied_success_toast">سیڈ کو کلپ بورڈ پر کاپی کرلیا گیا ہے</string>
+    <string name="seed_copy_failed_toast">سیڈ کلپ بورڈ پر کاپی نہیں ہوا ہے</string>
+    <string name="asset_balance">%1$s %2$s</string>
+    <string name="account_id_label">اکاؤنٹ کاپتہ</string>
+    <string name="xim_asset_code">XIM</string>
+
+    <!-- Accounts Activity -->
+    <string name="set_inflation">افراطِ زر رکھیں</string>
+    <string name="refresh">ریفریش کریں</string>
+    <string name="remove_account">اکاؤنٹ ہٹادیں</string>
+    <string name="remove_account_confirmation_title">کیااکاؤنٹ ہٹادیں؟</string>
+    <string name="remove_account_confirmation_message">کیا آپ کو پورا یقین ہے کہ آپ اس اکاؤنٹ کو Xim Wallet سے ہٹانا چاہتے ہیں؟ اس عمل میں واپس نہیں ہے۔/n/n یاد رکھیں آپ کا اکاؤنٹ اور اس میں موجود فنڈز محفوظ رہیں گے۔ اس میں ہوگا صرف یہ کہ ایپ کے ذریعے اکاؤنٹ تک رسائی کو ختم کردیا جائے گا۔ براہِ مہربانی اس کی پوری یقین دہانی کرلیں کہ آپ نے اپنے اکاؤنٹ سیڈ کو کسی دوسری جگہ پر محفوظ طورپر کاپی کرلیا ہے۔</string>
+    <string name="navigate_account_failure">اکاؤنٹ کھولنے میں ناکام</string>
+    <string name="load_accounts_failure">اکاؤنٹس لوڈ کرنے میں ناکام</string>
+    <string name="remove_account_failure">اکاؤنٹ کو ہٹانے میں ناکام</string>
+
+    <!-- Address Field Errors -->
+    <string name="account_address_prefix_error">یہ لازمی ہے کہ اکاؤنٹ کا پتہ "G"  سے شروع ہو</string>
+    <string name="account_address_length_error">یہ لازمی ہے کہ اکاؤنٹ کا پتہ % حروف تک لمبا ہو</string>
+    <string name="account_address_format_error">اکاؤنٹ کے پتے کا فارمیٹ درست نہیں ہے</string>
+    <string name="seed_prefix_error"> یہ لازمی ہے کہ اکاؤنٹ کا سیڈ "S"  سے شروع ہو </string>
+    <string name="seed_length_error">یہ لازمی ہے کہ اکاؤنٹ کا سیڈ % حروف تک لمبا ہو</string>
+    <string name="seed_format_error">سیڈ کا فارمیٹ درست نہیں ہے</string>
+
+    <!-- Receive Fragment -->
+    <string name="copy_address">پتہ کاپی کریں</string>
+    <string name="view_full_address">مکمل پتہ دیکھیں</string>
+
+    <!-- Create Account Fragment -->
+    <string name="create_new_account">نیا اکاؤنٹ بنائیں</string>
+    <string name="import_account">موجودہ اکاؤنٹ کو درآمد کریں</string>
+    <string name="login_with_export_id">ExportID  کے ساتھ مفت اکاؤنٹ بنائیں</string>
+    <string name="fund_xim">XIM  میں فنڈز دینے کیلئے ExportID کے ذریعے لاگ ان کریں</string>
+    <string name="fund_xim_message">اس اکاؤنٹ کو ایکٹی ویٹ کرنے کیلئے آپ کو کم ازکم Lumens (XLM) % کی ضرورت ہے</string>
+
+    <!-- Intro Slides -->
+    <string name="welcome">XIM Wallet میں آپ کاخیرمقدم ہے</string>
+    <string name="disclaimer">XIM Wallet  کو استعمال کرتے ہوئے آپ ہمارے About اتفاق کرتے ہیں والے حصے میں موجود ہمارے/استعمال کے شرائط و ضوابط/"اور" رازداری کی پالیسی/ </string>
+    <string name="secure_title">محفوظ</string>
+    <string name="secure_description">مقامی طور پر اینکرپٹ کردہ اکاؤنٹ سیڈ۔ اس کے ہونے سے پہلے لین دین کی منظوری دیں</string>
+    <string name="simple_title">سادہ</string>
+    <string name="simple_description">اس کو خوبصورتی اور استعمال میں آسانی کیلئے بنایا گیا ہے۔</string>
+    <string name="open_source_title">اوپن سورس</string>
+    <string name="open_source_description">مکمل شفافیت کیلئے اوپن سورس۔ اس کو کو مکمل طور پر مفت فراہم کیا گیا ہے۔</string>
+    <string name="developer_title">ہمارے ناچیز ڈیولپرز کی جانب سے ایک بات</string>
+    <string name="developer_description">میری ایپ انسٹال کرنے پر آپ کا شکریہ، براہِ مہربانی پلے اسٹور پر اس کو ریٹ کرنے یا چندہ دینے پر غور کریں!</string>
+
+    <!-- Add Account Source Fragment -->
+    <string name="add_account_source_fragment_title">اکاؤنٹ شامل کریں</string>
+    <string name="new_to_xim_wallet_message">XIM Wallet پر نئے ہیں؟</string>
+    <string name="account_source_message">ایک اکاؤنٹ کو شامل کرناہے؟</string>
+    <string name="create_account_button">نیا اکاؤنٹ بنائیں</string>
+    <string name="import_account_button">اکاؤنٹ کو درآمد کریں</string>
+
+    <!-- Import Seed Fragment -->
+    <string name="import_seed_fragment_title">سیڈ درآمد کریں</string>
+    <string name="seed_warning_bullet2_import">اس سیڈ کو کسی محفوظ مقام پرکاپی کریں۔</string>
+    <string name="seed_hint">اکاؤنٹ سیڈ</string>
+    <string name="xim_trust_loading_message">XIM Trust کی جانچ کرتے ہوئے</string>
+
+    <!-- Generate Seed Fragment -->
+    <string name="generate_seed_fragment_title">سیڈ بنائیں</string>
+    <string name="seed_message">یہ ہے آپ کا اکاؤنٹ/"سیڈ"/تمام اغراض و مقاصد کیلئے، آپ کا سیڈ آپ کے مکمل Stellar اکاؤنٹ کی نمائندگی کرتا ہے۔</string>
+    <string name="seed_warning_header">خبردار:</string>
+    <string name="seed_warning_bullet1">کسی بھی دوسرے فرد کے ساتھ اپنا سیڈ مت شیئر  کریں۔</string>
+    <string name="seed_warning_bullet2_generate">اس سیڈ کو دیکھیں اور کسی دوسرے زیادہ محفوظ مقام پر اس کو کاپی کرلیں۔</string>
+    <string name="seed_warning_bullet3">کسی بھی صورت میں Xim اگر آپ اپنے سیڈ کو اپنے پاس محفوظ کرکے نہیں رکھتے تو اس بات کا خطرہ موجود ہے کہ آپ اپنے اکاؤنٹ تک رسائی اورفنڈز کھو دیں۔ آپ کیلئے اس کو اپنے پاس رکھنے کی ضمانت نہیں دے سکتا۔ </string>
+    <string name="seed_warning_bullet4">آپ آئندہ قدم پر جو پاس فریز ہمیں فراہم کریںگے ہم اس کو استعمال کرتے ہوئے اس سیڈ کو اینکرپٹ کردیں گے۔</string>
+    <string name="auto_trust_xim_bullet">ہم XIM پر آپ کا اکاؤنٹ خودکار طور پر بنادیںگے۔</string>
+    <string name="show_seed">سیڈ دکھائیں</string>
+    <string name="copy_seed">سیڈ کاپی کریں</string>
+    <string name="generate_different_seed">مختلف سیڈ بنائیں</string>
+
+    <!-- Encrypt Seed Fragment -->
+    <string name="encrypt_seed_fragment_title">پاس فریز رکھیں</string>
+    <string name="encryption_message">اپنے اکاؤنٹ سیڈ کو اینکرپٹ کرنے کیلئے اب آپ اپنا پاس فریز داخل کریں گے۔</string>
+    <string name="encryption_message_bullet1">اس سے ہم محفوظ طورپر آپ کا سیڈ آپ کے ڈوائس میں اسٹور کر دیں گے۔</string>
+    <string name="encryption_message_bullet2">کسی بھی لین دین کی تکمیل کرنے کیلئے آپ کو یہ پاس فریز داخل کرنے کی ضرورت پڑے گی۔</string>
+    <string name="encryption_message_bullet3">اگر آپ اس کو بھول جائیں تو کوئی بات نہیں! اکاؤنٹ سیڈ کے ذریعے آپ جب چاہیں اپنا اکاؤنٹ واپس حاصل کرسکتے ہیں۔</string>
+    <string name="encryption_message_bullet4">آپ اپنا پاس فریز کبھی بھی اپنے ڈوائس میں اسٹور نہیں کریں گے۔</string>
+    <string name="encryption_message_bullet5">آپ یہاں جو مخصوص پاس فریز داخل کریں گے اس کو خاص طور پر اس اکاؤنٹ سیڈ کے ساتھ منسلک کردیا جائے گا جس کو آپ نے پچھلے اقدام میں درآمد کیا تھا یا بنایا تھا</string>
+    <string name="encryption_message_bullet6">آپ کے پاس فریز کو لازمی طور پر 8 سے 20 حروف پر مشتمل ہونا چاہیئے۔ اس میں کیس کیلئے بھی حساسیت ہے۔</string>
+    <string name="initial_password_field_hint">پاس ورڈ</string>
+    <string name="verify_password_field_hint">پاس ورڈ کی تصدیق کریں</string>
+    <string name="password_length_error">پاس فریز کو لازمی طور پر کم از کم 8 حروف پر مشتمل ہونا چاہیئے</string>
+    <string name="passwords_match_error">پاس ورڈ یکساں نہیں ہیں</string>
+    <!-- Operations Fragment -->
+    <string name="date_label">تاریخ:</string>
+    <string name="operation_type_label">کام انجام دیا گیا:</string>
+    <string name="memo_label">میمو:</string>
+    <string name="recipient_label">وصول کنندہ</string>
+    <string name="sender_label">ارسال کنندہ</string>
+    <string name="receive_amount_prefix">+%1$s %2$s</string>
+    <string name="send_amount_prefix">-%1$s %2$s</string>
+    <string name="failed_load_transactions">لین دین لوڈ کرنے میں ناکام</string>
+    <string name="trustee_label">امین:</string>
+    <string name="trustor_label">امانت دینے والا</string>
+    <string name="asset_label">اثاثہ:</string>
+    <string name="offer_id_label">ID کی پیشکش</string>
+    <string name="selling_asset_code_label">اثاثے کا کوڈ فروخت کریں:</string>
+    <string name="buying_asset_code_label">اثاثے کا کوڈ خریدیں</string>
+    <string name="selling_amount_label">فروخت کی رقم</string>
+    <string name="buying_price_label">خریدنے کی قیمت</string>
+    <string name="merged_into_label">میں شامل کریں:</string>
+    <string name="entry_name_label">داخلہ نام:</string>
+    <string name="entry_value_label">داخلہ قدر</string>
+
+    <!-- Send Fragment -->
+    <string name="recipient_hint">وصول کنندہ کا پتہ</string>
+    <string name="amount_hint">رقم</string>
+    <string name="memo_hint">میمو (اختیاری)</string>
+    <string name="invalid_ascii">ASCII کے حروف درست نہیں ہیں</string>
+    <string name="loading_building_transaction">لین دین بناتے ہوئے۔۔۔</string>
+    <string name="build_transaction_fail">لین دین بنانے میں ناکامی</string>
+    <string name="loading_sending_payment">لین دین پوسٹ کرتے ہوئے۔۔۔</string>
+    <string name="send_payment_fail">لین دین ناکام ہوگئی</string>
+    <string name="send_payment_success">لین دین کامیاب ہوگئی!</string>
+    <string name="account_address_same_as_self_error">یہ وہی پتہ ہے جو بھیجنے والے کا ہے</string>
+    <string name="account_address_not_exist_error">اکاؤنٹ موجود نہیں ہے، پہلے XLM بھیج کر نیا اکاؤنٹ بنائیں</string>
+    <string name="account_address_unsupported_asset_error">اکاؤنٹ وصول کرنے والے کو اس اثاثے پر اعتماد نہیں ہے</string>
+    <string name="insufficient_funds_error">ناکافی فند</string>
+    <string name="amount_greater_than_zero_error">رقم کو لازمی طور پر صفر سے زیادہ ہونا چاہیئے</string>
+
+    <!-- Send Confirmation Fragment -->
+    <string name="send_payment_title">ادائیگی کی تصدیق</string>
+    <string name="create_account_title">اکاؤنٹ کی تصدیق بنائیں</string>
+    <string name="confirm_transaction">لین دین کی تصدیق کریں</string>
+    <string name="sending_label">بھیجا جارہا ہے:</string>
+    <string name="to_label">کو:</string>
+    <string name="transaction_fees">لین دین کی فی</string>
+    <string name="remaining_balances">بقایا میزان:</string>
+    <string name="self_account_balance_violated">آپ کے اکاؤنٹ میں لازمی طورپر%1$ رہنے چاہیئیں۔</string>
+    <string name="new_account_balance_violated">نئی اکاؤنٹ کو لازمی طور پر کم از کم %1$ کا میزان بھیجا جانا چاہیئے۔</string>
+
+    <!-- Contact List Fragment -->
+    <string name="contact_list_fragment_title">روابط</string>
+    <string name="contacts_load_error_message">روابط لوڈ کرنے میں ناکام</string>
+    <string name="contacts_empty_message">کوئی رابطہ نہیں ملا</string>
+    <string name="contact_address_empty">(پتہ نہیں ہے)</string>
+    <string name="contact_notes_empty">(نوٹس نہیں ہیں)</string>
+
+    <!-- View Contact Fragment -->
+    <string name="view_contact_fragment_title">روابط دیکھیں</string>
+    <string name="delete_contact_confirmation_title">مٹائیں؟</string>
+    <string name="delete_contact_message">کیا آپ کو یقین ہے کہ آپ یہ رابطہ مٹانا چاہتے ہیں؟</string>
+    <string name="contact_load_error_message">رابطہ لوڈ کرنے میں ناکام</string>
+    <string name="contact_delete_error_message">رابطہ مٹانےمیں ناکام</string>
+    <string name="contact_notes_label">نوٹس</string>
+    <string name="contact_menu_edit">تدوین</string>
+    <string name="contact_menu_delete">مٹائیں</string>
+
+    <!-- Edit Contact Fragment -->
+    <string name="edit_contact_fragment_title">رابطے کی تدوین کریں</string>
+    <string name="add_contact_fragment_title">رابطہ شامل کریں</string>
+    <string name="discard_changes_title">تبدیلیاں مسترد کردیں؟</string>
+    <string name="discard_changes_message">آپ نے تبدیلوں کو محفوظ نہیں کیا</string>
+    <string name="save_contact">روابط کو محفوظ کریں</string>
+    <string name="contact_name_hint">نام</string>
+    <string name="contact_address_hint">اکاؤنٹ کا پتہ</string>
+    <string name="contact_notes_hint">نوٹس (اختیاری)</string>
+    <string name="contact_color_label">رنگ:</string>
+    <string name="saving_contact_progress_message">اکاؤنٹ کو محفوظ کرتے ہوئے۔۔۔</string>
+    <string name="saving_contact_progress_success">رابطہ محفوظ ہوگیا</string>
+    <string name="saving_contact_progress_fail">محفوظ ہونا ناکام</string>
+    <string name="contact_name_empty_error">رابطے کے نام کو خالی نہیں چھوڑا جاسکتا</string>
+    <string name="contact_color_dialog_title">رنگ منتخب کریں</string>
+
+    <!-- Inflation Fragment -->
+    <string name="inflation_fragment_title">افراطِ زر کی منزل</string>
+    <string name="inflation_hint">افراطِ زر کی منزل</string>
+    <string name="set_inflation_destination">افراطِ زر کی منزل کا تعین کریں</string>
+    <string name="populate_lumenaut_inflation">Lumenaut افراطِ زر کے پتے کو کاپی کریں</string>
+    <string name="clear_inflation_dialog_title">افراطِ زر کی منزل کو صاف کریں</string>
+    <string name="clear_inflation_dialog_message">کیا آپ کو یقین ہے کہ آپ اپنی افراطِ زر کی منزل کو صاف کرنا چاہتے ہیں؟</string>
+    <string name="inflation_description_title">افراطِ زرکیا ہے؟</string>
+    <string name="inflation_description">یہ نئے Lumens کو ہفتہ وار بنیادوں پر سالانہ  1% کی شرح سے موجودہ ہولڈرز میں تقسیم کیا جاتا ہے۔ اگرآپ نے منزل کا تعین نہیں کیا ہے تو آپ بنیادی طور پر مفت Lumens کھو رہے ہیں۔</string>
+    <string name="lumenaut_description_title">Lumenaut کمیونٹی پُول؟ </string>
+    <string name="lumenaut_description">افراطِ زر کو ووٹنگ کے نظام کے ذریعے تقسیم کیا جاتا ہے، جس میں صرف ان کو ہی نئے Lumens وصول ہوتے ہیں جن کے پاس مجموعی ووٹوں میں سے 0.5% ووٹ ہوتے ہیں۔ اس شرط کو پورا کرنے کیلئے آپ پُول میں شمولیت اختیار کرسکتے ہیں، مثلاً شرکت کیلئے Lumenaut۔ دراصل Lumenaut بھی Xim Wallet کا ترجیحی اختیار ہے، چونکہ ان میں فی صفر اور ادائگی 100% ہوتی ہے اور اس کو جو کمیونٹی استعمال کرتی ہے وہی اس کی معاونت بھی کرتی ہے۔</string>
+    <string name="inflation_operation_loading">افراطِ زر طے کرتے ہوئے۔۔۔۔</string>
+    <string name="inflation_operation_success">افراطِ زر طے کرنے میں کامیاب</string>
+    <string name="inflation_operation_fail">"افراطِ زر طے کرنے میں ناکام</string>
+    <string name="inflation_address_prefix_error">افراطِ زر کے پتے کو لازمی طور پر "G" سے شروع ہونا چاہیئے</string>
+    <string name="inflation_address_length_error">افراطِ زر کے پتے کو لازمی طور پر % حروف لمبا ہونا چاہیئے</string>
+    <string name="inflation_address_format_error">افراطِ زر کے پتے کا فارمیٹ درست نہیں ہے</string>
+    <string name="inflation_address_already_set_error">اس پتے پر پہلے ہی افراطِ زر طے کردی گئی ہے</string>
+    <string name="invalid_password_error">پاس ورڈ درست نہیں ہے</string>
+
+    <!-- Inflation Confirmation Fragment -->
+    <string name="inflation_confirmation_title">افراطِ زر کی تصدیق رکھیں</string>
+    <string name="inflation_destination_label">افراطِ زر کی منزل:</string>
+
+    <!-- About Fragment -->
+    <string name="about_fragment_title">کے بارے میں</string>
+    <string name="terms_and_conditions_link">استعمال کے شرائط و ضوابط</string>
+    <string name="privacy_policy_link">رازداری کی پالیسی</string>
+    <string name="source_code_link">سورس کوڈ</string>
+    <string name="contact_link">روابط کی معاونت</string>
+    <string name="contact_subject">XIM Wallet کی معاونت</string>
+    <string name="contact_body">براہِ مہربانی ہمیں بتائیں کہ ہم کیسا کام کرہے ہیں!</string>
+    <string name="contact_chooser_title">XIM Wallet کا ای میل</string>
+
+    <!-- Balances Fragment-->
+    <string name="xim_balance_label">XIM میزان</string>
+    <string name="remaining_transactions_label">بقایا لین دین</string>
+    <string name="remaining_transactions_help_message">لین دین کو Lumens کی جانب سے قوت بخشی جا رہی ہے۔ مزید لین دین کے حصول کیلئے اپنے اکاؤنٹ میں Lumens کو شامل کریں</string>
+    <string name="remaining_transactions_loading_message">لوڈ کرتے ہوئے۔۔۔۔</string>
+    <string name="failed_remaining_transactions_load">بقایا لین دین کو لوڈ کرنے میں ناکام</string>
+
+    <!-- Trust Xim Fragment-->
+    <string name="trust_xim_message">اپنے اکاؤنٹ کو رکھنے کی تکمیل کیلئے اپنے اکاؤنٹ کا پاس ورڈ داخل کریں۔</string>
+    <string name="trust_transaction_progress">عمل کرتے ہوئے۔۔۔</string>
+    <string name="trust_transaction_success">مکمل</string>
+    <string name="trust_transaction_failure">ناکام</string>
+
+    <!-- Account Header View -->
+    <string name="balance_label">Lumen (XLM) میزان:</string>
+    <string name="account_not_on_network_unknown_fee_message">اکاؤنٹ نیٹ ورک پر نہیں ہے۔ اس اکاؤنٹ کو بنانے کی تکمیل کیلئے مطلوبہ کم از کم میزان بھیجیں۔</string>
+    <string name="account_not_on_network_message">اکاؤنٹ نیٹ ورک پر نہیں ہے۔ اس اکاؤنٹ کو بنانے کی تکمیل کیلئے کم از کم %1$ میزان اپنے عوامی پتے پر بھیجیں۔۔</string>
+
+    <!-- Xim Webview -->
+    <string name="xim_webview_title">XIM اکاؤنٹ کو طے کرنا</string>
+
+    <!-- Operation Friendly Names -->
+    <string name="operation_account_created">اکاؤنٹ بنادیا گیا</string>
+    <string name="operation_payment">ادائیگی</string>
+    <string name="operation_path_payment">ادائیگی کا ذریعہ</string>
+    <string name="operation_manage_offer">پیشکش کی دیکھ بھال</string>
+    <string name="operation_create_passive_offer">غیرفعال پیشکش بنائی گئی</string>
+    <string name="operation_set_options">اختیارات رکھے گئے</string>
+    <string name="operation_change_trust">اعتماد میں تبدیلی</string>
+    <string name="operation_allow_trust">اعتماد کی اجازت</string>
+    <string name="operation_account_merge">اکاؤنٹ کو ملایا گیا</string>
+    <string name="operation_inflation">افراطِ زر چلایا گیا</string>
+    <string name="operation_manage_data">کوائف کے اندراج میں تبدیلی کی گئی</string>
+    <string name="operation_unknown">نا معلوم</string>
+
+    <!-- Navigation Drawer -->
+    <string name="nav_drawer_add_account">اکاؤنٹ شامل کریں</string>
+    <string name="nav_drawer_contacts">روابط</string>
+    <string name="nav_drawer_settings">سیٹنگز</string>
+    <string name="nav_drawer_about">بارے میں</string>
+    <string name="fiat_conversion_label">فیئاٹ کی تبدیلی</string>
+    <string name="fiat_conversion_prefix">1 XLM = %s</string>
+    <string name="fiat_conversion_suffix">%1$s %2$s</string>
+    <string name="fiat_conversion_last_updated">آخری مرتبہ اپڈیٹ کردہ:%s</string>
+    <string name="fiat_conversion_unknown">کوائف نہیں ہیں</string>
+    <string name="fiat_conversion_load_failure">تبدیلی کی شرح کو لوڈ کرنے میں ناکام</string>
+
+    <plurals name="lumens">
+        <item quantity="one">%s Lumen</item>
+        <item quantity="other">%s Lumens</item>
+    </plurals>
+
+    <string name="lumens_plural">Lumens</string>
+
+    <string name="address_validation" translatable="false">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
+</resources>

@@ -22,13 +22,12 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 import com.ximcoin.ximwallet.EnvironmentConstants;
 import com.ximcoin.ximwallet.dagger.scope.PerActivity;
-import com.ximcoin.ximwallet.model.api.CoinMarketCapApi;
+import com.ximcoin.ximwallet.model.api.StellarTermTickerApi;
 import com.ximcoin.ximwallet.model.api.CurlLoggingInterceptor;
 import com.ximcoin.ximwallet.model.api.HorizonApi;
 import com.ximcoin.ximwallet.model.persistence.AppFlagDB;
 import com.ximcoin.ximwallet.model.persistence.ContactDB;
 import com.ximcoin.ximwallet.model.persistence.HorizonDB;
-import com.ximcoin.ximwallet.model.persistence.coinmarketcap.ConversionRateAdapter;
 import com.ximcoin.ximwallet.view.about.AboutActivity;
 import com.ximcoin.ximwallet.view.about.AboutActivityModule;
 import com.ximcoin.ximwallet.view.account.AccountsActivity;
@@ -48,7 +47,7 @@ import com.ximcoin.ximwallet.view.exportidweb.ExportIdWebviewActivityModule;
 @Module(includes = AndroidInjectionModule.class)
 public abstract class AppModule {
     private static final String HORIZON_RETROFIT_QUALIFIER = "HorizonRetrofit";
-    private static final String CMC_RETROFIT_QUALIFIER = "CMCRetrofit";
+    private static final String STELLAR_TERM_RETROFIT_QUALIFIER = "StellarTermRetrofit";
 
     @Provides
     @Singleton
@@ -72,7 +71,6 @@ public abstract class AppModule {
     @Singleton
     static Moshi provideMoshi() {
         return new Moshi.Builder()
-                .add(new ConversionRateAdapter())
                 .build();
     }
 
@@ -114,12 +112,12 @@ public abstract class AppModule {
 
     @Provides
     @Singleton
-    @Named(CMC_RETROFIT_QUALIFIER)
-    static Retrofit provideCMCRetrofit(Moshi moshi, OkHttpClient okHttpClient) {
+    @Named(STELLAR_TERM_RETROFIT_QUALIFIER)
+    static Retrofit provideStellarTermRetrofit(Moshi moshi, OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(EnvironmentConstants.COIN_MARKET_CAP_API_ENDPOINT)
+                .baseUrl(EnvironmentConstants.STELLAR_TERM_API_ENDPOINT)
                 .client(okHttpClient)
                 .build();
     }
@@ -137,8 +135,8 @@ public abstract class AppModule {
 
     @Provides
     @Singleton
-    static CoinMarketCapApi providesCoinMarketCapApi(@Named(CMC_RETROFIT_QUALIFIER) Retrofit retrofit) {
-        return retrofit.create(CoinMarketCapApi.class);
+    static StellarTermTickerApi provideStellarTermTickerApi(@Named(STELLAR_TERM_RETROFIT_QUALIFIER) Retrofit retrofit) {
+        return retrofit.create(StellarTermTickerApi.class);
     }
 
     @PerActivity
